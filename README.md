@@ -88,15 +88,21 @@ benchmark/
 │   ├── en.json
 │   └── it.json
 ├── logs/           # Log files
-├── src/            # Source code
+├── script/         # Source code
 │   ├── __init__.py
-│   ├── main.py     # Main application
+│   ├── about.py    # About dialog
+│   ├── help.py     # Help Dialog
+│   ├── lang_mgr.py # Language manager
+│   ├── logger.py   # Logging configuration
 │   ├── menu.py     # Menu bar functionality
-│   ├── help.py     # Help system
-│   └── logger.py   # Logging configuration
+│   ├── pystone.py  # CLI Pystone benchmark
+│   ├── settings.py # Settings dialog
+│   ├── updates.py  # Update system
+│   ├── version.py  # Version system
+│   └── view_log.py # Log viewer
 ├── .gitignore
 ├── LICENSE
-├── py-build.py     # Build script
+├── main.py         # Main application
 ├── README.md       # This file
 └── requirements.txt
 ```
@@ -121,4 +127,4 @@ If you find this project useful, please consider supporting its development:
 
 - GitHub: [Nsfr750](https://github.com/Nsfr750)
 - Discord: [Join our community](https://discord.gg/ryqNeuRYjD)
-- Email: nsfr750@yandex.com
+- Email: [nsfr750@yandex.com](mailto:nsfr750@yandex.com)
