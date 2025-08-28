@@ -1,6 +1,6 @@
 {
     "app": {
-        "title": "Pystone Benchmark",
+        "title": "Benchmark",
         "version": "Version",
         "start_benchmark": "Start Benchmark",
         "stop_benchmark": "Stop Benchmark",
@@ -68,7 +68,7 @@
         "title": "Help",
         "error_loading": "Could not load help documentation\n\nPlease visit the GitHub repository for documentation",
         "getting_started": "Getting Started",
-        "welcome": "Welcome to Pystone Benchmark! This application allows you to benchmark your system's performance using the Pystone benchmark.",
+        "welcome": "Welcome to Benchmark! This application allows you to benchmark your system's performance using the Pystone benchmark.",
         "how_to_use": "How to Use",
         "step1": "Enter the number of iterations in the input field (default is 50,000)",
         "step2": "Click the \"Start Benchmark\" button to begin the test",
