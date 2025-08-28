@@ -6,7 +6,7 @@
 
 A modern Python benchmarking tool built with PySide6, providing a user-friendly interface for running and analyzing Pystone benchmark tests.
 
-![Pystone Benchmark Screenshot](screenshot.png)
+![Pystone Benchmark Screenshot](assets/screenshot.png)
 
 ## 📥 Installation
 
