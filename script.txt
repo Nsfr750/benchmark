@@ -1,0 +1,6 @@
+Add more benchmark tests, Implement result export functionality (CSV/JSON), Add system information collection,�Improve error handling for edge cases
+Crea una voce di menu (in script/menu.py) Test in cui visualizzare i vari test possibili (script/system info.py , script/bencmark_test.py, etc...)
+Add dark/light theme support, Implement benchmark history,Add more visualization options for results, Implement benchmark presets, Add more configuration options
+
+
+Add GitHub Actions for CI/CD, Add more benchmark presets, Implement result comparison feature, Add hardware monitoring during tests

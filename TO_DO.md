@@ -8,7 +8,6 @@
 ## Medium Priority
 - [ ] Add more visualization options for results
 - [ ] Implement benchmark presets
-- [ ] Add command-line interface (CLI) mode
 - [ ] Create a user guide
 - [ ] Add more configuration options
 
@@ -16,8 +15,6 @@
 - [ ] Add more benchmark presets
 - [ ] Implement result comparison feature
 - [ ] Add hardware monitoring during tests
-- [ ] Create installation package
-- [ ] Add more export formats (PDF, HTML)
 
 ## In Progress
 - [x] Set up project structure
