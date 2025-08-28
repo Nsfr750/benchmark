@@ -208,3 +208,4 @@ __marimo__/
 py-build.py
 fix_cache.py
 version.txt
+assets/version-info.txt
