@@ -1,6 +1,12 @@
 # 📂 Project Structure
 
 benchmark/
+├── .github/                    # GitHub Actions
+│   ├── workflows/              # GitHub Actions workflows
+│   │   └── ci-cd.yml           # CI/CD pipeline
+│   ├── issues/                 # GitHub Issues
+│   |   └── templates/          # GitHub Issues templates
+│   └── FUNDING.yml             # Funding file
 ├── assets/                     # Assets files
 ├── config/                     # Configuration files
 │   ├── config.json             # Configuration file
@@ -16,7 +22,9 @@ benchmark/
 │   ├── benchmark_history.py    # Benchmark history
 │   ├── benchmark_tests.py      # Benchmark tests
 │   ├── CLI_pystone.py          # CLI Pystone benchmark
+│   ├── config_manager.py       # Configuration manager
 │   ├── export_results.py       # Export results
+│   ├── hardware_monitor.py     # Hardware monitor
 │   ├── help.py                 # Help Dialog
 │   ├── history_dialog.py       # History dialog
 │   ├── lang_mgr.py             # Language manager
@@ -32,7 +40,8 @@ benchmark/
 │   ├── view_log.py             # Log viewer
 │   └── visualization.py        # Benchmark Visualization
 ├── tests/                      # Test files
-│   └── test_benchmark.py       # Test benchmark
+│   ├── test_benchmark.py       # Test benchmark
+│   └── test_hardware_monitor.py       # Test hardware monitor
 ├── .gitignore                  # Git ignore file
 ├── CHANGELOG.md                # Changelog file
 ├── CONTRIBUTING.md             # Contributing file

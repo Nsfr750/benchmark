@@ -142,7 +142,14 @@
         "last_month": "Last 30 Days",
         "date_time": "Date/Time",
         "no_data_title": "No Data Available",
-        "no_data_message": "No benchmark results found for the selected criteria."
+        "no_data_message": "No benchmark results found for the selected criteria.",
+        "export_png": "Export as PNG...",
+        "export_svg": "Export as SVG...",
+        "export_chart": "Export Chart",
+        "png_files": "PNG Images (*.png)",
+        "svg_files": "SVG Files (*.svg)",
+        "export_error": "Failed to export chart: {error}",
+        "export_error_title": "Export Error"
     },
     "export": {
         "no_data_title": "No Data",

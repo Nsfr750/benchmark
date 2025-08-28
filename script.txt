@@ -1,9 +1,0 @@
-Implement benchmark presets
-Add more benchmark presets
-Add more configuration options
-Implement result comparison feature
-Implement benchmark result comparison view
-Add more benchmark tests
-Improve error handling for edge cases
-Set up GitHub Actions for CI/CD
-Add hardware monitoring during tests

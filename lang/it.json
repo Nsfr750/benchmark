@@ -143,7 +143,14 @@
         "last_month": "Ultimi 30 Giorni",
         "date_time": "Data/Ora",
         "no_data_title": "Nessun Dato Disponibile",
-        "no_data_message": "Nessun risultato del benchmark trovato per i criteri selezionati."
+        "no_data_message": "Nessun risultato del benchmark trovato per i criteri selezionati.",
+        "export_png": "Esporta come PNG...",
+        "export_svg": "Esporta come SVG...",
+        "export_chart": "Esporta Grafico",
+        "png_files": "Immagini PNG (*.png)",
+        "svg_files": "File SVG (*.svg)",
+        "export_error": "Errore durante l'esportazione del grafico: {error}",
+        "export_error_title": "Errore di Esportazione"
     },
     "export": {
         "no_data_title": "Nessun Dato",

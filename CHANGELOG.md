@@ -5,8 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.1.0] - 2025-08-28
+
 ### Added
+
+- Comprehensive system information collection (CPU, memory, disk, OS details)
+- Advanced benchmark tests including:
+  - CPU performance (math operations, sorting)
+  - Memory allocation and access
+  - Disk I/O performance
+- Result export functionality (JSON and CSV formats)
+- Command-line test runner
+- Detailed benchmark statistics (min, max, mean, median, standard deviation)
+- Support for multiple test iterations
+- Error handling and fallback mechanisms
 - New visualization tab with interactive charts for benchmark results
 - Support for line charts, bar charts, and scatter plots
 - Time-based filtering of benchmark results (All time, last 7 days, last 30 days)
@@ -26,21 +38,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dark/Light theme support with system preference detection
 - Theme selection in the View menu
 - Persistent theme preferences across application restarts
-
-## [1.1.0] - 2025-08-28
-
-### Added
-
-- Comprehensive system information collection (CPU, memory, disk, OS details)
-- Advanced benchmark tests including:
-  - CPU performance (math operations, sorting)
-  - Memory allocation and access
-  - Disk I/O performance
-- Result export functionality (JSON and CSV formats)
-- Command-line test runner
-- Detailed benchmark statistics (min, max, mean, median, standard deviation)
-- Support for multiple test iterations
-- Error handling and fallback mechanisms
+- Enhanced visualization with interactive tooltips showing detailed metrics
+- Added chart export functionality (PNG/SVG)
+- Improved data point highlighting on hover
+- Context menu for chart interactions
+- Support for displaying additional benchmark metrics in tooltips
 
 ### Changed
 
