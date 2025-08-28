@@ -1,0 +1,138 @@
+{
+    "app": {
+        "title": "Pystone Benchmark",
+        "version": "Versione",
+        "start_benchmark": "Avvia Benchmark",
+        "stop_benchmark": "Ferma Benchmark",
+        "iterations": "Iterazioni",
+        "pystones_per_second": "Pystones/Secondo",
+        "benchmark_results": "Risultati Benchmark",
+        "time_elapsed": "Tempo Impiegato",
+        "status_ready": "Pronto",
+        "status_running": "In esecuzione...",
+        "status_completed": "Completato",
+        "status_stopped": "Fermato",
+        "status_error": "Errore"
+    },
+    "menu": {
+        "file": "File",
+        "exit": "Esci",
+        "language": "Lingua",
+        "tools": "Strumenti",
+        "help": "Aiuto",
+        "about": "Informazioni su {0}",
+        "view_logs": "Visualizza Log",
+        "view_logs_tooltip": "Visualizza i log dell'applicazione (Ctrl+L)",
+        "documentation": "Documentazione",
+        "settings": "&Impostazioni...",
+        "settings_tooltip": "Configura le impostazioni dell'applicazione",
+        "check_for_updates": "Controlla &Aggiornamenti...",
+        "check_for_updates_tooltip": "Controlla se è disponibile una nuova versione"
+    },
+    "messages": {
+        "benchmark_started": "Benchmark avviato con {iterations} iterazioni",
+        "benchmark_completed": "Benchmark completato in {time:.2f} secondi con {pystones:,.2f} pystones/secondo",
+        "benchmark_stopped": "Benchmark interrotto dall'utente",
+        "invalid_iterations": "Inserire un numero valido di iterazioni",
+        "benchmark_error": "Si è verificato un errore durante il benchmark: {error}",
+        "saving_results": "Salvataggio risultati del benchmark...",
+        "results_saved": "Risultati salvati in {filename}",
+        "save_error": "Errore durante il salvataggio: {error}"
+    },
+    "dialogs": {
+        "confirm_exit": "Sei sicuro di voler uscire?",
+        "confirm_stop": "Sei sicuro di voler fermare il benchmark?",
+        "error_title": "Errore",
+        "info_title": "Informazione"
+    },
+    "buttons": {
+        "ok": "OK",
+        "cancel": "Annulla",
+        "apply": "Applica",
+        "yes": "Sì",
+        "no": "No",
+        "save": "Salva",
+        "close": "Chiudi"
+    },
+    "status": {
+        "initializing": "Inizializzazione in corso...",
+        "ready": "Pronto",
+        "running": "Esecuzione benchmark...",
+        "completed": "Benchmark completato",
+        "saving": "Salvataggio risultati...",
+        "saved": "Risultati salvati"
+    },
+    "help": {
+        "title": "Aiuto",
+        "error_loading": "Impossibile caricare la documentazione di aiuto\n\nSi prega di visitare il repository GitHub per la documentazione",
+        "getting_started": "Per Iniziare",
+        "welcome": "Benvenuto in Pystone Benchmark! Questa applicazione ti permette di testare le prestazioni del tuo sistema utilizzando il benchmark Pystone.",
+        "how_to_use": "Come Utilizzare",
+        "step1": "Inserisci il numero di iterazioni nel campo di input (il valore predefinito è 50.000)",
+        "step2": "Fai clic sul pulsante \"Avvia Benchmark\" per iniziare il test",
+        "step3": "Attendi il completamento del benchmark",
+        "step4": "Visualizza i tuoi risultati nella sezione dei risultati",
+        "understanding_results": "Capire i Risultati",
+        "results_explanation": "Il benchmark misura quanti \"Pystones\" il tuo sistema può eseguire al secondo. Numeri più alti indicano prestazioni migliori.",
+        "need_help": "Hai bisogno di aiuto?",
+        "visit_github": "Visita il nostro",
+        "for_more_info": "per ulteriori informazioni e supporto.",
+        "join_discord": "Unisciti al nostro",
+        "community_support": "per il supporto della community.",
+        "keyboard_shortcuts": "Scorciatoie da Tastiera",
+        "shortcut_start": "Ctrl+Enter: Avvia benchmark",
+        "shortcut_stop": "Esc: Ferma benchmark",
+        "shortcut_help": "F1: Visualizza questo Aiuto"
+
+    },
+    "settings": {
+        "title": "Impostazioni",
+        "general": "Generale",
+        "appearance": "Aspetto",
+        "theme": "Tema:",
+        "theme_light": "Chiaro",
+        "theme_dark": "Scuro",
+        "theme_system": "Sistema",
+        "start_minimized": "Avvia ridotto a icona:",
+        "start_minimized_colon": "Avvia ridotto a icona:",
+        "language": "Lingua",
+        "check_updates": "Controlla aggiornamenti all'avvio:",
+        "check_updates_colon": "Controlla aggiornamenti all'avvio:",
+        "save_location": "Posizione di salvataggio:",
+        "save_location_colon": "Posizione di salvataggio:",
+        "browse": "Sfoglia...",
+        "reset_to_defaults": "Ripristina predefiniti",
+        "restart_required": "Riavvio Richiesto",
+        "language_change_message": "La modifica della lingua avrà effetto dopo il riavvio dell'applicazione."
+    },
+    "updates": {
+        "available_title": "Aggiornamento Disponibile",
+        "available_message": "È disponibile la versione {0}!\n\nVuoi scaricarla ora?",
+        "no_updates_title": "Nessun Aggiornamento Disponibile",
+        "no_updates_message": "Stai utilizzando l'ultima versione di {0}.",
+        "error_title": "Errore di Aggiornamento",
+        "error_network": "Impossibile controllare gli aggiornamenti. Controlla la tua connessione internet.",
+        "error_general": "Si è verificato un errore durante il controllo degli aggiornamenti: {0}",
+        "download": "&Scarica",
+        "checking": "Controllo aggiornamenti in corso...",
+        "update_available": "È disponibile la versione {0}!"
+    },
+    "about": {
+        "title": "Informazioni",
+        "description": "Un'implementazione Python del benchmark Pystone con un'interfaccia grafica moderna.",
+        "credits": "Crediti",
+        "connect": "Connettiti",
+        "github": "GitHub",
+        "discord": "Discord",
+        "support_on_patreon": "Supporta su Patreon",
+        "donate_via_paypal": "Dona con PayPal"
+    },
+    "credits": {
+        "developer": "Sviluppatore: {name}",
+        "designer": "Designer: {name}",
+        "translator": "Traduttore: {name}",
+        "tester": "Collaudatore: {name}",
+        "original_author": "Autore Originale: {name}",
+        "python_version_and_gui": "Versione Python e GUI: {name}"
+    }
+}

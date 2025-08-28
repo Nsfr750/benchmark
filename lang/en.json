@@ -1,0 +1,133 @@
+{
+    "app": {
+        "title": "Pystone Benchmark",
+        "version": "Version",
+        "start_benchmark": "Start Benchmark",
+        "stop_benchmark": "Stop Benchmark",
+        "iterations": "Iterations",
+        "pystones_per_second": "Pystones/Second",
+        "benchmark_results": "Benchmark Results",
+        "time_elapsed": "Time Elapsed",
+        "status_ready": "Ready",
+        "status_running": "Running...",
+        "status_completed": "Completed",
+        "status_stopped": "Stopped",
+        "status_error": "Error"
+    },
+    "menu": {
+        "file": "File",
+        "exit": "Exit",
+        "language": "Language",
+        "tools": "Tools",
+        "help": "Help",
+        "about": "About",
+        "view_logs": "View Logs",
+        "view_logs_tooltip": "View application logs (Ctrl+L)",
+        "settings": "&Settings...",
+        "settings_tooltip": "Configure application settings",
+        "check_for_updates": "Check for &Updates...",
+        "check_for_updates_tooltip": "Check for the latest version",
+        "documentation": "&Documentation"
+    },
+    "messages": {
+        "benchmark_started": "Benchmark started with {iterations} iterations",
+        "benchmark_completed": "Benchmark completed in {time:.2f} seconds with {pystones:,.2f} pystones/second",
+        "benchmark_stopped": "Benchmark stopped by user",
+        "invalid_iterations": "Please enter a valid number of iterations",
+        "benchmark_error": "An error occurred during benchmark: {error}",
+        "saving_results": "Saving benchmark results...",
+        "results_saved": "Results saved to {filename}",
+        "save_error": "Error saving results: {error}"
+    },
+    "dialogs": {
+        "confirm_exit": "Are you sure you want to exit?",
+        "confirm_stop": "Are you sure you want to stop the benchmark?",
+        "error_title": "Error",
+        "info_title": "Information"
+    },
+    "buttons": {
+        "ok": "OK",
+        "cancel": "Cancel",
+        "apply": "Apply",
+        "yes": "Yes",
+        "no": "No",
+        "save": "Save",
+        "close": "Close"
+    },
+    "status": {
+        "initializing": "Initializing...",
+        "ready": "Ready",
+        "running": "Running benchmark...",
+        "completed": "Benchmark completed",
+        "saving": "Saving results...",
+        "saved": "Results saved"
+    },
+    "help": {
+        "title": "Help",
+        "error_loading": "Could not load help documentation\n\nPlease visit the GitHub repository for documentation",
+        "getting_started": "Getting Started",
+        "welcome": "Welcome to Pystone Benchmark! This application allows you to benchmark your system's performance using the Pystone benchmark.",
+        "how_to_use": "How to Use",
+        "step1": "Enter the number of iterations in the input field (default is 50,000)",
+        "step2": "Click the \"Start Benchmark\" button to begin the test",
+        "step3": "Wait for the benchmark to complete",
+        "step4": "View your results in the results section",
+        "understanding_results": "Understanding Results",
+        "results_explanation": "The benchmark measures how many \"Pystones\" your system can perform per second. Higher numbers indicate better performance.",
+        "need_help": "Need More Help?",
+        "visit_github": "Visit our",
+        "for_more_info": "for more information and support.",
+        "join_discord": "Join our",
+        "community_support": "for community support.",
+        "keyboard_shortcuts": "Keyboard Shortcuts",
+        "shortcut_start": "Ctrl+Enter: Start benchmark",
+        "shortcut_stop": "Esc: Stop benchmark",
+        "shortcut_help": "F1: Show this help"
+    },
+    "settings": {
+        "title": "Settings",
+        "general": "General",
+        "language": "Language:",
+        "theme": "Theme:",
+        "theme_light": "Light",
+        "theme_dark": "Dark",
+        "theme_system": "System",
+        "start_minimized": "Start minimized:",
+        "check_updates": "Check for updates on startup:",
+        "save_location": "Save location:",
+        "browse": "Browse...",
+        "reset_to_defaults": "Reset to Defaults",
+        "restart_required": "Restart Required",
+        "language_change_message": "Language change will take effect after restarting the application."
+    },
+    "updates": {
+        "available_title": "Update Available",
+        "available_message": "A new version {0} is available!\n\nWould you like to download it now?",
+        "no_updates_title": "No Updates Available",
+        "no_updates_message": "You're using the latest version of {0}.",
+        "error_title": "Update Error",
+        "error_network": "Could not check for updates. Please check your internet connection.",
+        "error_general": "An error occurred while checking for updates: {0}",
+        "download": "&Download",
+        "checking": "Checking for updates...",
+        "update_available": "Version {0} is available!"
+    },
+    "about": {
+        "title": "About",
+        "description": "A Python implementation of the Pystone benchmark with a modern GUI.",
+        "credits": "Credits",
+        "connect": "Connect",
+        "github": "GitHub",
+        "discord": "Discord",
+        "support_on_patreon": "Support on Patreon",
+        "donate_via_paypal": "Donate via PayPal"
+    },
+    "credits": {
+        "developer": "Developer: {name}",
+        "designer": "Designer: {name}",
+        "translator": "Translator: {name}",
+        "tester": "Tester: {name}",
+        "original_author": "Original Author: {name}",
+        "python_version_and_gui": "Python Version and GUI: {name}"
+    }
+}
