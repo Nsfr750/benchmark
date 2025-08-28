@@ -83,36 +83,42 @@ A modern Python benchmarking tool built with PySide6, providing a user-friendly 
 
 ```
 benchmark/
-├── assets/          # Assets files
-├── config/          # Configuration files
-│   ├── config.json  # Configuration file
-│   └── updates.json # Update cache file
-├── docs/            # Documentation
-├── lang/            # Language files
-│   ├── en.json      # English language file
-│   └── it.json      # Italian language file
-├── logs/            # Log files
-├── script/          # Source code
-│   ├── __init__.py  # Initialize package
-│   ├── about.py     # About dialog
-│   ├── help.py      # Help Dialog
-│   ├── lang_mgr.py  # Language manager
-│   ├── logger.py    # Logging configuration
-│   ├── menu.py      # Menu bar functionality
-│   ├── pystone.py   # CLI Pystone benchmark
-│   ├── settings.py  # Settings dialog
-│   ├── sponsor.py   # Sponsor dialog
-│   ├── updates.py   # Update system
-│   ├── version.py   # Version system
-│   └── view_log.py  # Log viewer
-├── .gitignore       # Git ignore file
-├── CHANGELOG.md     # Changelog file
-├── CONTRIBUTING.md  # Contributing file
-├── LICENSE          # License file
-├── main.py          # Main application
-├── README.md        # This file
-├── requirements.txt # Requirements file
-└── TO_DO.md         # To do list
+├── assets/                 # Assets files
+├── config/                 # Configuration files
+│   ├── config.json         # Configuration file
+│   └── updates.json        # Update cache file
+├── docs/                   # Documentation
+├── lang/                   # Language files
+│   ├── en.json             # English language file
+│   └── it.json             # Italian language file
+├── logs/                   # Log files
+├── script/                 # Source code
+│   ├── __init__.py         # Initialize package
+│   ├── about.py            # About dialog
+│   ├── benchmark_tests.py  # Benchmark tests
+│   ├── CLI_pystone.py      # CLI Pystone benchmark
+│   ├── export_results.py   # Export results
+│   ├── help.py             # Help Dialog
+│   ├── lang_mgr.py         # Language manager
+│   ├── logger.py           # Logging configuration
+│   ├── menu.py             # Menu bar functionality
+│   ├── settings.py         # Settings dialog
+│   ├── sponsor.py          # Sponsor dialog
+│   ├── system_info.py      # System information
+│   ├── updates.py          # Update system
+│   ├── version.py          # Version system
+│   └── view_log.py         # Log viewer
+├── tests/                  # Test files
+│   ├── test_benchmark.py   # Test benchmark
+│   └── test_system_info.py # Test system information
+├── .gitignore              # Git ignore file
+├── CHANGELOG.md            # Changelog file
+├── CONTRIBUTING.md         # Contributing file
+├── LICENSE                 # License file
+├── main.py                 # Main application
+├── README.md               # This file
+├── requirements.txt        # Requirements file
+└── TO_DO.md                # To do list
 ```
 
 ## 🤝 Contributing

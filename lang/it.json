@@ -18,7 +18,27 @@
         "file": "File",
         "exit": "Esci",
         "language": "Lingua",
+        "test.label": "Test",
+        "test.system_info": "Informazioni di Sistema",
+        "test.system_info_tooltip": "Esegui test delle informazioni di sistema",
+        "test.system_info_title": "Informazioni di Sistema",
+        "test.system_info_success": "Informazioni di sistema salvate in {filename}",
+        "test.system_info_error": "Impossibile ottenere le informazioni di sistema: {error}",
+        "test.benchmark": "Esegui Benchmark",
+        "test.benchmark_tooltip": "Esegui test di benchmark",
+        "test.benchmark_title": "Risultati Benchmark",
+        "test.benchmark_success": "Benchmark completato con successo!\n\nPietre/secondo: {pystones:,.2f}\nTempo: {time:.2f} secondi\n\nRisultati salvati in: {filename}",
+        "test.benchmark_error": "Impossibile eseguire il benchmark: {error}",
+        "test.view_logs": "Guarda Log Test",
+        "test.view_logs_tooltip": "Visualizza i log dei test",
+        "test.logs_title": "File di Log",
+        "test.logs_not_found": "File di log non trovato in: {}",
+        "test.logs_error": "Impossibile aprire il file di log: {error}",
+        "test.error": "Errore",
+        "test.logs_title": "File Log",
+        "test.logs_not_found": "File Log non trovato in: {}",
         "help_contents": "&Contenuti della guida",
+        "help_label": "Aiuto",
         "support": "&Supporta lo sviluppo...",
         "tools": "Strumenti",
         "help": "Aiuto",
@@ -28,8 +48,9 @@
         "documentation": "Documentazione",
         "settings": "&Impostazioni...",
         "settings_tooltip": "Configura le impostazioni dell'applicazione",
-        "check_for_updates": "Controlla &Aggiornamenti...",
-        "check_for_updates_tooltip": "Controlla se è disponibile una nuova versione"
+        "check_for_updates": "Cerca aggiornamenti...",
+        "check_for_updates_tooltip": "Controlla se sono disponibili aggiornamenti",
+        "documentation_tooltip": "Apri la documentazione"
     },
     "messages": {
         "benchmark_started": "Benchmark avviato con {iterations} iterazioni",
@@ -120,20 +141,15 @@
         "update_available": "È disponibile la versione {0}!"
     },
     "sponsor": {
+        "support": "Supporta lo Sviluppo",
         "title": "Supporta lo Sviluppo",
         "thank_you": "Grazie per utilizzare {}!",
         "message": "Se trovi utile questo software, per favore considera di supportarne lo sviluppo.",
         "monero_address": "Monero (XMR):",
         "copy_address": "Copia Indirizzo",
+        "ways_to_contribute": "Modi per contribuire:",
         "other_ways_to_contribute": "Altri modi per contribuire:",
         "copied": "Copiato!"
-    },
-    "support": {
-        "title": "Supporta lo sviluppo",
-        "thank_you": "Grazie per utilizzare {}!",
-        "message": "Se trovi utile questo software, per favore considera di supportarne lo sviluppo.",
-        "ways_to_contribute": "Modi per contribuire:",
-        "monero_address": "Monero (XMR):"
     },
     "about": {
         "title": "Informazioni",

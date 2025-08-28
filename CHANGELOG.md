@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2025-08-28
+
+### Added
+
+- Comprehensive system information collection (CPU, memory, disk, OS details)
+- Advanced benchmark tests including:
+  - CPU performance (math operations, sorting)
+  - Memory allocation and access
+  - Disk I/O performance
+- Result export functionality (JSON and CSV formats)
+- Command-line test runner
+- Detailed benchmark statistics (min, max, mean, median, standard deviation)
+- Support for multiple test iterations
+- Error handling and fallback mechanisms
+
+### Changed
+
+- Improved error handling for edge cases
+- Enhanced logging for better debugging
+- Updated requirements with new dependencies (psutil, py-cpuinfo, tqdm)
+- Refactored codebase for better maintainability
+
+### Fixed
+
+- Fixed language file loading in compiled version
+- Fixed path resolution for assets in compiled version
+- Fixed compatibility issues across different platforms
+
+## [1.0.0] - 2025-08-27
+
 ### Added
 - Initial project setup
 - Basic PySide6 GUI interface

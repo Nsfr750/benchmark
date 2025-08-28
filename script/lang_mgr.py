@@ -4,6 +4,7 @@ Handles loading and managing translations from JSON files.
 """
 import json
 import os
+import sys
 import logging
 from typing import Dict, Optional, Any
 
@@ -20,7 +21,15 @@ class LanguageManager:
             lang_dir: Directory containing language files
             default_lang: Default language code (e.g., 'en', 'it')
         """
-        self.lang_dir = lang_dir
+        # Handle paths in both development and compiled mode
+        if getattr(sys, 'frozen', False):
+            # Running in compiled mode
+            base_path = os.path.dirname(sys.executable)
+            self.lang_dir = os.path.join(base_path, lang_dir)
+        else:
+            # Running in development mode
+            self.lang_dir = lang_dir
+            
         self.default_lang = default_lang
         self.translations: Dict[str, Dict[str, Any]] = {}
         self.current_lang = default_lang
@@ -45,34 +54,51 @@ class LanguageManager:
             return [self.default_lang]
     
     def load_language(self, lang_code: str) -> bool:
-        """Load a language from a JSON file.
-        
+        """Load translations for the specified language code.
+
         Args:
-            lang_code: Language code (e.g., 'en', 'it')
-            
+            lang_code (str): The language code to load (e.g., 'en', 'it')
+
         Returns:
             bool: True if the language was loaded successfully, False otherwise
         """
+        # Try to load the requested language file
         lang_file = os.path.join(self.lang_dir, f"{lang_code}.json")
+        
+        # In compiled mode, also check in the lang directory next to the executable
+        if getattr(sys, 'frozen', False) and not os.path.exists(lang_file):
+            base_path = os.path.dirname(sys.executable)
+            alt_lang_dir = os.path.join(base_path, 'lang')
+            alt_lang_file = os.path.join(alt_lang_dir, f"{lang_code}.json")
+            if os.path.exists(alt_lang_file):
+                lang_file = alt_lang_file
+                self.lang_dir = alt_lang_dir  # Update lang_dir to the found location
+                log.info(f"Using language file from: {alt_lang_dir}")
         
         if not os.path.exists(lang_file):
             log.error(f"Language file not found: {lang_file}")
+            # Try to fall back to default language if current load fails
             if lang_code != self.default_lang:
                 log.info(f"Falling back to default language: {self.default_lang}")
                 return self.load_language(self.default_lang)
             return False
-        
+
         try:
             with open(lang_file, 'r', encoding='utf-8') as f:
                 self.translations[lang_code] = json.load(f)
             self.current_lang = lang_code
-            log.info(f"Loaded language: {lang_code}")
+            log.info(f"Successfully loaded language: {lang_code}")
             return True
+        except json.JSONDecodeError as e:
+            log.error(f"Invalid JSON in language file {lang_file}: {e}")
         except Exception as e:
-            log.error(f"Error loading language {lang_code}: {e}")
-            if lang_code != self.default_lang:
-                return self.load_language(self.default_lang)
-            return False
+            log.error(f"Error loading language {lang_code} from {lang_file}: {e}")
+            
+        # If we get here, there was an error loading the file
+        if lang_code != self.default_lang:
+            log.info(f"Falling back to default language: {self.default_lang}")
+            return self.load_language(self.default_lang)
+        return False
     
     def get_text(self, key: str, default: Optional[str] = None, **kwargs) -> str:
         """Get a translated text by key with optional formatting.

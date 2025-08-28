@@ -1,0 +1,8 @@
+{
+    "performance_score": 8.480684699952208,
+    "time_per_run_seconds": 0.1179150075,
+    "total_time_seconds": 117.9150075,
+    "number_of_runs": 1000,
+    "timestamp": "20250828_142646",
+    "python_version": "3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]"
+}

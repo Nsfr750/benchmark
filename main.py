@@ -1000,10 +1000,84 @@ class PystoneApp(QMainWindow):
             log.critical(f"Critical error in benchmark_error handler: {e}\nOriginal error: {error_msg}", 
                         exc_info=True)
     
+    def run_system_info_test(self):
+        """Run system information test and display results."""
+        try:
+            log.info("Running system information test")
+            system_info = get_system_info()
+            os.makedirs('benchmark_results', exist_ok=True)
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f'benchmark_results/system_info_{timestamp}.json'
+            with open(filename, 'w', encoding='utf-8') as f:
+                json.dump(system_info, f, indent=4, ensure_ascii=False)
+            
+            # Show success message
+            QMessageBox.information(
+                self,
+                self.lang_manager.get_text("test.system_info_title", "System Information"),
+                self.lang_manager.get_text(
+                    "test.system_info_success", 
+                    "System information saved to {filename}"
+                ).format(filename=filename)
+            )
+        except Exception as e:
+            log.error(f"Error in system info test: {str(e)}", exc_info=True)
+            QMessageBox.critical(
+                self,
+                self.lang_manager.get_text("test.error", "Error"),
+                self.lang_manager.get_text(
+                    "test.system_info_error", 
+                    "Failed to get system information: {error}"
+                ).format(error=str(e))
+            )
+    
+    def run_benchmark_test(self):
+        """Run benchmark test and display results."""
+        try:
+            log.info("Running benchmark test")
+            # Use the existing benchmark functionality
+            self.start_benchmark()
+        except Exception as e:
+            log.error(f"Error in benchmark test: {str(e)}", exc_info=True)
+            QMessageBox.critical(
+                self,
+                self.lang_manager.get_text("test.error", "Error"),
+                self.lang_manager.get_text(
+                    "test.benchmark_error", 
+                    "Failed to run benchmark: {error}"
+                ).format(error=str(e))
+            )
+    
     def view_logs(self):
         """Show the log viewer dialog."""
-        from script.view_log import show_log_viewer
-        show_log_viewer(self)
+        from script.menu import view_logs
+        view_logs(self, self.lang_manager)
+        
+    def _export_results(self):
+        """Export benchmark results to a file."""
+        if not hasattr(self, 'results') or not self.results:
+            QMessageBox.information(
+                self,
+                self.lang_manager.get_text("export.no_data.title", "No Data"),
+                self.lang_manager.get_text("export.no_data.message", "No benchmark results available to export.")
+            )
+            return
+            
+        try:
+            # Get the latest results
+            latest_result = self.results[-1] if self.results else {}
+            
+            # Create and show export dialog
+            dialog = ExportDialog(self, latest_result)
+            if dialog.exec() == QDialog.Accepted:
+                log.info("Export completed successfully")
+        except Exception as e:
+            log.error(f"Error exporting results: {str(e)}")
+            QMessageBox.critical(
+                self,
+                self.lang_manager.get_text("export.error.title", "Export Error"),
+                self.lang_manager.get_text("export.error.message", "An error occurred while exporting results: {error}").format(error=str(e))
+            )
         
     def closeEvent(self, event):
         # Clean up the worker thread if running

@@ -1,0 +1,410 @@
+[
+    {
+        "name": "CPU Math Operations",
+        "score": 1.86737213496096,
+        "unit": "ops/s",
+        "iterations": 5,
+        "times": [
+            0.5576233999999998,
+            0.5307841,
+            0.5333059000000002,
+            0.5258495000000001,
+            0.5299965999999996
+        ],
+        "metadata": {},
+        "min": 0.5258495000000001,
+        "max": 0.5576233999999998,
+        "mean": 0.5355118999999999,
+        "median": 0.5307841,
+        "stdev": 0.012648295032730615,
+        "system_info": {
+            "timestamp": "2025-08-28T13:15:48.189747",
+            "cpu": {
+                "brand": "AMD Ryzen 7 3700X 8-Core Processor",
+                "cores": 8,
+                "logical_cores": 16,
+                "hz_actual": "3.6000 GHz",
+                "hz_advertised": "3.6000 GHz",
+                "architecture": "AMD64",
+                "bits": 64
+            },
+            "memory": {
+                "total": 34282471424,
+                "available": 22254395392,
+                "used": 12028076032,
+                "free": 22254395392,
+                "percent": 35.1,
+                "swap_total": 5100273664,
+                "swap_used": 1080270848,
+                "swap_free": 4020002816,
+                "swap_percent": 21.2
+            },
+            "disk": {
+                "total": 999493201920,
+                "used": 506678665216,
+                "free": 492814536704,
+                "percent": 50.7
+            },
+            "network": {
+                "hostname": "STORM",
+                "ip_address": "192.168.1.200"
+            },
+            "os": {
+                "system": "Windows",
+                "node": "STORM",
+                "release": "10",
+                "version": "10.0.19045",
+                "machine": "AMD64",
+                "processor": "AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD",
+                "python_version": "3.9.13",
+                "python_compiler": "MSC v.1929 64 bit (AMD64)",
+                "python_implementation": "CPython"
+            },
+            "environment": {
+                "python_version": "3.9.13",
+                "system": "Windows",
+                "release": "10"
+            }
+        }
+    },
+    {
+        "name": "CPU Sorting",
+        "score": 44.59388350293951,
+        "unit": "ops/s",
+        "iterations": 3,
+        "times": [
+            0.021181299999999403,
+            0.023034599999999905,
+            0.02305789999999952
+        ],
+        "metadata": {},
+        "min": 0.021181299999999403,
+        "max": 0.02305789999999952,
+        "mean": 0.02242459999999961,
+        "median": 0.023034599999999905,
+        "stdev": 0.0010767924080343342,
+        "system_info": {
+            "timestamp": "2025-08-28T13:15:48.189747",
+            "cpu": {
+                "brand": "AMD Ryzen 7 3700X 8-Core Processor",
+                "cores": 8,
+                "logical_cores": 16,
+                "hz_actual": "3.6000 GHz",
+                "hz_advertised": "3.6000 GHz",
+                "architecture": "AMD64",
+                "bits": 64
+            },
+            "memory": {
+                "total": 34282471424,
+                "available": 22254395392,
+                "used": 12028076032,
+                "free": 22254395392,
+                "percent": 35.1,
+                "swap_total": 5100273664,
+                "swap_used": 1080270848,
+                "swap_free": 4020002816,
+                "swap_percent": 21.2
+            },
+            "disk": {
+                "total": 999493201920,
+                "used": 506678665216,
+                "free": 492814536704,
+                "percent": 50.7
+            },
+            "network": {
+                "hostname": "STORM",
+                "ip_address": "192.168.1.200"
+            },
+            "os": {
+                "system": "Windows",
+                "node": "STORM",
+                "release": "10",
+                "version": "10.0.19045",
+                "machine": "AMD64",
+                "processor": "AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD",
+                "python_version": "3.9.13",
+                "python_compiler": "MSC v.1929 64 bit (AMD64)",
+                "python_implementation": "CPython"
+            },
+            "environment": {
+                "python_version": "3.9.13",
+                "system": "Windows",
+                "release": "10"
+            }
+        }
+    },
+    {
+        "name": "Memory Allocation & Access",
+        "score": 10.107084560922983,
+        "unit": "ops/s",
+        "iterations": 5,
+        "times": [
+            0.09721329999999995,
+            0.10036470000000008,
+            0.09940950000000015,
+            0.09897009999999984,
+            0.0987448999999998
+        ],
+        "metadata": {},
+        "min": 0.09721329999999995,
+        "max": 0.10036470000000008,
+        "mean": 0.09894049999999996,
+        "median": 0.09897009999999984,
+        "stdev": 0.001147896118993421,
+        "system_info": {
+            "timestamp": "2025-08-28T13:15:48.189747",
+            "cpu": {
+                "brand": "AMD Ryzen 7 3700X 8-Core Processor",
+                "cores": 8,
+                "logical_cores": 16,
+                "hz_actual": "3.6000 GHz",
+                "hz_advertised": "3.6000 GHz",
+                "architecture": "AMD64",
+                "bits": 64
+            },
+            "memory": {
+                "total": 34282471424,
+                "available": 22254395392,
+                "used": 12028076032,
+                "free": 22254395392,
+                "percent": 35.1,
+                "swap_total": 5100273664,
+                "swap_used": 1080270848,
+                "swap_free": 4020002816,
+                "swap_percent": 21.2
+            },
+            "disk": {
+                "total": 999493201920,
+                "used": 506678665216,
+                "free": 492814536704,
+                "percent": 50.7
+            },
+            "network": {
+                "hostname": "STORM",
+                "ip_address": "192.168.1.200"
+            },
+            "os": {
+                "system": "Windows",
+                "node": "STORM",
+                "release": "10",
+                "version": "10.0.19045",
+                "machine": "AMD64",
+                "processor": "AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD",
+                "python_version": "3.9.13",
+                "python_compiler": "MSC v.1929 64 bit (AMD64)",
+                "python_implementation": "CPython"
+            },
+            "environment": {
+                "python_version": "3.9.13",
+                "system": "Windows",
+                "release": "10"
+            }
+        }
+    },
+    {
+        "name": "Disk Write Speed",
+        "score": 278.78968106460735,
+        "unit": "ops/s",
+        "iterations": 3,
+        "times": [
+            0.003756099999999485,
+            0.0035853000000001245,
+            0.0034194000000002944
+        ],
+        "metadata": {},
+        "min": 0.0034194000000002944,
+        "max": 0.003756099999999485,
+        "mean": 0.003586933333333301,
+        "median": 0.0035853000000001245,
+        "stdev": 0.00016835594237566033,
+        "system_info": {
+            "timestamp": "2025-08-28T13:15:48.189747",
+            "cpu": {
+                "brand": "AMD Ryzen 7 3700X 8-Core Processor",
+                "cores": 8,
+                "logical_cores": 16,
+                "hz_actual": "3.6000 GHz",
+                "hz_advertised": "3.6000 GHz",
+                "architecture": "AMD64",
+                "bits": 64
+            },
+            "memory": {
+                "total": 34282471424,
+                "available": 22254395392,
+                "used": 12028076032,
+                "free": 22254395392,
+                "percent": 35.1,
+                "swap_total": 5100273664,
+                "swap_used": 1080270848,
+                "swap_free": 4020002816,
+                "swap_percent": 21.2
+            },
+            "disk": {
+                "total": 999493201920,
+                "used": 506678665216,
+                "free": 492814536704,
+                "percent": 50.7
+            },
+            "network": {
+                "hostname": "STORM",
+                "ip_address": "192.168.1.200"
+            },
+            "os": {
+                "system": "Windows",
+                "node": "STORM",
+                "release": "10",
+                "version": "10.0.19045",
+                "machine": "AMD64",
+                "processor": "AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD",
+                "python_version": "3.9.13",
+                "python_compiler": "MSC v.1929 64 bit (AMD64)",
+                "python_implementation": "CPython"
+            },
+            "environment": {
+                "python_version": "3.9.13",
+                "system": "Windows",
+                "release": "10"
+            }
+        }
+    },
+    {
+        "name": "Disk Read Speed",
+        "score": 191.20580755773997,
+        "unit": "ops/s",
+        "iterations": 3,
+        "times": [
+            0.009257799999999428,
+            0.0032513999999999044,
+            0.003180699999999703
+        ],
+        "metadata": {},
+        "min": 0.003180699999999703,
+        "max": 0.009257799999999428,
+        "mean": 0.005229966666666345,
+        "median": 0.0032513999999999044,
+        "stdev": 0.00348838510536492,
+        "system_info": {
+            "timestamp": "2025-08-28T13:15:48.189747",
+            "cpu": {
+                "brand": "AMD Ryzen 7 3700X 8-Core Processor",
+                "cores": 8,
+                "logical_cores": 16,
+                "hz_actual": "3.6000 GHz",
+                "hz_advertised": "3.6000 GHz",
+                "architecture": "AMD64",
+                "bits": 64
+            },
+            "memory": {
+                "total": 34282471424,
+                "available": 22254395392,
+                "used": 12028076032,
+                "free": 22254395392,
+                "percent": 35.1,
+                "swap_total": 5100273664,
+                "swap_used": 1080270848,
+                "swap_free": 4020002816,
+                "swap_percent": 21.2
+            },
+            "disk": {
+                "total": 999493201920,
+                "used": 506678665216,
+                "free": 492814536704,
+                "percent": 50.7
+            },
+            "network": {
+                "hostname": "STORM",
+                "ip_address": "192.168.1.200"
+            },
+            "os": {
+                "system": "Windows",
+                "node": "STORM",
+                "release": "10",
+                "version": "10.0.19045",
+                "machine": "AMD64",
+                "processor": "AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD",
+                "python_version": "3.9.13",
+                "python_compiler": "MSC v.1929 64 bit (AMD64)",
+                "python_implementation": "CPython"
+            },
+            "environment": {
+                "python_version": "3.9.13",
+                "system": "Windows",
+                "release": "10"
+            }
+        }
+    },
+    {
+        "name": "Disk I/O Speed",
+        "score": 2268.370969388425,
+        "unit": "MB/s",
+        "iterations": 3,
+        "times": [
+            0.003756099999999485,
+            0.0035853000000001245,
+            0.0034194000000002944,
+            0.009257799999999428,
+            0.0032513999999999044,
+            0.003180699999999703
+        ],
+        "metadata": {
+            "test_type": "disk",
+            "data_size": 10485760,
+            "write_speed": "2787.90 MB/s",
+            "read_speed": "1912.06 MB/s"
+        },
+        "min": 0.003180699999999703,
+        "max": 0.009257799999999428,
+        "mean": 0.0044084499999998234,
+        "median": 0.0035023500000002095,
+        "stdev": 0.0023851073994684297,
+        "system_info": {
+            "timestamp": "2025-08-28T13:15:48.189747",
+            "cpu": {
+                "brand": "AMD Ryzen 7 3700X 8-Core Processor",
+                "cores": 8,
+                "logical_cores": 16,
+                "hz_actual": "3.6000 GHz",
+                "hz_advertised": "3.6000 GHz",
+                "architecture": "AMD64",
+                "bits": 64
+            },
+            "memory": {
+                "total": 34282471424,
+                "available": 22254395392,
+                "used": 12028076032,
+                "free": 22254395392,
+                "percent": 35.1,
+                "swap_total": 5100273664,
+                "swap_used": 1080270848,
+                "swap_free": 4020002816,
+                "swap_percent": 21.2
+            },
+            "disk": {
+                "total": 999493201920,
+                "used": 506678665216,
+                "free": 492814536704,
+                "percent": 50.7
+            },
+            "network": {
+                "hostname": "STORM",
+                "ip_address": "192.168.1.200"
+            },
+            "os": {
+                "system": "Windows",
+                "node": "STORM",
+                "release": "10",
+                "version": "10.0.19045",
+                "machine": "AMD64",
+                "processor": "AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD",
+                "python_version": "3.9.13",
+                "python_compiler": "MSC v.1929 64 bit (AMD64)",
+                "python_implementation": "CPython"
+            },
+            "environment": {
+                "python_version": "3.9.13",
+                "system": "Windows",
+                "release": "10"
+            }
+        }
+    }
+]

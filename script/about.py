@@ -4,7 +4,9 @@ About dialog and related functionality for the Benchmark application.
 import os
 from PySide6.QtWidgets import QMessageBox
 from PySide6.QtCore import Qt
-
+from wand.image import Image as WandImage
+from wand.drawing import Drawing
+from wand.color import Color
 from script.version import (
     __version__, __author__, __copyright__, APP_NAME, APP_DESCRIPTION,
     GITHUB_URL, PATREON_URL, PAYPAL_URL, DISCORD_URL, CREDITS
@@ -45,7 +47,7 @@ def create_about_dialog(parent=None):
     </head>
     <body>
     <div class="header">
-        <img src="{os.path.abspath('assets/logo.png')}" class="logo" alt="Logo">
+        <img src="{os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'assets/logo.png')}" class="logo" alt="Logo">
         <div class="content">
             <h2>{APP_NAME} <span class="version">v{__version__}</span></h2>
             <p>{lang.get_text('about.description', default=APP_DESCRIPTION)}</p>

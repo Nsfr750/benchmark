@@ -1,0 +1,49 @@
+{
+    "timestamp": "2025-08-28T13:43:05.360655",
+    "cpu": {
+        "brand": "AMD Ryzen 7 3700X 8-Core Processor",
+        "cores": 8,
+        "logical_cores": 16,
+        "hz_actual": "3.6000 GHz",
+        "hz_advertised": "3.6000 GHz",
+        "architecture": "AMD64",
+        "bits": 64
+    },
+    "memory": {
+        "total": 34282471424,
+        "available": 22114095104,
+        "used": 12168376320,
+        "free": 22114095104,
+        "percent": 35.5,
+        "swap_total": 5100273664,
+        "swap_used": 1124360192,
+        "swap_free": 3975913472,
+        "swap_percent": 22.0
+    },
+    "disk": {
+        "total": 999493201920,
+        "used": 506682781696,
+        "free": 492810420224,
+        "percent": 50.7
+    },
+    "network": {
+        "hostname": "STORM",
+        "ip_address": "192.168.1.200"
+    },
+    "os": {
+        "system": "Windows",
+        "node": "STORM",
+        "release": "10",
+        "version": "10.0.19045",
+        "machine": "AMD64",
+        "processor": "AMD64 Family 23 Model 113 Stepping 0, AuthenticAMD",
+        "python_version": "3.9.13",
+        "python_compiler": "MSC v.1929 64 bit (AMD64)",
+        "python_implementation": "CPython"
+    },
+    "environment": {
+        "python_version": "3.9.13",
+        "system": "Windows",
+        "release": "10"
+    }
+}
