@@ -83,6 +83,10 @@ A modern Python benchmarking tool built with PySide6, providing a user-friendly 
 
 ```
 benchmark/
+├── assets/         # Assets files
+├── config/         # Configuration files
+│   ├── config.json # Configuration file
+│   └── updates.json # Update cache file
 ├── docs/           # Documentation
 ├── lang/           # Language files
 │   ├── en.json
