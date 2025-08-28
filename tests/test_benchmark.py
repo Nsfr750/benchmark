@@ -2,10 +2,16 @@
 Test script for the benchmark functionality.
 Run this to test the benchmark tests, system info collection, and result export.
 """
-import os
+import unittest
 import sys
+import os
 import json
 from datetime import datetime
+
+# Add the project root to the Python path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+# Now import local modules
 from script.benchmark_tests import BenchmarkSuite
 from script.system_info import get_system_info, save_system_info
 from script.export_results import ResultExporter

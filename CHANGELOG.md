@@ -5,9 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2025-08-28
+
+### Added in 1.2.0
+
+- GitHub Actions CI/CD pipeline with automated testing and deployment
+- Comprehensive hardware monitoring during benchmark tests
+  - Real-time CPU and memory usage tracking
+  - Disk I/O monitoring
+  - Network activity tracking
+  - Temperature monitoring (where supported)
+- Configuration management system with support for multiple profiles
+- User guide documentation in `/docs` directory
+- Benchmark result comparison view
+- Support for custom benchmark presets
+- Enhanced error handling and logging
+
+### Changed in 1.2.0
+
+- Updated dependencies to their latest stable versions
+- Improved test coverage and reliability
+- Refactored codebase for better maintainability
+- Enhanced visualization of benchmark results
+- Optimized performance for large datasets
+
+### Fixed in 1.2.0
+
+- Fixed issues with result export functionality
+- Resolved memory leaks in long-running tests
+- Addressed minor UI/UX issues
+- Fixed compatibility issues across different platforms
+
 ## [1.1.0] - 2025-08-28
 
-### Added
+### Added in 1.1.0
 
 - Comprehensive system information collection (CPU, memory, disk, OS details)
 - Advanced benchmark tests including:
@@ -44,14 +75,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Context menu for chart interactions
 - Support for displaying additional benchmark metrics in tooltips
 
-### Changed
+### Changed in 1.1.0
 
 - Improved error handling for edge cases
 - Enhanced logging for better debugging
 - Updated requirements with new dependencies (psutil, py-cpuinfo, tqdm)
 - Refactored codebase for better maintainability
 
-### Fixed
+### Fixed in 1.1.0
 
 - Fixed language file loading in compiled version
 - Fixed path resolution for assets in compiled version
@@ -59,7 +90,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2025-08-27
 
-### Added
+### Added in 1.0.0
 - Initial project setup
 - Basic PySide6 GUI interface
 - Pystone benchmark implementation

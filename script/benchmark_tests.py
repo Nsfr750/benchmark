@@ -7,8 +7,31 @@ import math
 import random
 import statistics
 import json
+import signal
 from typing import Dict, List, Tuple, Callable, Any
 from dataclasses import dataclass, asdict
+
+class TimeoutError(Exception):
+    pass
+
+def timeout(seconds=30, error_message='Function call timed out'):
+    """Timeout decorator to prevent tests from running indefinitely."""
+    def decorator(func):
+        def _handle_timeout(signum, frame):
+            raise TimeoutError(error_message)
+            
+        def wrapper(*args, **kwargs):
+            # Set the signal handler and a 30-second alarm
+            signal.signal(signal.SIGALRM, _handle_timeout)
+            signal.alarm(seconds)
+            try:
+                result = func(*args, **kwargs)
+            finally:
+                signal.alarm(0)  # Disable the alarm
+            return result
+            
+        return wrapper
+    return decorator
 
 @dataclass
 class BenchmarkResult:
@@ -115,36 +138,45 @@ class BenchmarkSuite:
             metadata={"test_type": "cpu", "operations": "integer arithmetic, bitwise"}
         )
     
+    @timeout(seconds=30)  # 30 second timeout for the sorting test
+    def sort_operations(self, array_size=1000, num_iterations=5):
+        """Perform sorting operations to test CPU performance."""
+        try:
+            data = [random.random() for _ in range(array_size)]
+            
+            start_time = time.time()
+            for _ in range(num_iterations):
+                data2 = data.copy()
+                # Simple bubble sort (inefficient on purpose)
+                for i in range(len(data2)):
+                    for j in range(0, len(data2)-i-1):
+                        if data2[j] > data2[j+1]:
+                            data2[j], data2[j+1] = data2[j+1], data2[j]
+            
+            end_time = time.time()
+            return end_time - start_time
+        except TimeoutError:
+            print("\nSorting test timed out after 30 seconds. Using a smaller dataset...")
+            # Fallback to a smaller dataset if the test times out
+            return self.sort_operations(array_size=500, num_iterations=2)
+    
     def test_cpu_sorting(self, iterations: int = 3) -> BenchmarkResult:
         """Test sorting performance with different algorithms."""
-        data = self._test_data['large_list'].copy()
-        
         def sort_operations():
-            # Test multiple sorting algorithms
-            data1 = data.copy()
-            data2 = data.copy()
-            data3 = data.copy()
+            # Use a smaller dataset for the test
+            test_size = 1000
+            test_data = [random.random() for _ in range(test_size)]
             
-            # Built-in Timsort
-            sorted1 = sorted(data1 * 10)
-            # Bubble sort (inefficient on purpose)
-            n = len(data2)
-            for i in range(n):
-                for j in range(0, n-i-1):
-                    if data2[j] > data2[j+1]:
-                        data2[j], data2[j+1] = data2[j+1], data2[j]
-            # Quick sort
-            def quicksort(arr):
-                if len(arr) <= 1:
-                    return arr
-                pivot = arr[len(arr) // 2]
-                left = [x for x in arr if x < pivot]
-                middle = [x for x in arr if x == pivot]
-                right = [x for x in arr if x > pivot]
-                return quicksort(left) + middle + quicksort(right)
-                
-            sorted3 = quicksort(data3 * 10)
-            return sum(sorted1) + sum(data2) + sum(sorted3)
+            # Test built-in sort
+            start_time = time.time()
+            sorted1 = sorted(test_data)
+            builtin_sort_time = time.time() - start_time
+            
+            # Test bubble sort (from sort_operations method)
+            bubble_sort_time = self.sort_operations(array_size=test_size, num_iterations=1)
+            
+            # Return the total time
+            return builtin_sort_time + bubble_sort_time
             
         return self.run_test(
             sort_operations,
