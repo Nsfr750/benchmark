@@ -680,107 +680,75 @@ class BenchmarkVisualizer(QWidget):
                 # Animate progress bar
                 width = int((avg_score / max_score) * 200) if max_score > 0 else 0
                 QTimer.singleShot(100, lambda w=width, b=group['progress_bar']: 
-            
-    # Get the most recent result
-    latest_result = max(results, key=lambda r: r.timestamp)
-        
-    # Update overall score
-    if hasattr(latest_result, 'results'):
-        # Calculate an overall score (simple average for now)
-        scores = [r.score for r in latest_result.results if hasattr(r, 'score') and r.score > 0]
-        if scores:
-            overall_score = sum(scores) / len(scores)
-            self.score_label.setText(f"{overall_score:.1f}")
-        
-    # Update category scores if category_groups exists
-    if hasattr(self, 'category_groups'):
-        for category in self.category_groups:
-            category_tests = [r for r in latest_result.results 
-                            if hasattr(r, 'metadata') and r.metadata.get('test_type') == category]
-                
-            if not category_tests:
-                continue
-                    
-            # Calculate average score for this category
-            scores = [t.score for t in category_tests if hasattr(t, 'score') and t.score > 0]
-            if not scores:
-                continue
-                    
-            avg_score = sum(scores) / len(scores)
-            max_score = max(scores) * 1.2  # Add some headroom
-                
-            # Update UI
-            group = self.category_groups[category]
-            unit = category_tests[0].unit if hasattr(category_tests[0], 'unit') else ''
-            group['score_label'].setText(f"{avg_score:.1f} {unit}")
-                
-            # Animate progress bar
-            width = int((avg_score / max_score) * 200) if max_score > 0 else 0
-            QTimer.singleShot(100, lambda w=width, b=group['progress_bar']: 
-                            b.setFixedWidth(min(w, 200)))
+                                b.setFixedWidth(min(w, 200)))
 
-def update_benchmark_data(self):
-    """Update all visualizations with the latest benchmark data."""
-    history = get_benchmark_history()
-    if not history:
-        self._show_no_data_message()
-        return
+    def update_summary(self, results):
+        """Update the summary tab with the latest results."""
+        if not results:
+            return
             
-    # Filter results based on time range
-    filtered_history = self._filter_results(history)
-        
-    if not filtered_history:
-        self._show_no_data_message()
-        return
+        # Get the most recent result
+        latest_result = max(results, key=lambda r: r.timestamp)
             
-    # Update summary with filtered results
-    self.update_summary(filtered_history)
-        
-    # Update performance chart with latest result from filtered set
-    self.update_performance_chart()
-        
-    # Update history tab if needed
-    if hasattr(self, 'update_history_chart'):
-        self.update_history_chart()
+        # Update overall score
+        if hasattr(latest_result, 'results'):
+            # Calculate an overall score (simple average for now)
+            scores = [r.score for r in latest_result.results if hasattr(r, 'score') and r.score > 0]
+            if scores:
+                overall_score = sum(scores) / len(scores)
+                self.score_label.setText(f"{overall_score:.1f}")
+            
+        # Update category scores if category_groups exists
+        if hasattr(self, 'category_groups'):
+            for category in self.category_groups:
+                category_tests = [r for r in latest_result.results 
+                                if hasattr(r, 'metadata') and r.metadata.get('test_type') == category]
+                    
+                if not category_tests:
+                    continue
+                        
+                # Calculate average score for this category
+                scores = [t.score for t in category_tests if hasattr(t, 'score') and t.score > 0]
+                if not scores:
+                    continue
+                        
+                avg_score = sum(scores) / len(scores)
+                max_score = max(scores) * 1.2  # Add some headroom
+                    
+                # Update UI
+                group = self.category_groups[category]
+                unit = category_tests[0].unit if hasattr(category_tests[0], 'unit') else ''
+                group['score_label'].setText(f"{avg_score:.1f} {unit}")
+                    
+                # Animate progress bar
+                width = int((avg_score / max_score) * 200) if max_score > 0 else 0
+                QTimer.singleShot(100, lambda w=width, b=group['progress_bar']: 
+                                b.setFixedWidth(min(w, 200)))
 
-def apply_theme(self, theme='light'):
-    """Apply a color theme to the visualizer."""
-    self.current_theme = theme
-    if theme == 'dark':
-        self.setStyleSheet("""
-            QWidget {
-                background-color: #2b2b2b;
-                color: #e0e0e0;
-            }
-            QGroupBox {
-                border: 1px solid #444;
-                border-radius: 5px;
-                margin-top: 10px;
-                padding-top: 15px;
-            }
-            QGroupBox::title {
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 5px;
-            }
-        """)
-    else:
-        self.setStyleSheet("""
-            QGroupBox {
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                margin-top: 10px;
-                padding-top: 15px;
-            }
-            QGroupBox::title {
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 5px;
-            }
-        """)
-def update_data(self):
-    """Update the visualization with the latest data."""
-    self.update_chart()
+    def update_benchmark_data(self):
+        """Update all visualizations with the latest benchmark data."""
+        history = get_benchmark_history()
+        if not history:
+            self._show_no_data_message()
+            return
+                
+        # Filter results based on time range
+        filtered_history = self._filter_results(history)
+            
+        if not filtered_history:
+            self._show_no_data_message()
+            return
+                
+        # Update summary with filtered results
+        self.update_summary(filtered_history)
+            
+        # Update performance chart with latest result from filtered set
+        self.update_performance_chart()
+            
+        # Update history tab if needed
+        if hasattr(self, 'update_history_chart'):
+            self.update_history_chart()
+
     def apply_theme(self, theme='light'):
         """Apply a color theme to the visualizer."""
         self.current_theme = theme
@@ -816,6 +784,7 @@ def update_data(self):
                     padding: 0 5px;
                 }
             """)
+
     def update_data(self):
         """Update the visualization with the latest data."""
-        self.update_chart()
+        self.update_benchmark_data()
