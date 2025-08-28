@@ -23,6 +23,10 @@ from script.version import __version__, APP_NAME, APP_DESCRIPTION
 import script.about as about
 from script.menu import create_menu_bar
 from script.lang_mgr import get_language_manager, get_text
+from script.theme_manager import get_theme_manager
+from script.test_menu import TestMenu
+from script.visualization import BenchmarkVisualizer
+from script.benchmark_history import get_benchmark_history
 
 # Log application startup
 log.info(f"Starting {APP_NAME} v{__version__}")
@@ -386,276 +390,76 @@ class PystoneBenchmark:
         pass
 
 class PystoneApp(QMainWindow):
-    def show_about(self):
-        """Show the about dialog using the about module."""
-        about.show_about(self)
-    
-    def benchmark_completed(self, benchtime, stones):
-        """Handle the completion of a benchmark run."""
-        try:
-            log.info(f"Benchmark completed in {benchtime:.2f} seconds ({stones:.2f} pystones/second)")
-            # Update status bar with completion message
-            self.status_label.setText(self.lang_manager.get_text('status.completed', 'Benchmark completed') + 
-                                   f' - {stones:.2f} pystones/second')
-            
-            # Store the result
-            self.results.append({
-                'run': self.current_run,
-                'time': benchtime,
-                'stones': stones
-            })
-            
-            # Update the results display
-            self.update_results_display()
-            
-            # Prepare for the next run or finish
-            self.current_run += 1
-            if self.current_run <= self.total_runs:
-                # Start the next run
-                self.start_benchmark()
-            else:
-                # All runs completed
-                self.status_bar.showMessage("Benchmark completed")
-                self.start_button.setEnabled(True)
-                self.stop_button.setEnabled(False)
-                
-                # Calculate and display statistics if we did multiple runs
-                if len(self.results) > 1:
-                    times = [r['time'] for r in self.results]
-                    stones = [r['stones'] for r in self.results]
-                    
-                    avg_time = sum(times) / len(times)
-                    min_time = min(times)
-                    max_time = max(times)
-                    
-                    avg_stones = sum(stones) / len(stones)
-                    min_stones = min(stones)
-                    max_stones = max(stones)
-                    
-                    stats = (
-                        f"\n--- Statistics (over {len(self.results)} runs) ---\n"
-                        f"Average time: {avg_time:.2f}s (min: {min_time:.2f}s, max: {max_time:.2f}s)\n"
-                        f"Average performance: {avg_stones:.2f} pystones/sec (min: {min_stones:.2f}, max: {max_stones:.2f})"
-                    )
-                    
-                    self.results_text.append(stats)
-                    log.info(f"Benchmark statistics:{stats}")
-            
-        except Exception as e:
-            log.error(f"Error in benchmark_completed: {e}", exc_info=True)
-            self.status_bar.showMessage("Error processing benchmark results")
-    
-    def update_results_display(self):
-        """Update the results display with the latest benchmark results."""
-        try:
-            if not hasattr(self, 'results_text') or not self.results:
-                return
-                
-            # Clear previous results
-            self.results_text.clear()
-            
-            # Add column headers
-            self.results_text.append("Run #\tTime (s)\tPystones/sec")
-            self.results_text.append("-" * 50)
-            
-            # Add each result
-            for result in self.results:
-                self.results_text.append(
-                    f"{result['run']:4d}\t"
-                    f"{result['time']:8.2f}\t"
-                    f"{result['stones']:10.2f}"
-                )
-                
-            # Scroll to the bottom to show the latest results
-            self.results_text.verticalScrollBar().setValue(
-                self.results_text.verticalScrollBar().maximum()
-            )
-            
-        except Exception as e:
-            log.error(f"Error updating results display: {e}", exc_info=True)
-        
     def __init__(self):
         super().__init__()
-        log.info("Initializing PystoneApp")
-        
-        # Set application icon
-        icon_path = os.path.join(os.path.dirname(__file__), 'assets', 'logo.png')
-        if os.path.exists(icon_path):
-            self.setWindowIcon(QIcon(icon_path))
-            log.debug(f"Application icon set from {icon_path}")
-        else:
-            log.warning(f"Icon file not found at {icon_path}")
-        
-        # Initialize language manager
-        self.lang_manager = get_language_manager()
-        
-        # Initialize benchmark state
-        self.current_run = 0
-        self.total_runs = 1
-        self.results = []
-        self.benchmark = PystoneBenchmark()
-        self.worker = None
-        
-        # Create a single thread pool for the application
-        self.thread_pool = QThreadPool()
-        self.thread_pool.setMaxThreadCount(1)  # Ensure only one benchmark runs at a time
-        
-        # Initialize UI
         self.setup_ui()
         self.retranslate_ui()
+        self.setup_connections()
+        self.load_settings()
         
-        # Connect signals
-        self.signals = BenchmarkSignals()
-        self.signals.progress_updated.connect(self.update_progress)
-        self.signals.finished.connect(self.benchmark_completed)
-        self.signals.error.connect(self.benchmark_error)
-        self.signals.stopped.connect(self.benchmark_stopped)
+        # Initialize history dialog
+        self.history_dialog = None
         
-        log.info("PystoneApp initialization complete")
-
-    def benchmark_error(self, error_msg):
-        """Handle errors that occur during benchmark execution."""
-        try:
-            log.error(f"Benchmark error: {error_msg}")
-            error_text = self.lang_manager.get_text('error.benchmark_failed', 'Benchmark failed: ') + str(error_msg)
-            QMessageBox.critical(self, self.lang_manager.get_text('error.title', 'Error'), error_text)
-            # Update status bar with error
-            self.status_label.setText(self.lang_manager.get_text('status.error', 'Error') + ': ' + str(error_msg))
-            if hasattr(self, 'status_bar'):
-                self.status_bar.showMessage(f"Error: {error_msg}")
+        # Apply theme
+        theme_manager = get_theme_manager(self)
+        if theme_manager:
+            theme_manager.apply_theme()
             
-            # Re-enable UI elements
-            if hasattr(self, 'start_btn'):
-                self.start_btn.setEnabled(True)
-            if hasattr(self, 'stop_btn'):
-                self.stop_btn.setEnabled(False)
-                
-            # Show error message to user
-            QMessageBox.critical(self, "Benchmark Error", 
-                              f"An error occurred during benchmark execution:\n\n{error_msg}")
+    def show_visualization(self):
+        """Show the visualization window."""
+        if not hasattr(self, 'visualization_window') or not self.visualization_window:
+            self.visualization_window = BenchmarkVisualizer()
+            self.visualization_window.setWindowTitle(f"{APP_NAME} - {get_text('visualization')}")
             
-        except Exception as e:
-            log.error(f"Error in benchmark_error handler: {str(e)}", exc_info=True)
-            
-    def start_benchmark(self):
-        """Start the benchmark with the current settings."""
-        try:
-            # Get benchmark parameters
-            loops = self.iter_spin.value()
-            self.total_runs = self.runs_spin.value()
-            
-            # Reset state
-            self.current_run = 0
-            self.results = []
-            self.results_table.setRowCount(0)  # Clear previous results
-            
-            # Update UI
-            self.start_button.setEnabled(False)
-            self.stop_button.setEnabled(True)
-            self.overall_progress.setValue(0)
-            self.run_progress.setValue(0)
-            
-            # Start the first benchmark run
-            self.run_next_benchmark(loops)
-            
-            log.info(f"Started benchmark with {self.total_runs} runs of {loops} iterations each")
-            
-        except Exception as e:
-            log.error(f"Error starting benchmark: {e}", exc_info=True)
-            QMessageBox.critical(
-                self,
-                "Error",
-                f"Failed to start benchmark:\n{str(e)}"
-            )
-            self.start_button.setEnabled(True)
-            self.stop_button.setEnabled(False)
+            # Connect theme changes
+            theme_manager = get_theme_manager()
+            if theme_manager:
+                theme_manager.theme_changed.connect(self.visualization_window.apply_theme)
         
-        # Initialize language manager
-        self.lang_manager = get_language_manager()
+        # Update data before showing
+        self.visualization_window.update_benchmark_data()
+        self.visualization_window.show()
+        self.visualization_window.raise_()
+        self.visualization_window.activateWindow()
+    
+    def closeEvent(self, event):
+        """Handle window close event."""
+        # Save window state
+        settings = QSettings()
+        settings.setValue("window/geometry", self.saveGeometry())
+        settings.setValue("window/state", self.saveState())
         
-        # Set up the UI with the default language
-        self.setup_ui()
-        self.retranslate_ui()
+        # Clean up resources
+        if hasattr(self, 'benchmark'):
+            self.benchmark.running = False
         
-        # Initialize benchmark
-        self.benchmark = PystoneBenchmark()
-        self.worker = None
-        self.thread_pool = QThreadPool()
+        # Close visualization window if open
+        if hasattr(self, 'visualization_window') and self.visualization_window:
+            self.visualization_window.close()
         
-        # Benchmark state
-        self.current_run = 0
-        self.total_runs = 1
-        self.results = []
-        
-        # Connect signals
-        self.signals = BenchmarkSignals()
-        self.signals.progress_updated.connect(self.update_progress)
-        self.signals.finished.connect(self.benchmark_completed)
-        self.signals.error.connect(self.benchmark_error)
-        self.signals.stopped.connect(self.benchmark_stopped)
-        log.info("PystoneApp initialization complete")
-        
-    def retranslate_ui(self):
-        """Update all UI elements with current language."""
-        self.setWindowTitle(f"{get_text('app.title')} {__version__}")
-        self.setWindowIcon(QIcon.fromTheme("utilities-system-monitor"))
-        self.resize(600, 450)
-        
-        # Update UI elements with translations
-        if hasattr(self, 'start_button'):
-            self.start_button.setText(get_text('app.start_benchmark'))
-        if hasattr(self, 'stop_button'):
-            self.stop_button.setText(get_text('app.stop_benchmark'))
-        if hasattr(self, 'iterations_label'):
-            self.iterations_label.setText(get_text('app.iterations'))
-        if hasattr(self, 'results_label'):
-            self.results_label.setText(get_text('app.benchmark_results'))
-        if hasattr(self, 'status_label'):
-            self.status_label.setText(get_text('app.status_ready'))
-            
-    def change_language(self, lang_code):
-        """Change the application language.
-        
-        Args:
-            lang_code: Language code (e.g., 'en', 'it')
-        """
-        if self.lang_manager.load_language(lang_code):
-            # Remove existing menu bar
-            if hasattr(self, 'menuBar'):
-                self.menuBar().setParent(None)
-            
-            # Recreate menu bar with new language
-            self.menuBar = create_menu_bar(self)
-            self.setMenuBar(self.menuBar)
-            
-            # Update UI with new translations
-            self.retranslate_ui()
-            log.info(f"Language changed to {lang_code}")
+        event.accept()
         
     def setup_ui(self):
-        """Set up the main window UI components."""
-        log.debug("Setting up UI components")
+        # Main window setup
+        self.setWindowTitle("Benchmark")
+        self.setGeometry(100, 100, 800, 600)
         
-        # Create status bar
-        self.statusBar = QStatusBar()
-        self.setStatusBar(self.statusBar)
+        # Create menu bar
+        self.create_menu()
         
-        # Add version label to status bar
-        self.version_label = QLabel(f"v{__version__}")
-        self.statusBar.addPermanentWidget(self.version_label)
+        # Create main content area
+        self.tab_widget = QTabWidget()
+        self.setCentralWidget(self.tab_widget)
         
-        # Add status label to status bar
-        self.status_label = QLabel(self.lang_manager.get_text('status.ready', 'Ready'))
-        self.statusBar.addWidget(self.status_label, 1)  # Stretch factor of 1 to take available space
+        # Add benchmark tab
+        self.benchmark_tab = QWidget()
+        self.setup_benchmark_tab()
+        self.tab_widget.addTab(self.benchmark_tab, self.lang.get("tabs.benchmark", "Benchmark"))
         
-        # Create main widget and layout
-        main_widget = QWidget()
-        self.setCentralWidget(main_widget)
-        layout = QVBoxLayout(main_widget)
-        
-        # Create and add the menu bar using the menu module
-        menubar = create_menu_bar(self)
-        self.setMenuBar(menubar)
+        # Add visualization tab
+        from visualization import BenchmarkVisualizer
+        self.visualization_tab = BenchmarkVisualizer()
+        self.tab_widget.addTab(self.visualization_tab, self.lang.get("tabs.visualization", "Visualization"))
         
         # Create a container widget for the main content
         content_widget = QWidget()
@@ -681,18 +485,16 @@ class PystoneApp(QMainWindow):
         content_layout.addSpacing(20)
         
         # Create settings group
-        settings_group = QGroupBox("Benchmark Settings")
-        settings_layout = QVBoxLayout()
+        settings_group = QWidget()
+        settings_layout = QFormLayout()
         
         # Add iterations control
-        iter_layout = QHBoxLayout()
         iter_label = QLabel("Iterations per run:")
         self.iter_spin = QSpinBox()
         self.iter_spin.setRange(1000, 1000000)
         self.iter_spin.setValue(LOOPS)
         self.iter_spin.setSingleStep(1000)
-        iter_layout.addWidget(iter_label)
-        iter_layout.addWidget(self.iter_spin)
+        settings_layout.addRow(iter_label, self.iter_spin)
         
         # Add number of runs control
         runs_label = QLabel("Number of runs:")
@@ -700,16 +502,13 @@ class PystoneApp(QMainWindow):
         self.runs_spin.setRange(1, 100)
         self.runs_spin.setValue(1)
         self.runs_spin.setSingleStep(1)
-        iter_layout.addWidget(runs_label)
-        iter_layout.addWidget(self.runs_spin)
-        iter_layout.addStretch()
-        settings_layout.addLayout(iter_layout)
+        settings_layout.addRow(runs_label, self.runs_spin)
         
         settings_group.setLayout(settings_layout)
         content_layout.addWidget(settings_group)
         
         # Add progress bars
-        progress_group = QGroupBox("Progress")
+        progress_group = QWidget()
         progress_layout = QVBoxLayout()
         
         # Overall progress
@@ -734,7 +533,7 @@ class PystoneApp(QMainWindow):
         content_layout.addWidget(progress_group)
         
         # Add status and results labels
-        status_group = QGroupBox("Status & Results")
+        status_group = QWidget()
         status_layout = QVBoxLayout()
         
         # Status label
@@ -760,9 +559,13 @@ class PystoneApp(QMainWindow):
         # Add buttons
         button_layout = QHBoxLayout()
         
-        self.start_button = QPushButton("Start Benchmark")
-        self.start_button.clicked.connect(self.start_benchmark)
-        button_layout.addWidget(self.start_button)
+        self.run_button = QPushButton()
+        self.run_button.clicked.connect(self.start_benchmark)
+        button_layout.addWidget(self.run_button)
+        
+        self.visualize_button = QPushButton()
+        self.visualize_button.clicked.connect(self.show_visualization)
+        button_layout.addWidget(self.visualize_button)
         
         self.stop_button = QPushButton("Stop")
         self.stop_button.clicked.connect(self.stop_benchmark)
@@ -771,37 +574,165 @@ class PystoneApp(QMainWindow):
         
         content_layout.addLayout(button_layout)
         
-        # Add results text area
-        self.results_text = QTextEdit()
-        self.results_text.setReadOnly(True)
-        self.results_text.setFont(QFont("Courier"))
-        content_layout.addWidget(self.results_text)
-        
         # Add the content widget to the main layout
         layout.addWidget(content_widget)
         
-    def stop_benchmark(self):
-        """Stop the currently running benchmark."""
-        if hasattr(self, 'worker') and self.worker is not None and hasattr(self.worker, 'is_running') and self.worker.is_running:
-            log.info("Stopping benchmark...")
-            self.worker.is_running = False
-            self.worker.signals.stopped.emit()
-            self.status_bar.showMessage("Benchmark stopped by user")
+    def create_menu(self):
+        # Create menu bar
+        self.menu_bar = create_menu_bar(self)
+        self.setMenuBar(self.menu_bar)
+        
+        # Main widget and layout
+        self.main_widget = QWidget()
+        self.setCentralWidget(self.main_widget)
+        self.main_layout = QVBoxLayout(self.main_widget)
+        
+        # Initialize visualization window
+        self.visualization_window = None
+        
+        # Add Test menu
+        self.test_menu = TestMenu(self)
+        self.menu_bar.addMenu(self.test_menu)
+        
+        # View menu
+        view_menu = self.menu_bar.addMenu("&View")
+        
+        # History action
+        self.history_action = QAction("History", self)
+        self.history_action.triggered.connect(self.show_history)
+        view_menu.addAction(self.history_action)
+        
+        view_menu.addSeparator()
+        
+        # Theme submenu
+        theme_menu = view_menu.addMenu("Theme")
+        
+        # Add theme actions
+        theme_manager = get_theme_manager(self)
+        if theme_manager:
+            for theme in theme_manager.get_themes():
+                action = QAction(theme, self)
+                action.triggered.connect(lambda theme=theme: theme_manager.apply_theme(theme))
+                theme_menu.addAction(action)
+        
+        # Help menu
+        help_menu = self.menu_bar.addMenu("&Help")
+        
+        # About action
+        about_action = QAction("About", self)
+        about_action.triggered.connect(self.show_about)
+        help_menu.addAction(about_action)
+        
+        # Logs action
+        logs_action = QAction("View Logs", self)
+        logs_action.triggered.connect(self.view_logs)
+        help_menu.addAction(logs_action)
+        
+    def retranslate_ui(self):
+        """Update UI text based on current language."""
+        _ = get_text
+        self.setWindowTitle(_("window_title").format(APP_NAME))
+        self.run_button.setText(_("start_benchmark"))
+        self.stop_button.setText(_("stop_benchmark"))
+        self.visualize_button.setText(_("visualize_results"))
+        self.loops_label.setText(_("iterations"))
+        self.results_group.setTitle(_("results"))
+        
+        # Update history action text
+        if hasattr(self, 'history_action'):
+            self.history_action.setText(_("history.title"))
+        
+        # Update UI elements with translations
+        if hasattr(self, 'start_button'):
+            self.start_button.setText(self.lang.get("app.start_benchmark", "Start Benchmark"))
+        if hasattr(self, 'stop_button'):
+            self.stop_button.setText(self.lang.get("app.stop_benchmark", "Stop"))
+        if hasattr(self, 'iterations_label'):
+            self.iterations_label.setText(self.lang.get("app.iterations", "Iterations per run:"))
+        if hasattr(self, 'results_label'):
+            self.results_label.setText(self.lang.get("app.benchmark_results", "Benchmark Results"))
+        if hasattr(self, 'status_label'):
+            self.status_label.setText(self.lang.get("app.status_ready", "Ready"))
+        
+    def setup_connections(self):
+        # Connect signals
+        self.signals = BenchmarkSignals()
+        self.signals.progress_updated.connect(self.update_progress)
+        self.signals.finished.connect(self.benchmark_completed)
+        self.signals.error.connect(self.benchmark_error)
+        self.signals.stopped.connect(self.benchmark_stopped)
+    
+    def load_settings(self):
+        # Load settings from QSettings
+        settings = QSettings("YourCompany", "Benchmark")
+        self.restoreGeometry(settings.value("geometry"))
+        self.restoreState(settings.value("windowState"))
+    
+    def start_benchmark(self):
+        """Start the benchmark with the current settings."""
+        try:
+            # Get benchmark parameters
+            loops = self.iter_spin.value()
+            self.total_runs = self.runs_spin.value()
             
-            # Reset UI
-            self.start_button.setEnabled(True)
+            # Reset state
+            self.current_run = 0
+            self.results = []
+            self.results_table.setRowCount(0)  # Clear previous results
+            
+            # Update UI
+            self.run_button.setEnabled(False)
+            self.stop_button.setEnabled(True)
+            self.overall_progress.setValue(0)
+            self.run_progress.setValue(0)
+            
+            # Start the first benchmark run
+            self.run_next_benchmark(loops)
+            
+            log.info(f"Started benchmark with {self.total_runs} runs of {loops} iterations each")
+            
+        except Exception as e:
+            log.error(f"Error starting benchmark: {e}", exc_info=True)
+            QMessageBox.critical(
+                self,
+                "Error",
+                f"Failed to start benchmark:\n{str(e)}"
+            )
+            self.run_button.setEnabled(True)
             self.stop_button.setEnabled(False)
+        
+    def run_next_benchmark(self, loops):
+        self.current_run += 1
+        self.statusBar().showMessage(f"Running benchmark {self.current_run} of {self.total_runs}...")
+        self.overall_progress.setValue(int((self.current_run - 1) * 100 / self.total_runs))
+        self.run_progress.setValue(0)
+        
+        # Clean up any existing worker
+        if self.worker is not None:
+            try:
+                self.worker.signals.progress_updated.disconnect()
+                self.worker.signals.finished.disconnect()
+                self.worker.signals.error.disconnect()
+            except:
+                pass
             
-            # Reset progress
-            if hasattr(self, 'progress_bar'):
-                self.progress_bar.setValue(0)
+        # Create a worker thread for the benchmark
+        log.debug(f"Creating benchmark worker for run {self.current_run}")
+        self.worker = BenchmarkWorker(loops, PystoneBenchmark())
+        self.worker.signals.progress_updated.connect(self.update_progress)
+        self.worker.signals.finished.connect(self.benchmark_completed)
+        self.worker.signals.error.connect(self.benchmark_error)
+        
+        # Start the worker in the thread pool
+        log.debug("Starting worker in thread pool")
+        QThreadPool.globalInstance().start(self.worker)
     
     def update_progress(self, current, total):
         if total > 0:
             progress = int((current / total) * 100)
             self.run_progress.setValue(progress)
             # Update status bar with progress
-            self.status_label.setText(self.lang_manager.get_text('status.running', 'Running') + f'... {progress}%')
+            self.status_label.setText(self.lang.get("app.status_running", "Running") + f'... {progress}%')
             
             # Calculate overall progress across all runs
             if self.total_runs > 1:
@@ -820,58 +751,168 @@ class PystoneApp(QMainWindow):
             
             QApplication.processEvents()
     
-    def run_next_benchmark(self, loops):
+    def benchmark_completed(self, result):
+        """Handle benchmark completion."""
+        self.update_ui_after_benchmark()
+        self.statusBar().showMessage(
+            self.lang.get("app.benchmark_completed", "Benchmark completed in {0:.2f} seconds").format(
+                result["time_elapsed"]
+            )
+        )
+        
+        # Save to history
+        self.save_to_history(result)
+        
+        # Update results display
+        self.update_results_display()
+        
+        # Prepare for the next run or finish
         self.current_run += 1
-        self.statusBar().showMessage(f"Running benchmark {self.current_run} of {self.total_runs}...")
-        self.overall_progress.setValue(int((self.current_run - 1) * 100 / self.total_runs))
-        self.run_progress.setValue(0)
-        
-        # Clean up any existing worker
-        if self.worker is not None:
-            try:
-                self.worker.signals.progress_updated.disconnect()
-                self.worker.signals.finished.disconnect()
-                self.worker.signals.error.disconnect()
-            except:
-                pass
+        if self.current_run <= self.total_runs:
+            # Start the next run
+            self.run_next_benchmark(result["loops"])
+        else:
+            # All runs completed
+            self.status_bar.showMessage("Benchmark completed")
+            self.run_button.setEnabled(True)
+            self.stop_button.setEnabled(False)
             
-        # Create a worker thread for the benchmark
-        log.debug(f"Creating benchmark worker for run {self.current_run}")
-        self.worker = BenchmarkWorker(loops, self.benchmark)
-        self.worker.signals.progress_updated.connect(self.update_progress)
-        self.worker.signals.finished.connect(self.benchmark_completed)
-        self.worker.signals.error.connect(self.benchmark_error)
-        
-        # Start the worker in the thread pool
-        log.debug("Starting worker in thread pool")
-        self.thread_pool.start(self.worker)
-    
-    def run_benchmark(self, loops):
-        # Clean up any existing worker
-        if self.worker is not None:
-            try:
-                self.worker.signals.progress_updated.disconnect()
-                self.worker.signals.finished.disconnect()
-                self.worker.signals.error.disconnect()
-            except:
-                pass
+            # Calculate and display statistics if we did multiple runs
+            if len(self.results) > 1:
+                times = [r["time_elapsed"] for r in self.results]
+                pystones = [r["pystones"] for r in self.results]
                 
-        # Create a worker thread for the benchmark
-        log.debug(f"Creating benchmark worker for run {self.current_run}")
-        self.worker = BenchmarkWorker(loops, self.benchmark)
-        self.worker.signals.progress_updated.connect(self.update_progress)
-        self.worker.signals.finished.connect(self.benchmark_completed)
-        self.worker.signals.error.connect(self.benchmark_error)
+                avg_time = sum(times) / len(times)
+                min_time = min(times)
+                max_time = max(times)
+                
+                avg_pystones = sum(pystones) / len(pystones)
+                min_pystones = min(pystones)
+                max_pystones = max(pystones)
+                
+                stats = (
+                    f"\n--- Statistics (over {len(self.results)} runs) ---\n"
+                    f"Average time: {avg_time:.2f}s (min: {min_time:.2f}s, max: {max_time:.2f}s)\n"
+                    f"Average performance: {avg_pystones:.2f} pystones/sec (min: {min_pystones:.2f}, max: {max_pystones:.2f})"
+                )
+                
+                self.results_text.append(stats)
+                log.info(f"Benchmark statistics:{stats}")
+    
+    def update_results_display(self):
+        """Update the results display with the latest benchmark results."""
+        try:
+            if not hasattr(self, 'results_text') or not self.results:
+                return
+                
+            # Clear previous results
+            self.results_text.clear()
+            
+            # Add column headers
+            self.results_text.append("Run #\tTime (s)\tPystones/sec")
+            self.results_text.append("-" * 50)
+            
+            # Add each result
+            for result in self.results:
+                self.results_text.append(
+                    f"{result['run']:4d}\t"
+                    f"{result['time_elapsed']:8.2f}\t"
+                    f"{result['pystones']:10.2f}"
+                )
+                
+            # Scroll to the bottom to show the latest results
+            self.results_text.verticalScrollBar().setValue(
+                self.results_text.verticalScrollBar().maximum()
+            )
+            
+        except Exception as e:
+            log.error(f"Error updating results display: {e}", exc_info=True)
         
-        # Start the worker in the thread pool
-        log.debug("Starting worker in thread pool")
-        self.thread_pool.start(self.worker)
+    def save_to_history(self, result):
+        """Save benchmark result to history."""
+        try:
+            from script.benchmark_history import get_benchmark_history
+            from datetime import datetime
+            import psutil
+            import platform
+            
+            # Get system information
+            cpu_info = {
+                'model': platform.processor(),
+                'cores': psutil.cpu_count(logical=False) or 1,
+                'threads': psutil.cpu_count() or 1
+            }
+            
+            system_info = {
+                'system': {
+                    'system': platform.system(),
+                    'version': platform.version(),
+                    'machine': platform.machine()
+                },
+                'cpu': cpu_info,
+                'memory': {
+                    'total': psutil.virtual_memory().total,
+                    'available': psutil.virtual_memory().available
+                }
+            }
+            
+            # Create benchmark result
+            history = get_benchmark_history()
+            history.add_result(
+                pystones=result["pystones"],
+                time_elapsed=result["time_elapsed"],
+                iterations=result["loops"],
+                system_info=system_info
+            )
+            
+        except Exception as e:
+            logging.error(f"Error saving to history: {e}")
+    
+    def show_history(self):
+        """Show the benchmark history dialog."""
+        if not self.history_dialog:
+            self.history_dialog = HistoryDialog(self)
+            self.history_dialog.result_selected.connect(self.on_history_result_selected)
         
+        self.history_dialog.show()
+        self.history_dialog.raise_()
+        self.history_dialog.activateWindow()
+    
+    def on_history_result_selected(self, result):
+        """Handle selection of a result from history."""
+        # Update UI with the selected result
+        self.pystones_label.setText(f"{result.pystones:,.2f}")
+        self.time_label.setText(f"{result.time_elapsed:.2f}")
+        self.iterations_label.setText(f"{result.iterations:,}")
+        
+        # Show a message
+        self.statusBar().showMessage(
+            self.lang.get("history.result_loaded", "Loaded result from {}").format(
+                datetime.fromtimestamp(result.timestamp).strftime("%Y-%m-%d %H:%M:%S")
+            )
+        )
+    
+    def stop_benchmark(self):
+        """Stop the currently running benchmark."""
+        if hasattr(self, 'worker') and self.worker is not None and hasattr(self.worker, 'is_running') and self.worker.is_running:
+            log.info("Stopping benchmark...")
+            self.worker.is_running = False
+            self.worker.signals.stopped.emit()
+            self.status_bar.showMessage("Benchmark stopped by user")
+            
+            # Reset UI
+            self.run_button.setEnabled(True)
+            self.stop_button.setEnabled(False)
+            
+            # Reset progress
+            if hasattr(self, 'progress_bar'):
+                self.progress_bar.setValue(0)
+    
     def benchmark_stopped(self):
         try:
             log.info("Benchmark stopped by user")
             # Update status bar when benchmark is stopped
-            self.status_label.setText(self.lang_manager.get_text('status.stopped', 'Benchmark stopped by user'))
+            self.status_label.setText(self.lang.get("app.status_stopped", "Benchmark stopped by user"))
             
             # Update UI state
             if hasattr(self, 'start_btn'):
@@ -895,197 +936,13 @@ class PystoneApp(QMainWindow):
             except:
                 pass
                 
-    def stop_benchmark(self):
-        try:
-            # Signal the benchmark to stop
-            if hasattr(self, 'benchmark') and self.benchmark is not None:
-                self.benchmark.should_stop = True
-                
-            # Stop any running worker
-            if hasattr(self, 'worker') and self.worker is not None:
-                self.worker.stop()
-                self.worker = None
-                
-            # Calculate statistics if we have results
-            if hasattr(self, 'results') and self.results:
-                try:
-                    # Extract pystones and times from results
-                    pystones = [r[1] for r in self.results]  # stones is the second element
-                    times = [r[0] for r in self.results]     # benchtime is the first element
-                    
-                    # Calculate statistics
-                    avg_pystones = sum(pystones) / len(pystones)
-                    min_pystones = min(pystones)
-                    max_pystones = max(pystones)
-                    avg_time = sum(times) / len(times)
-                    
-                    # Create stats text
-                    stats_text = (
-                        f"Completed {len(self.results)} benchmark(s). "
-                        f"Average: {avg_pystones:,.2f} pystones/sec, "
-                        f"Min: {min_pystones:,.2f}, "
-                        f"Max: {max_pystones:,.2f}, "
-                        f"Avg Time: {avg_time:.4f}s"
-                    )
-                    
-                    # Update stats label if it exists
-                    if hasattr(self, 'stats_label'):
-                        self.stats_label.setText(stats_text)
-                    
-                    # Show completion message
-                    try:
-                        from PySide6.QtWidgets import QMessageBox
-                        QMessageBox.information(
-                            self,
-                            "Benchmark Complete",
-                            f"Completed {len(self.results)} benchmark runs.\n\n"
-                            f"Average: {avg_pystones:,.2f} pystones/sec\n"
-                            f"Best: {max_pystones:,.2f} pystones/sec\n"
-                            f"Worst: {min_pystones:,.2f} pystones/sec\n"
-                            f"Average time: {avg_time:.4f} seconds"
-                        )
-                    except Exception as msg_box_error:
-                        log.error(f"Failed to show completion message: {msg_box_error}")
-                    
-                except Exception as stats_error:
-                    log.error(f"Error calculating statistics: {stats_error}", exc_info=True)
-                    if hasattr(self, 'status_bar'):
-                        self.status_bar.showMessage("Benchmark stopped with partial results")
-            else:
-                if hasattr(self, 'status_bar'):
-                    self.status_bar.showMessage("Benchmark stopped - no results yet")
-            
-            # Update UI state
-            if hasattr(self, 'start_btn'):
-                self.start_btn.setEnabled(True)
-            if hasattr(self, 'stop_btn'):
-                self.stop_btn.setEnabled(False)
-                
-        except Exception as e:
-            error_msg = f"Error stopping benchmark: {str(e)}"
-            log.error(error_msg, exc_info=True)
-            
-            # Try to update UI to show error
-            try:
-                if hasattr(self, 'status_bar'):
-                    self.status_bar.showMessage("Error stopping benchmark")
-                
-                from PySide6.QtWidgets import QMessageBox
-                QMessageBox.critical(
-                    self,
-                    "Error",
-                    f"An error occurred while stopping the benchmark.\n\n{str(e)}"
-                )
-            except Exception as ui_error:
-                log.error(f"Failed to update UI with error: {ui_error}")
-                
-            # Ensure UI is in a consistent state
-            try:
-                if hasattr(self, 'start_btn'):
-                    self.start_btn.setEnabled(True)
-                if hasattr(self, 'stop_btn'):
-                    self.stop_btn.setEnabled(False)
-                if hasattr(self, 'progress'):
-                    self.progress.setValue(0)
-                if hasattr(self, 'status_bar'):
-                    self.status_bar.showMessage("Benchmark stopped")
-            except Exception as ui_error:
-                log.error(f"Failed to reset UI state: {ui_error}")
-                self.status_bar.showMessage("Benchmark error")
-                
-            log.debug("UI reset after benchmark error")
-            
-        except Exception as e:
-            # If we can't show the error dialog, at least log it
-            log.critical(f"Critical error in benchmark_error handler: {e}\nOriginal error: {error_msg}", 
-                        exc_info=True)
-    
-    def run_system_info_test(self):
-        """Run system information test and display results."""
-        try:
-            log.info("Running system information test")
-            system_info = get_system_info()
-            os.makedirs('benchmark_results', exist_ok=True)
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            filename = f'benchmark_results/system_info_{timestamp}.json'
-            with open(filename, 'w', encoding='utf-8') as f:
-                json.dump(system_info, f, indent=4, ensure_ascii=False)
-            
-            # Show success message
-            QMessageBox.information(
-                self,
-                self.lang_manager.get_text("test.system_info_title", "System Information"),
-                self.lang_manager.get_text(
-                    "test.system_info_success", 
-                    "System information saved to {filename}"
-                ).format(filename=filename)
-            )
-        except Exception as e:
-            log.error(f"Error in system info test: {str(e)}", exc_info=True)
-            QMessageBox.critical(
-                self,
-                self.lang_manager.get_text("test.error", "Error"),
-                self.lang_manager.get_text(
-                    "test.system_info_error", 
-                    "Failed to get system information: {error}"
-                ).format(error=str(e))
-            )
-    
-    def run_benchmark_test(self):
-        """Run benchmark test and display results."""
-        try:
-            log.info("Running benchmark test")
-            # Use the existing benchmark functionality
-            self.start_benchmark()
-        except Exception as e:
-            log.error(f"Error in benchmark test: {str(e)}", exc_info=True)
-            QMessageBox.critical(
-                self,
-                self.lang_manager.get_text("test.error", "Error"),
-                self.lang_manager.get_text(
-                    "test.benchmark_error", 
-                    "Failed to run benchmark: {error}"
-                ).format(error=str(e))
-            )
-    
-    def view_logs(self):
-        """Show the log viewer dialog."""
-        from script.menu import view_logs
-        view_logs(self, self.lang_manager)
-        
-    def _export_results(self):
-        """Export benchmark results to a file."""
-        if not hasattr(self, 'results') or not self.results:
-            QMessageBox.information(
-                self,
-                self.lang_manager.get_text("export.no_data.title", "No Data"),
-                self.lang_manager.get_text("export.no_data.message", "No benchmark results available to export.")
-            )
-            return
-            
-        try:
-            # Get the latest results
-            latest_result = self.results[-1] if self.results else {}
-            
-            # Create and show export dialog
-            dialog = ExportDialog(self, latest_result)
-            if dialog.exec() == QDialog.Accepted:
-                log.info("Export completed successfully")
-        except Exception as e:
-            log.error(f"Error exporting results: {str(e)}")
-            QMessageBox.critical(
-                self,
-                self.lang_manager.get_text("export.error.title", "Export Error"),
-                self.lang_manager.get_text("export.error.message", "An error occurred while exporting results: {error}").format(error=str(e))
-            )
-        
     def closeEvent(self, event):
         # Clean up the worker thread if running
-        if hasattr(self, 'worker') and self.worker and self.worker.is_running:
+        if hasattr(self, 'worker') and self.worker and self.worker.isRunning():
             reply = QMessageBox.question(
                 self, 
-                self.lang_manager.get_text("messages.confirm_exit", "Confirm Exit"),
-                self.lang_manager.get_text("messages.benchmark_running", "A benchmark is currently running. Are you sure you want to exit?"),
+                self.lang.get("messages.confirm_exit", "Confirm Exit"),
+                self.lang.get("messages.benchmark_running", "A benchmark is currently running. Are you sure you want to exit?"),
                 QMessageBox.Yes | QMessageBox.No,
                 QMessageBox.No
             )
@@ -1111,8 +968,13 @@ class PystoneApp(QMainWindow):
 def main():
     app = QApplication(sys.argv)
     
-    # Set application style
+    # Set application style and theme
     app.setStyle('Fusion')
+    
+    # Initialize and apply theme
+    theme_manager = get_theme_manager(app)
+    if theme_manager:
+        theme_manager.apply_theme()
     
     # Set application information
     app.setApplicationName("Pystone Benchmark")

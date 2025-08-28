@@ -1,4 +1,30 @@
 {
+    "history": {
+        "title": "Cronologia Benchmark",
+        "filter": "Filtra:",
+        "filter_all": "Tutti",
+        "filter_today": "Oggi",
+        "filter_week": "Ultimi 7 giorni",
+        "filter_month": "Ultimi 30 giorni",
+        "filter_custom": "Intervallo personalizzato...",
+        "column_date": "Data/Ora",
+        "column_pystones": "Pietre/s",
+        "column_time": "Tempo (s)",
+        "column_iterations": "Iterazioni",
+        "column_cpu": "CPU",
+        "column_system": "Sistema",
+        "results_count": "Mostrati {count} risultati",
+        "compare": "Confronta Selezionato",
+        "delete": "Elimina Selezionato",
+        "delete_title": "Conferma Eliminazione",
+        "delete_confirm": "Sei sicuro di voler eliminare il risultato del benchmark selezionato?",
+        "delete_success": "Il risultato del benchmark è stato eliminato.",
+        "delete_error": "Impossibile eliminare il risultato del benchmark.",
+        "deleted": "Eliminato",
+        "no_results": "Nessun risultato del benchmark trovato.",
+        "export": "Esporta...",
+        "import": "Importa..."
+    },
     "app": {
         "title": "Benchmark",
         "version": "Versione",
@@ -17,6 +43,10 @@
     "menu": {
         "file": "File",
         "exit": "Esci",
+        "view": "Visualizza",
+        "theme": "Tema",
+        "theme_light": "Chiaro",
+        "theme_dark": "Scuro",
         "language": "Lingua",
         "test.label": "Test",
         "test.system_info": "Informazioni di Sistema",
@@ -35,8 +65,6 @@
         "test.logs_not_found": "File di log non trovato in: {}",
         "test.logs_error": "Impossibile aprire il file di log: {error}",
         "test.error": "Errore",
-        "test.logs_title": "File Log",
-        "test.logs_not_found": "File Log non trovato in: {}",
         "help_contents": "&Contenuti della guida",
         "help_label": "Aiuto",
         "support": "&Supporta lo sviluppo...",
@@ -84,6 +112,52 @@
         "completed": "Benchmark completato",
         "saving": "Salvataggio risultati...",
         "saved": "Risultati salvati"
+    },
+    "test_menu": {
+        "title": "&Test",
+        "system_info": "Informazioni di &Sistema",
+        "benchmark_tests": "&Test di Benchmark",
+        "hardware_monitor": "&Monitor Hardware",
+        "export_results": "&Esporta Risultati...",
+        "import_results": "&Importa Risultati..."
+    },
+    "tabs": {
+        "benchmark": "Benchmark",
+        "visualization": "Visualizzazione"
+    },
+    "visualization": {
+        "line_chart": "Grafico a Linee",
+        "bar_chart": "Grafico a Barre",
+        "scatter_plot": "Grafico a Dispersione",
+        "line_chart_title": "Risultati dei Benchmark nel Tempo",
+        "bar_chart_title": "Risultati dei Benchmark",
+        "scatter_plot_title": "Distribuzione dei Risultati",
+        "chart_type": "Tipo di Grafico:",
+        "y_axis": "Asse Y:",
+        "time_range": "Intervallo Temporale:",
+        "pystones_sec": "Pystones/s",
+        "time_elapsed": "Tempo Impiegato (s)",
+        "iterations": "Iterazioni",
+        "all_time": "Tutti i Dati",
+        "last_week": "Ultimi 7 Giorni",
+        "last_month": "Ultimi 30 Giorni",
+        "date_time": "Data/Ora",
+        "no_data_title": "Nessun Dato Disponibile",
+        "no_data_message": "Nessun risultato del benchmark trovato per i criteri selezionati."
+    },
+    "export": {
+        "no_data_title": "Nessun Dato",
+        "no_data_msg": "Nessun risultato di benchmark disponibile per l'esportazione.",
+        "save_dialog": "Esporta Risultati Benchmark",
+        "success_title": "Esportazione Completata",
+        "success_msg": "Risultati del benchmark esportati con successo.",
+        "error_msg": "Errore durante l'esportazione dei risultati: {0}"
+    },
+    "import": {
+        "open_dialog": "Importa Risultati Benchmark",
+        "complete_title": "Importazione Completata",
+        "complete_msg": "Importati {imported} di {total} risultati di benchmark.",
+        "error_msg": "Errore durante l'importazione dei risultati: {0}"
     },
     "help": {
         "title": "Aiuto",

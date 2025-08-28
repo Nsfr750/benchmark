@@ -1,4 +1,30 @@
 {
+    "history": {
+        "title": "Benchmark History",
+        "filter": "Filter:",
+        "filter_all": "All time",
+        "filter_today": "Today",
+        "filter_week": "Last 7 days",
+        "filter_month": "Last 30 days",
+        "filter_custom": "Custom range...",
+        "column_date": "Date/Time",
+        "column_pystones": "Pystones/s",
+        "column_time": "Time (s)",
+        "column_iterations": "Iterations",
+        "column_cpu": "CPU",
+        "column_system": "System",
+        "results_count": "Showing {count} results",
+        "compare": "Compare Selected",
+        "delete": "Delete Selected",
+        "delete_title": "Confirm Deletion",
+        "delete_confirm": "Are you sure you want to delete the selected benchmark result?",
+        "delete_success": "The benchmark result has been deleted.",
+        "delete_error": "Failed to delete the benchmark result.",
+        "deleted": "Deleted",
+        "no_results": "No benchmark results found.",
+        "export": "Export...",
+        "import": "Import..."
+    },
     "app": {
         "title": "Benchmark",
         "version": "Version",
@@ -17,6 +43,10 @@
     "menu": {
         "file": "File",
         "exit": "Exit",
+        "view": "View",
+        "theme": "Theme",
+        "theme_light": "Light",
+        "theme_dark": "Dark",
         "language": "Language",
         "test.label": "Test",
         "test.system_info": "System Information",
@@ -35,8 +65,6 @@
         "test.logs_not_found": "Log file not found at: {}",
         "test.logs_error": "Failed to open log file: {error}",
         "test.error": "Error",
-        "test.logs_title": "Log File",
-        "test.logs_not_found": "Log file not found at: {}",
         "help_contents": "&Help Contents",
         "help_label": "Help",
         "support": "&Support Development...",
@@ -83,6 +111,52 @@
         "completed": "Benchmark completed",
         "saving": "Saving results...",
         "saved": "Results saved"
+    },
+    "test_menu": {
+        "title": "&Test",
+        "system_info": "System &Information",
+        "benchmark_tests": "&Benchmark Tests",
+        "hardware_monitor": "&Hardware Monitor",
+        "export_results": "&Export Results...",
+        "import_results": "&Import Results..."
+    },
+    "tabs": {
+        "benchmark": "Benchmark",
+        "visualization": "Visualization"
+    },
+    "visualization": {
+        "line_chart": "Line Chart",
+        "bar_chart": "Bar Chart",
+        "scatter_plot": "Scatter Plot",
+        "line_chart_title": "Benchmark Results Over Time",
+        "bar_chart_title": "Benchmark Results",
+        "scatter_plot_title": "Benchmark Results Distribution",
+        "chart_type": "Chart Type:",
+        "y_axis": "Y-Axis:",
+        "time_range": "Time Range:",
+        "pystones_sec": "Pystones/s",
+        "time_elapsed": "Time Elapsed (s)",
+        "iterations": "Iterations",
+        "all_time": "All Time",
+        "last_week": "Last 7 Days",
+        "last_month": "Last 30 Days",
+        "date_time": "Date/Time",
+        "no_data_title": "No Data Available",
+        "no_data_message": "No benchmark results found for the selected criteria."
+    },
+    "export": {
+        "no_data_title": "No Data",
+        "no_data_msg": "No benchmark results available to export.",
+        "save_dialog": "Export Benchmark Results",
+        "success_title": "Export Successful",
+        "success_msg": "Benchmark results exported successfully.",
+        "error_msg": "Failed to export results: {0}"
+    },
+    "import": {
+        "open_dialog": "Import Benchmark Results",
+        "complete_title": "Import Complete",
+        "complete_msg": "Imported {imported} of {total} benchmark results.",
+        "error_msg": "Failed to import results: {0}"
     },
     "help": {
         "title": "Help",

@@ -81,12 +81,14 @@ class BenchmarkSuite:
     def test_cpu_math(self, iterations: int = 5) -> BenchmarkResult:
         """Test CPU performance with mathematical operations."""
         def math_operations(n=1000000):
-            for _ in range(n):
+            result = 0
+            for i in range(n):
                 x = 3.14159 * 2.71828
                 x = math.sqrt(x)
                 x = math.sin(x) + math.cos(x)
                 x = math.exp(math.log(x + 1))
-            return x
+                result += x  # Ensure the operation isn't optimized away
+            return result
             
         return self.run_test(
             math_operations,
@@ -95,118 +97,387 @@ class BenchmarkSuite:
             metadata={"test_type": "cpu", "operations": "arithmetic, sqrt, trig, exp, log"}
         )
     
+    def test_cpu_integer_math(self, iterations: int = 5) -> BenchmarkResult:
+        """Test CPU performance with integer arithmetic."""
+        def int_math_operations(n=2000000):
+            result = 0
+            for i in range(1, n + 1):
+                result = (result + i) * i % 1000000007
+                result ^= (result << 13) & 0xFFFFFFFF
+                result ^= (result >> 17) & 0xFFFFFFFF
+                result ^= (result << 5) & 0xFFFFFFFF
+            return result
+            
+        return self.run_test(
+            int_math_operations,
+            name="CPU Integer Math",
+            iterations=iterations,
+            metadata={"test_type": "cpu", "operations": "integer arithmetic, bitwise"}
+        )
+    
     def test_cpu_sorting(self, iterations: int = 3) -> BenchmarkResult:
-        """Test sorting performance."""
+        """Test sorting performance with different algorithms."""
         data = self._test_data['large_list'].copy()
         
         def sort_operations():
-            return sorted(data * 10)
+            # Test multiple sorting algorithms
+            data1 = data.copy()
+            data2 = data.copy()
+            data3 = data.copy()
+            
+            # Built-in Timsort
+            sorted1 = sorted(data1 * 10)
+            # Bubble sort (inefficient on purpose)
+            n = len(data2)
+            for i in range(n):
+                for j in range(0, n-i-1):
+                    if data2[j] > data2[j+1]:
+                        data2[j], data2[j+1] = data2[j+1], data2[j]
+            # Quick sort
+            def quicksort(arr):
+                if len(arr) <= 1:
+                    return arr
+                pivot = arr[len(arr) // 2]
+                left = [x for x in arr if x < pivot]
+                middle = [x for x in arr if x == pivot]
+                right = [x for x in arr if x > pivot]
+                return quicksort(left) + middle + quicksort(right)
+                
+            sorted3 = quicksort(data3 * 10)
+            return sum(sorted1) + sum(data2) + sum(sorted3)
             
         return self.run_test(
             sort_operations,
-            name="CPU Sorting",
+            name="CPU Sorting Algorithms",
             iterations=iterations,
-            metadata={"test_type": "cpu", "data_size": len(data) * 10}
+            metadata={
+                "test_type": "cpu", 
+                "data_size": len(data) * 10,
+                "algorithms": ["Timsort", "Bubble Sort", "Quicksort"]
+            }
+        )
+        
+    def test_cpu_compression(self, iterations: int = 3) -> BenchmarkResult:
+        """Test CPU performance with compression algorithms."""
+        import zlib
+        import bz2
+        
+        data = b'x' * (10 * 1024 * 1024)  # 10MB of data
+        
+        def compression_operations():
+            # Test different compression levels
+            zlib_compressed = zlib.compress(data, level=9)
+            bz2_compressed = bz2.compress(data, compresslevel=9)
+            
+            # Decompress to ensure data integrity
+            zlib_decompressed = zlib.decompress(zlib_compressed)
+            bz2_decompressed = bz2.decompress(bz2_compressed)
+            
+            return len(zlib_compressed) + len(bz2_compressed)
+            
+        return self.run_test(
+            compression_operations,
+            name="CPU Compression",
+            iterations=iterations,
+            metadata={
+                "test_type": "cpu", 
+                "data_size": len(data),
+                "algorithms": ["zlib", "bz2"]
+            }
         )
     
     # Memory Tests
     def test_memory_allocation(self, iterations: int = 5) -> BenchmarkResult:
-        """Test memory allocation and access speed."""
+        """Test memory allocation and access patterns."""
         size = 1000000
         
         def memory_operations():
-            # Allocate and process a large list
-            data = [i * 2 for i in range(size)]
-            # Process the data
-            return sum(x % 17 for x in data)
+            # Test different allocation patterns
+            
+            # Sequential access
+            seq_data = [i * 2 for i in range(size)]
+            seq_sum = sum(x % 17 for x in seq_data)
+            
+            # Random access
+            random_indices = random.sample(range(size), min(100000, size))
+            random_sum = sum(seq_data[i] for i in random_indices)
+            
+            # Memory copy
+            copy_data = seq_data.copy()
+            copy_sum = sum(x for x in copy_data[::100])
+            
+            # Memory-intensive operations
+            matrix = [[(i * j) % 100 for j in range(100)] for i in range(1000)]
+            matrix_sum = sum(sum(row) for row in matrix)
+            
+            return seq_sum + random_sum + copy_sum + matrix_sum
             
         return self.run_test(
             memory_operations,
-            name="Memory Allocation & Access",
+            name="Memory Access Patterns",
             iterations=iterations,
-            metadata={"test_type": "memory", "data_size": size}
+            metadata={
+                "test_type": "memory", 
+                "data_size": size,
+                "patterns": ["sequential", "random", "copy", "matrix"]
+            }
+        )
+        
+    def test_memory_bandwidth(self, iterations: int = 3) -> BenchmarkResult:
+        """Test memory bandwidth with different access patterns."""
+        size = 10 * 1024 * 1024  # 10MB
+        block_size = 1024  # 1KB blocks
+        
+        def memory_bandwidth_operations():
+            # Create a large array
+            data = bytearray(size)
+            total = 0
+            
+            # Sequential write
+            for i in range(0, size, block_size):
+                data[i:i+block_size] = bytes([i % 256] * block_size)
+            
+            # Random read
+            for _ in range(size // block_size):
+                idx = random.randint(0, size - block_size)
+                total += sum(data[idx:idx+block_size])
+            
+            # Sequential read
+            total += sum(byte for byte in data[::block_size])
+            
+            return total
+            
+        return self.run_test(
+            memory_bandwidth_operations,
+            name="Memory Bandwidth",
+            iterations=iterations,
+            metadata={
+                "test_type": "memory",
+                "data_size": size,
+                "block_size": block_size,
+                "operations": ["sequential_write", "random_read", "sequential_read"]
+            }
+        )
+        
+    def test_cache_effects(self, iterations: int = 3) -> BenchmarkResult:
+        """Test CPU cache effects with different access patterns."""
+        # Test different array sizes that will fit in different cache levels
+        sizes = [
+            (1024, "L1"),      # ~1KB - L1 cache
+            (32768, "L2"),     # ~32KB - L2 cache
+            (1048576, "L3"),   # ~1MB - L3 cache
+            (16777216, "RAM")  # ~16MB - Main memory
+        ]
+        
+        def cache_test_operations():
+            total = 0
+            for size, level in sizes:
+                # Create array and access it sequentially (cache-friendly)
+                arr = [i % 256 for i in range(size)]
+                seq_sum = sum(arr)
+                
+                # Access with a large stride (cache-unfriendly)
+                stride = max(1, size // 16)
+                stride_sum = sum(arr[i] for i in range(0, size, stride))
+                
+                total += seq_sum + stride_sum
+                
+            return total
+            
+        return self.run_test(
+            cache_test_operations,
+            name="CPU Cache Effects",
+            iterations=iterations,
+            metadata={
+                "test_type": "cpu_memory",
+                "cache_levels": [size[1] for size in sizes],
+                "access_patterns": ["sequential", "strided"]
+            }
         )
     
     # Disk I/O Tests
     def test_disk_io(self, test_file: str = "benchmark_temp_file.bin", iterations: int = 3) -> BenchmarkResult:
-        """Test disk I/O performance."""
+        """Test disk I/O performance with different access patterns."""
         import os
         import tempfile
+        import shutil
         
-        # Use a temporary file that will be automatically cleaned up
-        with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
-            test_file = tmp_file.name
+        # Create a temporary directory for our tests
+        temp_dir = tempfile.mkdtemp()
         
-        data_size = 10 * 1024 * 1024  # 10MB
-        data = os.urandom(data_size)
-        
-        def write_test():
-            with open(test_file, 'wb') as f:
-                f.write(data)
-            
-        def read_test():
-            with open(test_file, 'rb') as f:
-                return len(f.read())
-        
-        # Run write test
-        write_result = self.run_test(
-            write_test,
-            name="Disk Write Speed",
-            iterations=iterations,
-            metadata={"test_type": "disk", "operation": "write", "data_size": data_size}
-        )
-        
-        # Run read test
-        read_result = self.run_test(
-            read_test,
-            name="Disk Read Speed",
-            iterations=iterations,
-            metadata={"test_type": "disk", "operation": "read", "data_size": data_size}
-        )
-        
-        # Clean up
         try:
-            os.remove(test_file)
-        except:
-            pass
-        
-        # Calculate combined score (MB/s)
-        total_time = statistics.mean(write_result.times) + statistics.mean(read_result.times)
-        combined_score = (2 * data_size / (1024 * 1024)) / total_time if total_time > 0 else 0
-        
-        combined_result = BenchmarkResult(
-            name="Disk I/O Speed",
-            score=combined_score,
-            unit="MB/s",
-            iterations=iterations,
-            times=write_result.times + read_result.times,
-            metadata={
+            # Test different file sizes and access patterns
+            test_cases = [
+                (1 * 1024 * 1024, "1MB"),       # 1MB file
+                (10 * 1024 * 1024, "10MB"),     # 10MB file
+                (100 * 1024 * 1024, "100MB"),   # 100MB file
+            ]
+            
+            results = []
+            
+            for file_size, size_label in test_cases:
+                test_file = os.path.join(temp_dir, f"benchmark_{size_label}.bin")
+                data = os.urandom(file_size)
+                
+                # Sequential write test
+                def sequential_write():
+                    with open(test_file, 'wb') as f:
+                        f.write(data)
+                
+                # Random write test
+                def random_write():
+                    with open(test_file, 'wb+') as f:
+                        # Write in random order
+                        block_size = 4096  # Typical filesystem block size
+                        blocks = [(i, data[i*block_size:(i+1)*block_size]) 
+                                for i in range((len(data) + block_size - 1) // block_size)]
+                        random.shuffle(blocks)
+                        
+                        for i, block in blocks:
+                            f.seek(i * block_size)
+                            f.write(block)
+                
+                # Sequential read test
+                def sequential_read():
+                    with open(test_file, 'rb') as f:
+                        return len(f.read())
+                
+                # Random read test
+                def random_read():
+                    with open(test_file, 'rb') as f:
+                        file_size = os.path.getsize(test_file)
+                        block_size = 4096
+                        total = 0
+                        for _ in range(file_size // block_size):
+                            pos = random.randint(0, (file_size - block_size) // block_size) * block_size
+                            f.seek(pos)
+                            total += len(f.read(block_size))
+                        return total
+                
+                # Run tests for this file size
+                for test_name, test_func in [
+                    (f"Sequential Write ({size_label})", sequential_write),
+                    (f"Random Write ({size_label})", random_write),
+                    (f"Sequential Read ({size_label})", sequential_read),
+                    (f"Random Read ({size_label})", random_read)
+                ]:
+                    result = self.run_test(
+                        test_func,
+                        name=test_name,
+                        iterations=iterations,
+                        metadata={
+                            "test_type": "disk",
+                            "operation": test_name.split()[0].lower(),
+                            "file_size": file_size,
+                            "size_label": size_label
+                        }
+                    )
+                    results.append(result)
+                
+                # Clean up test file
+                try:
+                    os.remove(test_file)
+                except:
+                    pass
+            
+            # Calculate overall disk score
+            total_time = sum(statistics.mean(r.times) for r in results if r.times)
+            total_data = sum(r.metadata.get('file_size', 0) for r in results if 'file_size' in r.metadata)
+            
+            if total_time > 0 and total_data > 0:
+                overall_speed = (total_data / (1024 * 1024)) / total_time  # MB/s
+            else:
+                overall_speed = 0
+            
+            # Create a combined result
+            combined_metadata = {
                 "test_type": "disk",
-                "data_size": data_size,
-                "write_speed": f"{data_size / (1024 * 1024 * statistics.mean(write_result.times)):.2f} MB/s" if write_result.times else "N/A",
-                "read_speed": f"{data_size / (1024 * 1024 * statistics.mean(read_result.times)):.2f} MB/s" if read_result.times else "N/A"
+                "operations": [r.name for r in results],
+                "total_data_processed_mb": total_data / (1024 * 1024),
+                "average_speed_mb_s": overall_speed
             }
-        )
-        
-        self.results.append(combined_result)
-        return combined_result
+            
+            # Add individual speeds to metadata
+            for r in results:
+                if r.times and 'file_size' in r.metadata:
+                    file_size_mb = r.metadata['file_size'] / (1024 * 1024)
+                    avg_time = statistics.mean(r.times)
+                    if avg_time > 0:
+                        combined_metadata[f"{r.name.lower().replace(' ', '_')}_speed"] = \
+                            f"{file_size_mb / avg_time:.2f} MB/s"
+            
+            combined_result = BenchmarkResult(
+                name="Disk I/O Performance",
+                score=overall_speed,
+                unit="MB/s",
+                iterations=iterations,
+                times=[t for r in results for t in r.times],
+                metadata=combined_metadata
+            )
+            
+            self.results.append(combined_result)
+            return combined_result
+            
+        finally:
+            # Clean up temporary directory
+            try:
+                shutil.rmtree(temp_dir, ignore_errors=True)
+            except:
+                pass
     
     # Run all available tests
-    def run_all_tests(self) -> List[Dict[str, Any]]:
-        """Run all available benchmark tests."""
+    def run_all_tests(self, test_categories: list = None) -> List[Dict[str, Any]]:
+        """
+        Run all available benchmark tests or specific categories.
+        
+        Args:
+            test_categories: List of categories to test. If None, run all tests.
+                            Possible values: 'cpu', 'memory', 'disk'
+        """
         self.results = []  # Reset previous results
         
+        # If no specific categories provided, run all tests
+        if test_categories is None:
+            test_categories = ['cpu', 'memory', 'disk']
+        
         # Run CPU tests
-        self.test_cpu_math()
-        self.test_cpu_sorting()
+        if 'cpu' in test_categories:
+            self.test_cpu_math()
+            self.test_cpu_integer_math()
+            self.test_cpu_sorting()
+            self.test_cpu_compression()
         
         # Run memory tests
-        self.test_memory_allocation()
+        if 'memory' in test_categories:
+            self.test_memory_allocation()
+            self.test_memory_bandwidth()
+            self.test_cache_effects()
         
-        # Run disk I/O test (last as it's the slowest)
-        self.test_disk_io()
+        # Run disk I/O tests
+        if 'disk' in test_categories:
+            self.test_disk_io()
         
-        return [result.to_dict() for result in self.results]
+        # Convert results to dictionaries for serialization
+        return [r.to_dict() for r in self.results]
+    
+    def get_test_categories(self) -> Dict[str, list]:
+        """Get available test categories and their tests."""
+        return {
+            'cpu': [
+                'test_cpu_math',
+                'test_cpu_integer_math',
+                'test_cpu_sorting',
+                'test_cpu_compression'
+            ],
+            'memory': [
+                'test_memory_allocation',
+                'test_memory_bandwidth',
+                'test_cache_effects'
+            ],
+            'disk': [
+                'test_disk_io'
+            ]
+        }
     
     def export_results(self, file_path: str, format: str = 'json') -> bool:
         """Export benchmark results to a file.

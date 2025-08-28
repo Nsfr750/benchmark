@@ -1,14 +1,25 @@
 # To-Do List
 
 ## High Priority
-- [ ] Add dark/light theme support
-- [ ] Implement benchmark history
+- [x] Add dark/light theme support
+- [x] Implement benchmark history
+- [x] Create a Test menu with various tests
+- [ ] Add more visualization options for results
+- [ ] Implement benchmark presets
+- [ ] Add more configuration options
+- [x] Add export/import functionality for benchmark history
+- [ ] Implement benchmark result comparison view
+- [ ] Add more benchmark tests
+- [x] Implement result export functionality (CSV/JSON)
+- [ ] Improve error handling for edge cases
 - [ ] Add GitHub Actions for CI/CD
+- [ ] Add hardware monitoring during tests
+- [ ] Create a user guide
+- [ ] Add more configuration options
 
 ## Medium Priority
 - [ ] Add more visualization options for results
 - [ ] Implement benchmark presets
-- [ ] Create a user guide
 - [ ] Add more configuration options
 
 ## Low Priority
