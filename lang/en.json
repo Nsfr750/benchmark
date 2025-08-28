@@ -18,6 +18,8 @@
         "file": "File",
         "exit": "Exit",
         "language": "Language",
+        "help_contents": "&Help Contents",
+        "support": "&Support Development...",
         "tools": "Tools",
         "help": "Help",
         "about": "About",
@@ -111,6 +113,22 @@
         "download": "&Download",
         "checking": "Checking for updates...",
         "update_available": "Version {0} is available!"
+    },
+    "sponsor": {
+        "title": "Support Development",
+        "thank_you": "Thank you for using {}!",
+        "message": "If you find this software useful, please consider supporting its development.",
+        "monero_address": "Monero (XMR):",
+        "copy_address": "Copy Address",
+        "other_ways_to_contribute": "Other ways to contribute:",
+        "copied": "Copied!"
+    },
+    "support": {
+        "title": "Support Development",
+        "thank_you": "Thank you for using {}!",
+        "message": "If you find this software useful, please consider supporting its development.",
+        "ways_to_contribute": "Ways to contribute:",
+        "monero_address": "Monero (XMR):"
     },
     "about": {
         "title": "About",

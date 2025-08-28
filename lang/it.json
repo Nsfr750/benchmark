@@ -18,6 +18,8 @@
         "file": "File",
         "exit": "Esci",
         "language": "Lingua",
+        "help_contents": "&Contenuti della guida",
+        "support": "&Supporta lo sviluppo...",
         "tools": "Strumenti",
         "help": "Aiuto",
         "about": "Informazioni su {0}",
@@ -116,6 +118,22 @@
         "download": "&Scarica",
         "checking": "Controllo aggiornamenti in corso...",
         "update_available": "È disponibile la versione {0}!"
+    },
+    "sponsor": {
+        "title": "Supporta lo Sviluppo",
+        "thank_you": "Grazie per utilizzare {}!",
+        "message": "Se trovi utile questo software, per favore considera di supportarne lo sviluppo.",
+        "monero_address": "Monero (XMR):",
+        "copy_address": "Copia Indirizzo",
+        "other_ways_to_contribute": "Altri modi per contribuire:",
+        "copied": "Copiato!"
+    },
+    "support": {
+        "title": "Supporta lo sviluppo",
+        "thank_you": "Grazie per utilizzare {}!",
+        "message": "Se trovi utile questo software, per favore considera di supportarne lo sviluppo.",
+        "ways_to_contribute": "Modi per contribuire:",
+        "monero_address": "Monero (XMR):"
     },
     "about": {
         "title": "Informazioni",

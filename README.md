@@ -101,14 +101,18 @@ benchmark/
 │   ├── menu.py      # Menu bar functionality
 │   ├── pystone.py   # CLI Pystone benchmark
 │   ├── settings.py  # Settings dialog
+│   ├── sponsor.py   # Sponsor dialog
 │   ├── updates.py   # Update system
 │   ├── version.py   # Version system
 │   └── view_log.py  # Log viewer
 ├── .gitignore       # Git ignore file
+├── CHANGELOG.md     # Changelog file
+├── CONTRIBUTING.md  # Contributing file
 ├── LICENSE          # License file
 ├── main.py          # Main application
 ├── README.md        # This file
-└── requirements.txt # Requirements file
+├── requirements.txt # Requirements file
+└── TO_DO.md         # To do list
 ```
 
 ## 🤝 Contributing

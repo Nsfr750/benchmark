@@ -37,6 +37,14 @@ def get_help_module():
         help = importlib.import_module('script.help')
     return help
 
+# Lazy import sponsor to avoid circular imports
+sponsor = None
+def get_sponsor_module():
+    global sponsor
+    if sponsor is None:
+        sponsor = importlib.import_module('script.sponsor')
+    return sponsor
+
 def create_menu_bar(parent):
     """Create and return the application menu bar."""
     menubar = QMenuBar(parent)
@@ -54,7 +62,7 @@ def create_menu_bar(parent):
     
     # Exit action with icon
     exit_action = QAction(
-        style.standardIcon(QStyle.SP_DialogCloseButton),  # Icon
+        style.standardIcon(QStyle.SP_DialogCancelButton),  # Icon
         "E&xit",  # Text
         parent
     )
@@ -136,6 +144,31 @@ def create_menu_bar(parent):
     help_text = lang.get_text('menu.help', default='&Help')
     help_menu = menubar.addMenu(help_text)
     
+    # Help Contents action
+    help_action = QAction(
+        style.standardIcon(QStyle.SP_MessageBoxQuestion),  # Icon
+        lang.get_text('menu.help_contents', '&Help Contents'),  # Text
+        parent
+    )
+    help_action.triggered.connect(lambda: get_help_module().show_help(parent))
+    help_action.setShortcut(QKeySequence.HelpContents)
+    help_menu.addAction(help_action)
+    
+    # Add separator
+    help_menu.addSeparator()
+    
+    # Support Development action with QR code
+    support_action = QAction(
+        style.standardIcon(QStyle.SP_DialogHelpButton),  # Using help icon as placeholder
+        lang.get_text('menu.support', '&Support Development...'),
+        parent
+    )
+    support_action.triggered.connect(lambda: get_sponsor_module().show_sponsor_dialog(parent))
+    help_menu.addAction(support_action)
+    
+    # Add separator
+    help_menu.addSeparator()
+    
     # About action with icon
     about_text = lang.get_text('menu.about', default=f'&About {APP_NAME} {__version__}')
     about_action = QAction(
@@ -145,20 +178,5 @@ def create_menu_bar(parent):
     )
     about_action.triggered.connect(parent.show_about)
     help_menu.addAction(about_action)
-    
-    # Add a separator
-    help_menu.addSeparator()
-    
-    # Documentation action with icon
-    docs_text = lang.get_text('menu.documentation', default='&Documentation')
-    docs_action = QAction(
-        style.standardIcon(QStyle.SP_DialogHelpButton),  # Icon
-        docs_text,  # Text
-        parent
-    )
-    docs_action.setShortcut(QKeySequence.HelpContents)
-    # Use lazy import for help module
-    docs_action.triggered.connect(lambda: get_help_module().show_help(parent))
-    help_menu.addAction(docs_action)
     
     return menubar
