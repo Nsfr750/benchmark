@@ -1,11 +1,11 @@
 {
     "timestamp": "2025-08-28T20:15:19.717776",
     "cpu": {
-        "brand": "AMD Ryzen 7 3700X 64-Core Processor",
+        "brand": "AMD Ryzen Threadripper 7980X 64-Core Processor",
         "cores": 64,
         "logical_cores": 128,
-        "hz_actual": "3.6000 GHz",
-        "hz_advertised": "3.6000 GHz",
+        "hz_actual": "3.2000 GHz",
+        "hz_advertised": "3.2000 GHz",
         "architecture": "AMD64",
         "bits": 64
     },
