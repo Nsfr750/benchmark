@@ -12,6 +12,9 @@ benchmark/
 │   ├── config.json             # Configuration file
 │   └── updates.json            # Update cache file
 ├── docs/                       # Documentation
+│   ├── images/                 # Documentation images
+│   ├── pdf/                    # Documentation PDF
+│   └── USER_GUIDE.md           # User Guide
 ├── lang/                       # Language files
 │   ├── en.json                 # English language file
 │   └── it.json                 # Italian language file
