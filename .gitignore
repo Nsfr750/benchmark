@@ -209,3 +209,4 @@ py-build.py
 fix_cache.py
 version.txt
 assets/version-info.txt
+build_nuitka.py
