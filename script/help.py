@@ -1,5 +1,5 @@
 """
-Help and documentation functionality for the Pystone Benchmark application.
+Help and documentation functionality for the Benchmark application.
 """
 import webbrowser
 import logging
@@ -24,7 +24,7 @@ def show_help(parent=None):
                     parent = None
                     
                 super().__init__(parent)
-                app_name = APP_NAME if 'APP_NAME' in globals() else 'Pystone Benchmark'
+                app_name = APP_NAME if 'APP_NAME' in globals() else 'PyBench'
                 self.setWindowTitle(f"{get_language_manager().get_text('help.title', default=f'{app_name} Help')}")
                 self.setMinimumSize(600, 500)
                 
@@ -121,10 +121,10 @@ def show_help(parent=None):
             '''.format(get_text('help.title', '{0} Help'.format(APP_NAME))))
             
             # Getting Started section
-            app_name = APP_NAME if 'APP_NAME' in globals() else 'Pystone Benchmark'
+            app_name = APP_NAME if 'APP_NAME' in globals() else 'PyBench'
             welcome_msg = get_text(
                 'help.welcome',
-                f'Welcome to {app_name}! This application allows you to benchmark your system\'s performance using the Pystone benchmark.'
+                f'Welcome to {app_name}! This application allows you to benchmark your system\'s performance using the benchmark.'
             )
             html_parts.append('''
         <h2>{0}</h2>

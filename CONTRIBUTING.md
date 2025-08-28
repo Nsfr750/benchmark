@@ -1,6 +1,6 @@
-# Contributing to Pystone Benchmark
+# Contributing to Benchmark
 
-First off, thank you for considering contributing to Pystone Benchmark! It's people like you that make open-source software a great community.
+First off, thank you for considering contributing to Benchmark! It's people like you that make open-source software a great community.
 
 ## Code of Conduct
 

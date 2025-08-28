@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Pystone Benchmark with PySide6 GUI
+Benchmark with PySide6 GUI
 """
 import sys
 import os

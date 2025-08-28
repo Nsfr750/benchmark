@@ -1,5 +1,5 @@
 """
-Settings management for the Pystone Benchmark application.
+Settings management for the Benchmark application.
 """
 import os
 import json

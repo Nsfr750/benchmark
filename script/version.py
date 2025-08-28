@@ -1,5 +1,5 @@
 """
-Version information for the Pystone Benchmark application.
+Version information for the Benchmark application.
 """
 
 __version__ = "1.0.0"
@@ -9,8 +9,8 @@ __license__ = "GPLv3"
 __copyright__ = f"© 2025 {__author__} - All rights reserved"
 
 # Application information
-APP_NAME = "Pystone Benchmark"
-APP_DESCRIPTION = "A Python implementation of the Pystone benchmark with a modern GUI"
+APP_NAME = "Benchmark"
+APP_DESCRIPTION = "A Python implementation of the benchmark with a modern GUI"
 APP_URL = "https://github.com/Nsfr750/benchmark"
 
 # Social and support links

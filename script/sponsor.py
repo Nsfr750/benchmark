@@ -56,7 +56,7 @@ class SponsorDialog(QDialog):
         layout = QVBoxLayout(self)
         
         # Title
-        title = QLabel(self.tr("sponsor.title", "Support Pystone Benchmark"))
+        title = QLabel(self.tr("sponsor.title", "Support Benchmark"))
         title.setStyleSheet("font-size: 18px; font-weight: bold; margin-bottom: 20px;")
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(title)

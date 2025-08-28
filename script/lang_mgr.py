@@ -1,5 +1,5 @@
 """
-Language Manager for Pystone Benchmark
+Language Manager for Benchmark
 Handles loading and managing translations from JSON files.
 """
 import json

@@ -1,5 +1,5 @@
 """
-Update checker for Pystone Benchmark.
+Update checker for Benchmark.
 """
 import json
 import logging
@@ -216,7 +216,7 @@ def check_for_updates(parent, force=False):
         title = lang.get_text("updates.no_updates_title", "No Updates")
         message = lang.get_text(
             "updates.no_updates_message",
-            "You're using the latest version of Pystone Benchmark."
+            "You're using the latest version of Benchmark."
         )
         QMessageBox.information(parent, title, message)
     

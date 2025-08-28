@@ -1,5 +1,5 @@
 """
-About dialog and related functionality for the Pystone Benchmark application.
+About dialog and related functionality for the Benchmark application.
 """
 import os
 from PySide6.QtWidgets import QMessageBox
