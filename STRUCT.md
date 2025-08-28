@@ -46,6 +46,7 @@ benchmark/
 │   ├── test_benchmark.py               # Test benchmark
 │   ├── test_hardware_monitor.py        # Test hardware monitor
 │   ├── test_monitor_manual.py          # Test monitor manual
+│   ├── test_monitor.py                 # Test monitor
 │   └── TEST_README.md                  # Test README
 ├── .gitignore                          # Git ignore file
 ├── CHANGELOG.md                        # Changelog file
