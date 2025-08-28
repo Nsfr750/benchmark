@@ -207,3 +207,4 @@ marimo/_lsp/
 __marimo__/
 py-build.py
 fix_cache.py
+version.txt
