@@ -1,5 +1,6 @@
 # 📂 Project Structure
 
+```
 benchmark/
 ├── .github/                            # GitHub Actions
 │   ├── workflows/                      # GitHub Actions workflows
@@ -56,3 +57,4 @@ benchmark/
 ├── README.md                           # This file
 ├── requirements.txt                    # Requirements file
 └── TO_DO.md                            # To do list
+```
