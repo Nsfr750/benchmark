@@ -3,17 +3,22 @@
 Benchmark with PySide6 GUI
 """
 import sys
+# Standard library imports
 import os
+import sys
 import traceback
 import webbrowser
 from time import perf_counter as clock
-from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
-                             QPushButton, QLabel, QProgressBar, QSpinBox, QTextEdit,
-                             QMessageBox, QMenuBar, QMenu, QStatusBar, QSizePolicy, QGroupBox,
-                             QTableWidget, QTableWidgetItem, QHeaderView, QDialog, QDialogButtonBox)
-from PySide6.QtGui import QPixmap
-from PySide6.QtCore import Qt, QTimer, Signal, QObject, QThread, QRunnable, QThreadPool
-from PySide6.QtGui import QAction, QIcon, QTextCursor, QFont
+
+# Qt imports
+from PySide6.QtCore import Qt, QSettings, Signal, QObject, QThreadPool, QTimer, QRunnable
+from PySide6.QtGui import QAction, QIcon, QPixmap, QTextCursor, QFont
+from PySide6.QtWidgets import (
+    QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QHBoxLayout,
+    QLabel, QPushButton, QProgressBar, QSpinBox, QTableWidget, QTableWidgetItem,
+    QHeaderView, QMessageBox, QDialog, QDialogButtonBox, QMenuBar, 
+    QMenu, QFormLayout, QGroupBox, QTextEdit, QStatusBar, QSizePolicy
+)
 
 # Setup logger before other local imports
 from script import logger
@@ -393,13 +398,15 @@ class PystoneBenchmark:
 class PystoneApp(QMainWindow):
     def __init__(self):
         super().__init__()
+        # Initialize history dialog before setting up UI
+        self.history_dialog = None
+        
+        # Setup UI (which includes retranslate_ui)
         self.setup_ui()
-        self.retranslate_ui()
+        
+        # Setup connections and load settings
         self.setup_connections()
         self.load_settings()
-        
-        # Initialize history dialog
-        self.history_dialog = None
         
         # Apply theme
         theme_manager = get_theme_manager(self)
@@ -452,7 +459,7 @@ class PystoneApp(QMainWindow):
         layout.addWidget(desc_label)
         
         # Copyright
-        copyright_label = QLabel(" 2023 Nsfr750. All rights reserved.")
+        copyright_label = QLabel("© 2025 Nsfr750. All rights reserved.")
         copyright_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(copyright_label)
         
@@ -462,6 +469,32 @@ class PystoneApp(QMainWindow):
         layout.addWidget(button_box)
         
         about_dialog.exec_()
+        
+    def view_logs(self):
+        """Open the application log file in the default text editor."""
+        log_file = os.path.join('logs', 'benchmark.log')
+        
+        if not os.path.exists(log_file):
+            QMessageBox.warning(
+                self,
+                "Log File Not Found",
+                f"Log file not found at: {os.path.abspath(log_file)}"
+            )
+            return
+            
+        try:
+            if sys.platform == 'win32':
+                os.startfile(log_file)
+            elif sys.platform == 'darwin':
+                subprocess.run(['open', log_file], check=True)
+            else:  # Linux and other Unix-like
+                subprocess.run(['xdg-open', log_file], check=True)
+        except Exception as e:
+            QMessageBox.critical(
+                self,
+                "Error Opening Logs",
+                f"Failed to open log file: {str(e)}"
+            )
     
     def closeEvent(self, event):
         """Handle window close event."""
@@ -480,6 +513,90 @@ class PystoneApp(QMainWindow):
         
         event.accept()
         
+    def setup_benchmark_tab(self):
+        """Set up the benchmark tab UI elements."""
+        layout = QVBoxLayout(self.benchmark_tab)
+        
+        # Title and description
+        title_label = QLabel(APP_NAME)
+        title_label.setAlignment(Qt.AlignCenter)
+        title_font = title_label.font()
+        title_font.setPointSize(16)
+        title_font.setBold(True)
+        title_label.setFont(title_font)
+        
+        desc_label = QLabel(APP_DESCRIPTION)
+        desc_label.setAlignment(Qt.AlignCenter)
+        desc_label.setWordWrap(True)
+        
+        # Settings group
+        settings_group = QGroupBox("Settings")
+        settings_layout = QFormLayout()
+        
+        # Iterations control
+        self.iter_spin = QSpinBox()
+        self.iter_spin.setRange(1000, 1000000)
+        self.iter_spin.setValue(LOOPS)
+        settings_layout.addRow("Iterations:", self.iter_spin)
+        
+        # Number of runs control
+        self.runs_spin = QSpinBox()
+        self.runs_spin.setRange(1, 100)
+        self.runs_spin.setValue(1)
+        settings_layout.addRow("Number of runs:", self.runs_spin)
+        settings_group.setLayout(settings_layout)
+        
+        # Progress bars
+        progress_group = QGroupBox("Progress")
+        progress_layout = QVBoxLayout()
+        
+        self.overall_progress = QProgressBar()
+        self.overall_progress.setRange(0, 100)
+        progress_layout.addWidget(QLabel("Overall Progress:"))
+        progress_layout.addWidget(self.overall_progress)
+        
+        self.run_progress = QProgressBar()
+        self.run_progress.setRange(0, 100)
+        progress_layout.addWidget(QLabel("Current Run:"))
+        progress_layout.addWidget(self.run_progress)
+        progress_group.setLayout(progress_layout)
+        
+        # Results table
+        self.results_table = QTableWidget()
+        self.results_table.setColumnCount(3)
+        self.results_table.setHorizontalHeaderLabels(["Run #", "Pystones/sec", "Time (s)"])
+        self.results_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        
+        # Status label
+        self.status_label = QLabel("Ready")
+        
+        # Buttons
+        button_layout = QHBoxLayout()
+        
+        self.run_button = QPushButton("Start Benchmark")
+        self.run_button.clicked.connect(self.start_benchmark)
+        
+        self.stop_button = QPushButton("Stop")
+        self.stop_button.clicked.connect(self.stop_benchmark)
+        self.stop_button.setEnabled(False)
+        
+        self.visualize_button = QPushButton("Visualize Results")
+        self.visualize_button.clicked.connect(self.show_visualization)
+        
+        button_layout.addWidget(self.run_button)
+        button_layout.addWidget(self.stop_button)
+        button_layout.addWidget(self.visualize_button)
+        
+        # Add all widgets to main layout
+        layout.addWidget(title_label)
+        layout.addWidget(desc_label)
+        layout.addWidget(settings_group)
+        layout.addWidget(progress_group)
+        layout.addWidget(QLabel("Results:"))
+        layout.addWidget(self.results_table)
+        layout.addWidget(self.status_label)
+        layout.addLayout(button_layout)
+    
     def setup_ui(self):
         # Main window setup
         self.setWindowTitle("Benchmark")
@@ -501,6 +618,9 @@ class PystoneApp(QMainWindow):
         from visualization import BenchmarkVisualizer
         self.visualization_tab = BenchmarkVisualizer()
         self.tab_widget.addTab(self.visualization_tab, self.lang.get("tabs.visualization", "Visualization"))
+        
+        # Translate UI after all elements are created
+        self.retranslate_ui()
         
         # Create a container widget for the main content
         content_widget = QWidget()
@@ -659,42 +779,29 @@ class PystoneApp(QMainWindow):
         # Help menu
         help_menu = self.menu_bar.addMenu("&Help")
         
-        # About action
-        about_action = QAction("About", self)
-        about_action.triggered.connect(self.show_about)
-        help_menu.addAction(about_action)
-        
-        # Logs action
-        logs_action = QAction("View Logs", self)
-        logs_action.triggered.connect(self.view_logs)
-        help_menu.addAction(logs_action)
-        
     def retranslate_ui(self):
         """Update UI text based on current language."""
-        _ = get_text
-        self.setWindowTitle(_("window_title").format(APP_NAME))
-        self.run_button.setText(_("start_benchmark"))
-        self.stop_button.setText(_("stop_benchmark"))
-        self.visualize_button.setText(_("visualize_results"))
-        self.loops_label.setText(_("iterations"))
-        self.results_group.setTitle(_("results"))
-        
-        # Update history action text
+        if hasattr(self, 'run_button'):
+            self.run_button.setText(_("start_benchmark"))
+        if hasattr(self, 'stop_button'):
+            self.stop_button.setText(_("stop_benchmark"))
+        if hasattr(self, 'visualize_button'):
+            self.visualize_button.setText(_("visualize_results"))
+        if hasattr(self, 'loops_label'):
+            self.loops_label.setText(_("iterations"))
+        if hasattr(self, 'results_group'):
+            self.results_group.setTitle(_("results"))
         if hasattr(self, 'history_action'):
             self.history_action.setText(_("history.title"))
-        
-        # Update UI elements with translations
         if hasattr(self, 'start_button'):
             self.start_button.setText(self.lang.get("app.start_benchmark", "Start Benchmark"))
-        if hasattr(self, 'stop_button'):
-            self.stop_button.setText(self.lang.get("app.stop_benchmark", "Stop"))
         if hasattr(self, 'iterations_label'):
             self.iterations_label.setText(self.lang.get("app.iterations", "Iterations per run:"))
         if hasattr(self, 'results_label'):
             self.results_label.setText(self.lang.get("app.benchmark_results", "Benchmark Results"))
         if hasattr(self, 'status_label'):
             self.status_label.setText(self.lang.get("app.status_ready", "Ready"))
-        
+    
     def setup_connections(self):
         # Connect signals
         self.signals = BenchmarkSignals()
@@ -1018,7 +1125,7 @@ def main():
         theme_manager.apply_theme()
     
     # Set application information
-    app.setApplicationName("Pystone Benchmark")
+    app.setApplicationName("Benchmark")
     app.setApplicationVersion(__version__)
     app.setOrganizationName("Nsfr750")
     

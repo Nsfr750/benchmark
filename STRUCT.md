@@ -52,7 +52,7 @@ benchmark/
 ├── .gitignore                          # Git ignore file
 ├── CHANGELOG.md                        # Changelog file
 ├── CONTRIBUTING.md                     # Contributing file
-├── LICENSE                             # License file
+├── LICENSE                             # GPLv3 License file
 ├── main.py                             # Main application
 ├── README.md                           # This file
 ├── requirements.txt                    # Requirements file

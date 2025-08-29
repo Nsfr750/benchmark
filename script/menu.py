@@ -224,7 +224,7 @@ def create_menu_bar(parent):
         parent
     )
     view_logs_action.setStatusTip(lang.get_text("test.view_logs_tooltip", "View application logs"))
-    view_logs_action.triggered.connect(lambda: view_logs(parent, lang))
+    view_logs_action.triggered.connect(lambda: view_log.view_logs(parent, lang))
     test_menu.addAction(view_logs_action)
     
     # Help menu
