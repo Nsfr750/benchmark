@@ -401,6 +401,9 @@ class PystoneApp(QMainWindow):
         # Initialize history dialog before setting up UI
         self.history_dialog = None
         
+        # Initialize language manager
+        self.lang = get_language_manager()
+        
         # Setup UI (which includes retranslate_ui)
         self.setup_ui()
         
@@ -612,12 +615,12 @@ class PystoneApp(QMainWindow):
         # Add benchmark tab
         self.benchmark_tab = QWidget()
         self.setup_benchmark_tab()
-        self.tab_widget.addTab(self.benchmark_tab, self.lang.get("tabs.benchmark", "Benchmark"))
+        self.tab_widget.addTab(self.benchmark_tab, get_text("tabs.benchmark", "Benchmark"))
         
         # Add visualization tab
-        from visualization import BenchmarkVisualizer
+        from script.visualization import BenchmarkVisualizer
         self.visualization_tab = BenchmarkVisualizer()
-        self.tab_widget.addTab(self.visualization_tab, self.lang.get("tabs.visualization", "Visualization"))
+        self.tab_widget.addTab(self.visualization_tab, get_text("tabs.visualization", "Visualization"))
         
         # Translate UI after all elements are created
         self.retranslate_ui()

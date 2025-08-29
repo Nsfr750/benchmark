@@ -3,6 +3,7 @@ Enhanced visualization module for benchmark results.
 Provides various visualization options for displaying benchmark data.
 """
 from typing import Dict, List, Optional, Tuple, Any
+from .lang_mgr import get_text
 from PySide6.QtCore import Qt, QPoint, Signal, QTimer, QDateTime
 from PySide6.QtGui import QPainter, QPen, QColor, QFont, QAction
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QComboBox, QLabel, 
@@ -176,11 +177,51 @@ class BenchmarkVisualizer(QWidget):
         self.lang = get_language_manager()
         self.current_chart = None
         self.current_theme = 'light'
-        self.setWindowTitle(self.lang.get("visualization.title", "Benchmark Results Visualization"))
+        self.setWindowTitle(get_text("visualization.title", "Benchmark Results Visualization"))
         self.setMinimumSize(800, 600)
         self.setup_ui()
         self.apply_theme()
     
+    def setup_summary_tab(self):
+        """Set up the summary tab with benchmark statistics."""
+        self.summary_tab = QWidget()
+        layout = QVBoxLayout(self.summary_tab)
+        
+        # Create a scroll area for the summary tab
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll_widget = QWidget()
+        scroll_layout = QVBoxLayout(scroll_widget)
+        
+        # Overall score section
+        overall_group = QGroupBox(get_text("visualization.overall_score", "Overall Score"))
+        overall_layout = QVBoxLayout(overall_group)
+        
+        # Score label
+        self.score_label = QLabel("N/A")
+        score_font = self.score_label.font()
+        score_font.setPointSize(24)
+        score_font.setBold(True)
+        self.score_label.setFont(score_font)
+        self.score_label.setAlignment(Qt.AlignCenter)
+        overall_layout.addWidget(self.score_label)
+        
+        # Score description
+        score_desc = QLabel(get_text("visualization.overall_score_desc", "Based on all benchmark results"))
+        score_desc.setAlignment(Qt.AlignCenter)
+        overall_layout.addWidget(score_desc)
+        
+        scroll_layout.addWidget(overall_group)
+        
+        # Add some spacing
+        scroll_layout.addSpacing(20)
+        
+        # Add scroll area to layout
+        scroll.setWidget(scroll_widget)
+        layout.addWidget(scroll)
+        
+        return self.summary_tab
+        
     def setup_ui(self):
         """Set up the UI components."""
         # Main layout
@@ -192,26 +233,27 @@ class BenchmarkVisualizer(QWidget):
         controls_layout = QHBoxLayout()
         
         # Chart type selection
-        chart_type_layout = QHBoxLayout()
-        chart_type_layout.addWidget(QLabel(self.lang.get("visualization.chart_type", "Chart Type:")))
+        chart_type_group = QGroupBox(get_text("visualization.chart_type", "Chart Type"))
+        chart_type_layout = QHBoxLayout(chart_type_group)
+        chart_type_layout.addWidget(QLabel(get_text("visualization.chart_type", "Chart Type:")))
         
         self.chart_type_combo = QComboBox()
-        self.chart_type_combo.addItem(self.lang.get("visualization.chart_type_line", "Line Chart"), "line")
-        self.chart_type_combo.addItem(self.lang.get("visualization.chart_type_bar", "Bar Chart"), "bar")
-        self.chart_type_combo.addItem(self.lang.get("visualization.chart_type_scatter", "Scatter Plot"), "scatter")
+        self.chart_type_combo.addItem(get_text("visualization.chart_type_line", "Line Chart"), "line")
+        self.chart_type_combo.addItem(get_text("visualization.chart_type_bar", "Bar Chart"), "bar")
+        self.chart_type_combo.addItem(get_text("visualization.chart_type_scatter", "Scatter Plot"), "scatter")
         self.chart_type_combo.currentIndexChanged.connect(self._on_chart_type_changed)
         chart_type_layout.addWidget(self.chart_type_combo)
         
         # Time range selection
         time_range_layout = QHBoxLayout()
-        time_range_layout.addWidget(QLabel(self.lang.get("visualization.time_range", "Time Range:")))
+        time_range_layout.addWidget(QLabel(get_text("visualization.time_range", "Time Range:")))
         
         self.time_range_combo = QComboBox()
-        self.time_range_combo.addItem(self.lang.get("visualization.last_hour", "Last Hour"), "1h")
-        self.time_range_combo.addItem(self.lang.get("visualization.today", "Today"), "today")
-        self.time_range_combo.addItem(self.lang.get("visualization.last_7_days", "Last 7 Days"), "7d")
-        self.time_range_combo.addItem(self.lang.get("visualization.last_30_days", "Last 30 Days"), "30d")
-        self.time_range_combo.addItem(self.lang.get("visualization.all_time", "All Time"), "all")
+        self.time_range_combo.addItem(get_text("visualization.last_hour", "Last Hour"), "1h")
+        self.time_range_combo.addItem(get_text("visualization.today", "Today"), "today")
+        self.time_range_combo.addItem(get_text("visualization.last_7_days", "Last 7 Days"), "7d")
+        self.time_range_combo.addItem(get_text("visualization.last_30_days", "Last 30 Days"), "30d")
+        self.time_range_combo.addItem(get_text("visualization.all_time", "All Time"), "all")
         self.time_range_combo.currentIndexChanged.connect(self._on_time_range_changed)
         time_range_layout.addWidget(self.time_range_combo)
         
@@ -230,22 +272,22 @@ class BenchmarkVisualizer(QWidget):
         # Summary tab
         self.summary_tab = QWidget()
         self.setup_summary_tab()
-        self.tab_widget.addTab(self.summary_tab, self.lang.get("visualization.summary", "Summary"))
+        self.tab_widget.addTab(self.summary_tab, get_text("visualization.summary", "Summary"))
         
         # Performance tab
         self.performance_tab = QWidget()
         self.setup_performance_tab()
-        self.tab_widget.addTab(self.performance_tab, self.lang.get("visualization.performance", "Performance"))
+        self.tab_widget.addTab(self.performance_tab, get_text("visualization.performance", "Performance"))
         
         # Comparison tab
         self.comparison_tab = QWidget()
         self.setup_comparison_tab()
-        self.tab_widget.addTab(self.comparison_tab, self.lang.get("visualization.comparison", "Comparison"))
+        self.tab_widget.addTab(self.comparison_tab, get_text("visualization.comparison", "Comparison"))
         
         # History tab
         self.history_tab = QWidget()
         self.setup_history_tab()
-        self.tab_widget.addTab(self.history_tab, self.lang.get("visualization.history", "History"))
+        self.tab_widget.addTab(self.history_tab, get_text("visualization.history", "History"))
         
         # Set default tab
         self.tab_widget.setCurrentIndex(0)
@@ -254,6 +296,55 @@ class BenchmarkVisualizer(QWidget):
         self.selected_runs = []
         self.comparison_series = {}
         
+    def setup_performance_tab(self):
+        """Set up the performance tab with benchmark results visualization."""
+        layout = QVBoxLayout(self.performance_tab)
+        
+        # Create chart view
+        self.chart_view = QChartView()
+        self.chart_view.setRenderHint(QPainter.Antialiasing)
+        
+        # Add chart view to layout
+        layout.addWidget(self.chart_view)
+        
+        # Initialize with empty chart
+        self.chart = QChart()
+        self.chart.setTitle(get_text("visualization.performance_chart_title", "Benchmark Results"))
+        self.chart.legend().setVisible(True)
+        self.chart.legend().setAlignment(Qt.AlignBottom)
+        
+        self.chart_view.setChart(self.chart)
+        
+        # Add some sample data (to be replaced with actual benchmark data)
+        self._add_sample_data()
+    
+    def _add_sample_data(self):
+        """Add sample data to the chart (for testing)."""
+        series = QLineSeries()
+        series.setName("Sample Data")
+        
+        # Add some sample points
+        series.append(0, 0)
+        series.append(1, 5)
+        series.append(2, 3)
+        series.append(3, 7)
+        series.append(4, 6)
+        
+        self.chart.addSeries(series)
+        
+        # Create axes
+        axis_x = QValueAxis()
+        axis_x.setTitleText(get_text("visualization.x_axis", "Run #"))
+        axis_x.setLabelFormat("%d")
+        self.chart.addAxis(axis_x, Qt.AlignBottom)
+        series.attachAxis(axis_x)
+        
+        axis_y = QValueAxis()
+        axis_y.setTitleText(get_text("visualization.y_axis", "Score"))
+        axis_y.setLabelFormat("%.1f")
+        self.chart.addAxis(axis_y, Qt.AlignLeft)
+        series.attachAxis(axis_y)
+    
     def setup_comparison_tab(self):
         """Set up the comparison tab for comparing multiple benchmark runs."""
         layout = QVBoxLayout(self.comparison_tab)
@@ -495,25 +586,15 @@ class BenchmarkVisualizer(QWidget):
         # Update view
         self.comparison_chart_view.update()
     
-    def setup_summary_tab(self):
-        """Set up the summary tab with key metrics."""
-        layout = QVBoxLayout(self.summary_tab)
+        # Create a bar series for each selected run
+        bar_series = QBarSeries()
+        categories = []
         
-        # Add a scroll area for the summary
-        scroll = QScrollArea()
-        scroll.setWidgetResizable(True)
-        scroll_widget = QWidget()
-        scroll_layout = QVBoxLayout(scroll_widget)
-        
-        # Overall score card
-        overall_group = QGroupBox(self.lang.get("visualization.overall_score", "Overall Score"))
-        overall_layout = QHBoxLayout(overall_group)
-        
-        self.score_label = QLabel("-")
-        self.score_label.setAlignment(Qt.AlignCenter)
-        score_font = self.score_label.font()
+        # Set up score label font
+        score_font = self.font()
         score_font.setPointSize(24)
         score_font.setBold(True)
+        self.score_label = QLabel()
         self.score_label.setFont(score_font)
         
         overall_layout.addWidget(self.score_label)
@@ -522,7 +603,7 @@ class BenchmarkVisualizer(QWidget):
         # Category scores
         self.category_groups = {}
         for category in ['cpu', 'memory', 'disk']:
-            group = QGroupBox(self.lang.get(f"visualization.category_{category}", category.capitalize()))
+            group = QGroupBox(get_text(f"visualization.category_{category}", category.capitalize()))
             group_layout = QVBoxLayout(group)
             
             # Score bar
