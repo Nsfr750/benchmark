@@ -1,27 +1,18 @@
 """
-Test menu for the benchmark application.
-Provides access to various test and diagnostic tools.
+Simplified test menu for the benchmark application.
 """
+
 from PySide6.QtWidgets import (
-    QMenu, QAction, QDialog, QVBoxLayout, QTabWidget, QWidget, QTextEdit,
-    QHBoxLayout, QPushButton, QLabel, QFileDialog, QMessageBox, QTableWidget,
-    QTableWidgetItem, QHeaderView, QFormLayout, QGroupBox, QScrollArea
+    QMenu, QDialog, QVBoxLayout, QScrollArea, QFrame,
+    QWidget, QDialogButtonBox, QMessageBox, QFormLayout,
+    QLabel, QLineEdit, QPushButton, QComboBox, QCheckBox,
+    QSpinBox, QDoubleSpinBox, QProgressBar, QTabWidget,
+    QGroupBox, QHBoxLayout, QTextEdit, QFileDialog
 )
+from PySide6.QtGui import QAction, QFont, QTextCursor, QPixmap, QIcon
 from PySide6.QtCore import Qt, QSize, QTimer, Signal, QThread, QObject
-from PySide6.QtGui import QFont, QTextCursor
-import platform
-import psutil
-import json
-import logging
-import sys
-import os
-from datetime import datetime
-
-from script.lang_mgr import get_language_manager
-from script.logging_config import setup_logging
-
-# Set up logging
-log = logging.getLogger(__name__)
+from script.lang_mgr import get_language_manager, get_text
+from script.logger import logger as log
 
 class TestMenu(QMenu):
     """Test menu for the benchmark application."""
@@ -32,6 +23,21 @@ class TestMenu(QMenu):
         self.lang = get_language_manager()
         self.setup_ui()
         self.retranslate_ui()
+    
+    def setup_ui(self):
+        """Set up the test menu UI."""
+        # Add test actions here
+        self.test_action = QAction("Test Action", self)
+        self.test_action.triggered.connect(self.on_test_action)
+        self.addAction(self.test_action)
+    
+    def retranslate_ui(self):
+        """Update UI text based on current language."""
+        self.test_action.setText(self.lang.get("test_action", "Test Action"))
+    
+    def on_test_action(self):
+        """Handle test action trigger."""
+        log.info("Test action triggered")
     
     def setup_ui(self):
         """Set up the test menu UI."""
@@ -65,12 +71,12 @@ class TestMenu(QMenu):
     
     def retranslate_ui(self):
         """Update UI text based on current language."""
-        self.setTitle(self.lang.get("test_menu.title", "&Test"))
-        self.system_info_action.setText(self.lang.get("test_menu.system_info", "System &Information"))
-        self.benchmark_tests_action.setText(self.lang.get("test_menu.benchmark_tests", "&Benchmark Tests"))
-        self.hw_monitor_action.setText(self.lang.get("test_menu.hardware_monitor", "&Hardware Monitor"))
-        self.export_results_action.setText(self.lang.get("test_menu.export_results", "&Export Results..."))
-        self.import_results_action.setText(self.lang.get("test_menu.import_results", "&Import Results..."))
+        self.setTitle(get_text("test_menu.title", "&Test"))
+        self.system_info_action.setText(get_text("test_menu.system_info", "System &Information"))
+        self.benchmark_tests_action.setText(get_text("test_menu.benchmark_tests", "&Benchmark Tests"))
+        self.hw_monitor_action.setText(get_text("test_menu.hardware_monitor", "&Hardware Monitor"))
+        self.export_results_action.setText(get_text("test_menu.export_results", "&Export Results..."))
+        self.import_results_action.setText(get_text("test_menu.import_results", "&Import Results..."))
     
     def show_system_info(self):
         """Show system information dialog."""
@@ -218,7 +224,6 @@ class TestDialog(QDialog):
     def __init__(self, title, parent=None):
         """Initialize the test dialog."""
         super().__init__(parent)
-        self.lang = get_language_manager()
         self.setWindowTitle(title)
         self.setMinimumSize(800, 600)
         

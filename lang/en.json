@@ -48,6 +48,15 @@
         "theme_light": "Light",
         "theme_dark": "Dark",
         "language": "Language",
+        "test": {
+            "label": "Test",
+            "system_info": "System Information",
+            "system_info_tooltip": "View detailed system information",
+            "benchmark": "Run Benchmark",
+            "benchmark_tooltip": "Run benchmark tests",
+            "view_logs": "View Logs",
+            "view_logs_tooltip": "View application logs"
+        },
         "test.label": "Test",
         "test.system_info": "System Information",
         "test.system_info_tooltip": "Run system information tests",

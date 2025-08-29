@@ -12,7 +12,7 @@ from PySide6.QtGui import QKeySequence, QIcon, QAction, QActionGroup
 from PySide6.QtCore import Qt, Signal, QObject
 
 from script.version import APP_NAME, APP_DESCRIPTION, __version__
-from script.lang_mgr import get_language_manager
+from script.lang_mgr import get_language_manager, get_text
 from script.theme_manager import get_theme_manager
 # Import view_log directly since it doesn't cause circular imports
 from script import view_log
@@ -96,10 +96,10 @@ def create_menu_bar(parent):
     file_menu.addAction(exit_action)
     
     # View menu
-    view_menu = menubar.addMenu(lang.get('menu_view', '&View'))
+    view_menu = menubar.addMenu(get_text('menu.view', '&View'))
     
     # Add theme selection submenu
-    theme_menu = view_menu.addMenu(lang.get('menu_theme', '&Theme'))
+    theme_menu = view_menu.addMenu(get_text('menu.theme', '&Theme'))
     
     # Get theme manager
     theme_manager = get_theme_manager(QApplication.instance())
@@ -110,7 +110,7 @@ def create_menu_bar(parent):
     theme_group.setExclusive(True)
     
     # Add light theme action
-    light_action = theme_menu.addAction(lang.get('theme_light', '&Light'))
+    light_action = theme_menu.addAction(get_text('theme_light', '&Light'))
     light_action.setCheckable(True)
     light_action.setChecked(current_theme == 'light')
     light_action.setData('light')
@@ -118,7 +118,7 @@ def create_menu_bar(parent):
     theme_group.addAction(light_action)
     
     # Add dark theme action
-    dark_action = theme_menu.addAction(lang.get('theme_dark', '&Dark'))
+    dark_action = theme_menu.addAction(get_text('theme_dark', '&Dark'))
     dark_action.setCheckable(True)
     dark_action.setChecked(current_theme == 'dark')
     dark_action.setData('dark')
@@ -128,7 +128,7 @@ def create_menu_bar(parent):
     view_menu.addSeparator()
     
     # Language menu
-    language_menu = view_menu.addMenu(lang.get('menu_language', '&Language'))
+    language_menu = view_menu.addMenu(get_text('menu_language', '&Language'))
     
     # Create an action group
     language_group = QActionGroup(parent)

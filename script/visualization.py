@@ -12,7 +12,7 @@ from PySide6.QtCharts import (QChart, QChartView, QLineSeries, QScatterSeries, Q
                              QBarSet, QBarSeries, QBarCategoryAxis, QPieSeries, QPieSlice)
 
 from script.benchmark_history import get_benchmark_history, TestResult
-from script.language_manager import get_language_manager
+from script.lang_mgr import get_language_manager
 import math
 import statistics
 from datetime import datetime, timedelta
@@ -34,9 +34,7 @@ import numpy as np
 
 from script.lang_mgr import get_language_manager
 from script.benchmark_history import get_benchmark_history, BenchmarkResult, TestResult
-from script.logger import get_logger
-
-logger = get_logger(__name__)
+from script.logger import logger
 
 class BenchmarkChartView(QChartView):
     """Custom chart view with hover effects and tooltips."""

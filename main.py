@@ -10,7 +10,8 @@ from time import perf_counter as clock
 from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
                              QPushButton, QLabel, QProgressBar, QSpinBox, QTextEdit,
                              QMessageBox, QMenuBar, QMenu, QStatusBar, QSizePolicy, QGroupBox,
-                             QTableWidget, QTableWidgetItem, QHeaderView)
+                             QTableWidget, QTableWidgetItem, QHeaderView, QDialog, QDialogButtonBox)
+from PySide6.QtGui import QPixmap
 from PySide6.QtCore import Qt, QTimer, Signal, QObject, QThread, QRunnable, QThreadPool
 from PySide6.QtGui import QAction, QIcon, QTextCursor, QFont
 
@@ -422,6 +423,46 @@ class PystoneApp(QMainWindow):
         self.visualization_window.raise_()
         self.visualization_window.activateWindow()
     
+    def show_about(self):
+        """Show the About dialog."""
+        about_dialog = QDialog(self)
+        about_dialog.setWindowTitle(get_text('about.title', 'About {0}').format(APP_NAME))
+        about_dialog.setMinimumWidth(400)
+        
+        layout = QVBoxLayout(about_dialog)
+        
+        # App info
+        info_label = QLabel(f"<h2>{APP_NAME} v{__version__}</h2>")
+        info_label.setAlignment(Qt.AlignCenter)
+        
+        desc_label = QLabel(APP_DESCRIPTION)
+        desc_label.setWordWrap(True)
+        desc_label.setAlignment(Qt.AlignCenter)
+        
+        # Add logo if available
+        logo_path = os.path.join(os.path.dirname(__file__), 'assets', 'logo.png')
+        if os.path.exists(logo_path):
+            logo_label = QLabel()
+            pixmap = QPixmap(logo_path)
+            logo_label.setPixmap(pixmap.scaled(128, 128, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+            logo_label.setAlignment(Qt.AlignCenter)
+            layout.addWidget(logo_label)
+        
+        layout.addWidget(info_label)
+        layout.addWidget(desc_label)
+        
+        # Copyright
+        copyright_label = QLabel(" 2023 Nsfr750. All rights reserved.")
+        copyright_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(copyright_label)
+        
+        # Close button
+        button_box = QDialogButtonBox(QDialogButtonBox.Close)
+        button_box.rejected.connect(about_dialog.reject)
+        layout.addWidget(button_box)
+        
+        about_dialog.exec_()
+    
     def closeEvent(self, event):
         """Handle window close event."""
         # Save window state
@@ -610,9 +651,9 @@ class PystoneApp(QMainWindow):
         # Add theme actions
         theme_manager = get_theme_manager(self)
         if theme_manager:
-            for theme in theme_manager.get_themes():
-                action = QAction(theme, self)
-                action.triggered.connect(lambda theme=theme: theme_manager.apply_theme(theme))
+            for theme_id, theme_data in theme_manager.THEMES.items():
+                action = QAction(theme_data.get('name', theme_id).title(), self)
+                action.triggered.connect(lambda checked, t=theme_id: theme_manager.apply_theme(t))
                 theme_menu.addAction(action)
         
         # Help menu

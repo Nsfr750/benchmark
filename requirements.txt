@@ -10,3 +10,4 @@ py-cpuinfo>=9.0.0
 wmi>=1.5.1; platform_system == "Windows"
 pytest>=7.0.0
 pytest-cov>=3.0.0
+numpy>=2.0.2
