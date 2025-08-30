@@ -363,10 +363,10 @@ class BenchmarkVisualizer(QWidget):
         button_layout = QVBoxLayout()
         button_layout.setSpacing(5)
         
-        self.refresh_button = QPushButton(self.lang.get("visualization.refresh", "Refresh"))
+        self.refresh_button = QPushButton(get_text("visualization.refresh", "Refresh"))
         self.refresh_button.clicked.connect(self._refresh_run_list)
         
-        self.compare_button = QPushButton(self.lang.get("visualization.compare", "Compare"))
+        self.compare_button = QPushButton(get_text("visualization.compare", "Compare"))
         self.compare_button.setEnabled(False)
         self.compare_button.clicked.connect(self._update_comparison_chart)
         
@@ -375,7 +375,7 @@ class BenchmarkVisualizer(QWidget):
         button_layout.addStretch()
         
         # Add widgets to controls layout
-        controls_layout.addWidget(QLabel(self.lang.get("visualization.select_runs", "Select Runs:")))
+        controls_layout.addWidget(QLabel(get_text("visualization.select_runs", "Select Runs:")))
         controls_layout.addWidget(self.run_list, 1)
         controls_layout.addLayout(button_layout)
         
