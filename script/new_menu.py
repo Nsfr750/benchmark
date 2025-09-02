@@ -10,6 +10,7 @@ import sys
 import subprocess
 import timeit
 import math
+import webbrowser
 from datetime import datetime
 
 from PySide6.QtWidgets import (
@@ -570,6 +571,18 @@ def create_menu_bar(parent):
     from script.about import show_about
     about_action.triggered.connect(lambda: show_about(parent))
     help_menu.addAction(about_action)
+    
+    # Add separator
+    help_menu.addSeparator()
+    
+    # Documentation action
+    docs_action = QAction(
+        style.standardIcon(QStyle.SP_FileDialogContentsView),
+        parent.tr("&Documentation"),
+        parent
+    )
+    docs_action.triggered.connect(lambda: webbrowser.open("https://github.com/Nsfr750/benchmark/wiki"))
+    help_menu.addAction(docs_action)
     
     # Add separator
     help_menu.addSeparator()
