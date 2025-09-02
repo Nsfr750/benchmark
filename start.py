@@ -6,16 +6,17 @@ import sys
 import os
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QVBoxLayout, QWidget, QLabel, 
-    QPushButton, QMenuBar, QStatusBar
+    QPushButton, QMenuBar, QStatusBar, QMessageBox, QDialog
 )
+from PySide6.QtCore import Qt, QSettings
+from PySide6.QtWidgets import QDialogButtonBox
 from PySide6.QtCore import Qt, QSettings
 
 # Local imports
 from script.version import __version__, APP_NAME, APP_DESCRIPTION
 from script.logger import logger
 from script.lang_mgr import get_language_manager, get_text
-from script.menu import create_menu_bar
-from script.test_menu import TestMenu
+from script.new_menu import create_menu_bar, TestMenu
 from script.theme_manager import get_theme_manager
 
 log = logger
@@ -97,7 +98,48 @@ class BenchmarkApp(QMainWindow):
         """Load application settings"""
         settings = QSettings("Nsfr750", "Benchmark")
         self.restoreGeometry(settings.value("geometry"))
-        self.restoreState(settings.value("windowState"))
+        
+    def view_logs(self):
+        """View application logs."""
+        from script.new_menu import view_logs
+        view_logs(self, self.lang)
+        # Restore window state if available
+        settings = QSettings("Nsfr750", "Benchmark")
+        if settings.contains("windowState"):
+            self.restoreState(settings.value("windowState"))
+    
+    def toggle_fullscreen(self):
+        """Toggle between fullscreen and normal window mode"""
+        if self.isFullScreen():
+            self.showNormal()
+            if hasattr(self, 'menuBar'):
+                self.menuBar().show()
+            if hasattr(self, 'statusBar'):
+                self.statusBar().show()
+        else:
+            self.showFullScreen()
+            if hasattr(self, 'menuBar'):
+                self.menuBar().hide()
+            if hasattr(self, 'statusBar'):
+                self.statusBar().hide()
+    
+    def show_options(self):
+        """Show the options/settings dialog"""
+        try:
+            from script.settings import SettingsDialog
+            dialog = SettingsDialog(self)
+            if dialog.exec() == QDialogButtonBox.Accepted:
+                # Apply any settings that need immediate update
+                if hasattr(self, 'theme_manager'):
+                    self.theme_manager.apply_theme()
+                log.info("Settings saved")
+        except Exception as e:
+            log.error(f"Error showing options dialog: {e}")
+            QMessageBox.critical(
+                self,
+                get_text("error.title", "Error"),
+                get_text("error.show_options", "Could not open settings: {}").format(str(e))
+            )
     
     def save_settings(self):
         """Save application settings"""

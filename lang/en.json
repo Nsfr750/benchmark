@@ -38,6 +38,7 @@
         "status_running": "Running...",
         "status_completed": "Completed",
         "status_stopped": "Stopped",
+        "starting_benchmark": "Starting benchmark...",
         "status_error": "Error"
     },
     "menu": {
@@ -55,8 +56,20 @@
             "system_info_tooltip": "View detailed system information",
             "benchmark": "Run Benchmark",
             "benchmark_tooltip": "Run benchmark tests",
+            "hardware_monitor": "Hardware Monitor",
+            "hardware_monitor_tooltip": "View hardware monitoring information",
             "view_logs": "View Logs",
-            "view_logs_tooltip": "View application logs"
+            "view_logs_tooltip": "View application logs",
+            "view_history": "View History",
+            "view_history_tooltip": "View benchmark history",
+            "export_results": "Export Results...",
+            "export_results_tooltip": "Export benchmark results to a file",
+            "import_results": "Import Results...",
+            "import_results_tooltip": "Import benchmark results from a file",
+            "test_action": "Test Action",
+            "test_tooltip": "Test action for development",
+            "test_dialog_title": "Test",
+            "test_message": "Test action triggered!"
         },
         "test.error": "Error",
         "help_contents": "&Help Contents",
@@ -105,6 +118,31 @@
         "completed": "Benchmark completed",
         "saving": "Saving results...",
         "saved": "Results saved"
+    },
+    "test": {
+        "export_dialog": "Export Results",
+        "import_dialog": "Import Results",
+        "test_dialog_title": "Test",
+        "test_message": "This is a test message.",
+        "export_results": "&Export Results...",
+        "export_results_tooltip": "Export test results to a file",
+        "import_results": "&Import Results...",
+        "import_results_tooltip": "Import test results from a file",
+        "test_action": "Test &Action",
+        "test_tooltip": "Test action for development",
+        "logs_title": "Log Files",
+        "logs_not_found": "No log files found in: {}",
+        "logs_error": "Error loading log file: {}",
+        "system_info": "System Information",
+        "system_info_tooltip": "View detailed system information",
+        "benchmark": "Run Benchmark",
+        "benchmark_tooltip": "Run benchmark tests",
+        "hardware_monitor": "Hardware Monitor",
+        "hardware_monitor_tooltip": "View hardware monitoring information",
+        "view_logs": "View Logs",
+        "view_logs_tooltip": "View application logs",
+        "view_history": "View History",
+        "view_history_tooltip": "View benchmark history"
     },
     "test_menu": {
         "title": "&Test",
@@ -163,16 +201,19 @@
     },
     "export": {
         "no_data_title": "No Data",
-        "no_data_msg": "No benchmark results available to export.",
-        "save_dialog": "Export Benchmark Results",
+        "no_data_message": "No benchmark results available to export.",
+        "save_dialog_title": "Save Benchmark Results",
         "success_title": "Export Successful",
-        "success_msg": "Benchmark results exported successfully.",
+        "success_message": "Successfully exported {0} benchmark results.",
         "error_msg": "Failed to export results: {0}"
     },
     "import": {
-        "open_dialog": "Import Benchmark Results",
+        "open_dialog_title": "Import Benchmark Results",
+        "success_title": "Import Successful",
+        "success_message": "Successfully imported {0} benchmark results.",
         "complete_title": "Import Complete",
         "complete_msg": "Imported {imported} of {total} benchmark results.",
+        "invalid_json": "The selected file is not a valid JSON file.",
         "error_msg": "Failed to import results: {0}"
     },
     "help": {
@@ -213,6 +254,23 @@
         "restart_required": "Restart Required",
         "language_change_message": "Language change will take effect after restarting the application."
     },
+    "log_viewer": {
+        "title": "Log Viewer",
+        "refresh": "&Refresh",
+        "clear": "C&lear Logs",
+        "save_as": "&Save As...",
+        "no_logs": "No log file found.",
+        "load_error": "Error loading log file: {}",
+        "save_dialog": "Save Log As",
+        "save_error": "Error saving log file: {}",
+        "confirm_clear": "Confirm Clear",
+        "confirm_clear_msg": "Are you sure you want to clear all logs? This cannot be undone.",
+        "clear_error": "Error clearing logs: {}"
+    },
+    "common": {
+        "close": "&Close",
+        "refresh": "&Refresh"
+    },
     "updates": {
         "available_title": "Update Available",
         "available_message": "A new version {0} is available!\n\nWould you like to download it now?",
@@ -224,6 +282,47 @@
         "download": "&Download",
         "checking": "Checking for updates...",
         "update_available": "Version {0} is available!"
+    },
+    "hardware_monitor": {
+        "title": "Hardware Monitor",
+        "cpu_tab": "CPU",
+        "memory_tab": "Memory",
+        "io_tab": "I/O",
+        "cpu_usage": "CPU Usage",
+        "cpu_temp": "CPU Temperature",
+        "memory_usage": "Memory Usage",
+        "memory_used": "Used",
+        "memory_available": "Available",
+        "disk_io": "Disk I/O",
+        "read": "Read",
+        "write": "Write",
+        "network": "Network",
+        "sent": "Sent",
+        "received": "Received"
+    },
+    "system_info": {
+        "title": "System Information",
+        "os": "Operating System",
+        "hostname": "Hostname",
+        "ip_address": "IP Address",
+        "python_version": "Python Version",
+        "cpu_model": "CPU Model",
+        "cores": "Cores",
+        "threads": "Threads",
+        "architecture": "Architecture",
+        "total_memory": "Total Memory",
+        "available_memory": "Available Memory",
+        "used_memory": "Used Memory",
+        "memory_usage": "Memory Usage",
+        "disk_total": "Total Disk Space",
+        "disk_used": "Used Space",
+        "disk_free": "Free Space",
+        "disk_usage": "Disk Usage",
+        "tab_system": "System",
+        "tab_cpu": "CPU",
+        "tab_memory": "Memory",
+        "tab_disk": "Disk",
+        "tab_raw": "Raw Info"
     },
     "sponsor": {
         "support": "Support Development",
@@ -238,7 +337,7 @@
     },
     "about": {
         "title": "About",
-        "description": "A Python implementation of the Pystone benchmark with a modern GUI.",
+        "description": "A Python implementation of the Pystone benchmark andother resrs with a modern GUI.",
         "credits": "Credits",
         "connect": "Connect",
         "github": "GitHub",

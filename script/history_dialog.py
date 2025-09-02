@@ -11,7 +11,7 @@ import logging
 from typing import List, Optional, Tuple
 
 from script.benchmark_history import BenchmarkResult, get_benchmark_history
-from script.lang_mgr import get_language_manager
+from script.lang_mgr import get_language_manager, get_text
 
 log = logging.getLogger(__name__)
 
@@ -27,7 +27,7 @@ class HistoryDialog(QDialog):
         self.lang = get_language_manager()
         self.history = get_benchmark_history()
         self.selected_result: Optional[BenchmarkResult] = None
-        self.setWindowTitle(self.lang.get('history.title', 'Benchmark History'))
+        self.setWindowTitle(get_text('history.title', 'Benchmark History'))
         self.setMinimumSize(800, 500)
         
         self.setup_ui()
@@ -46,11 +46,11 @@ class HistoryDialog(QDialog):
         self.date_filter_label = QLabel()
         self.date_filter_combo = QComboBox()
         self.date_filter_combo.addItems([
-            self.lang.get('history.filter_all', 'All time'),
-            self.lang.get('history.filter_today', 'Today'),
-            self.lang.get('history.filter_week', 'Last 7 days'),
-            self.lang.get('history.filter_month', 'Last 30 days'),
-            self.lang.get('history.filter_custom', 'Custom range...')
+            get_text('history.filter_all', 'All time'),
+            get_text('history.filter_today', 'Today'),
+            get_text('history.filter_week', 'Last 7 days'),
+            get_text('history.filter_month', 'Last 30 days'),
+            get_text('history.filter_custom', 'Custom range...')
         ])
         self.date_filter_combo.currentIndexChanged.connect(self.on_date_filter_changed)
         
@@ -98,7 +98,7 @@ class HistoryDialog(QDialog):
         self.delete_button = QPushButton()
         self.delete_button.clicked.connect(self.on_delete_clicked)
         
-        self.close_button = QPushButton(self.lang.get('common.close', 'Close'))
+        self.close_button = QPushButton(get_text('common.close', 'Close'))
         self.close_button.clicked.connect(self.accept)
         
         button_layout.addWidget(self.compare_button)
@@ -126,19 +126,19 @@ class HistoryDialog(QDialog):
     
     def retranslate_ui(self):
         """Update UI text based on current language."""
-        self.setWindowTitle(self.lang.get('history.title', 'Benchmark History'))
-        self.date_filter_label.setText(self.lang.get('history.filter', 'Filter:'))
-        self.compare_button.setText(self.lang.get('history.compare', 'Compare Selected'))
-        self.delete_button.setText(self.lang.get('history.delete', 'Delete Selected'))
+        self.setWindowTitle(get_text('history.title', 'Benchmark History'))
+        self.date_filter_label.setText(get_text('history.filter', 'Filter:'))
+        self.compare_button.setText(get_text('history.compare', 'Compare Selected'))
+        self.delete_button.setText(get_text('history.delete', 'Delete Selected'))
         
-        # Update table headers
+        # Set column headers
         headers = [
-            self.lang.get('history.column_date', 'Date/Time'),
-            self.lang.get('history.column_pystones', 'Pystones/s'),
-            self.lang.get('history.column_time', 'Time (s)'),
-            self.lang.get('history.column_iterations', 'Iterations'),
-            self.lang.get('history.column_cpu', 'CPU'),
-            self.lang.get('history.column_system', 'System')
+            get_text('history.column_date', 'Date/Time'),
+            get_text('history.column_pystones', 'Pystones/s'),
+            get_text('history.column_time', 'Time (s)'),
+            get_text('history.column_iterations', 'Iterations'),
+            get_text('history.column_cpu', 'CPU'),
+            get_text('history.column_system', 'System')
         ]
         self.table.setHorizontalHeaderLabels(headers)
     
@@ -201,7 +201,7 @@ class HistoryDialog(QDialog):
     def update_stats_label(self, count: int):
         """Update the statistics label with the number of results."""
         self.stats_label.setText(
-            self.lang.get('history.results_count', 'Showing {count} results').format(count=count)
+            get_text('history.results_count', 'Showing {count} results').format(count=count)
         )
     
     def on_date_filter_changed(self, index: int):
@@ -262,8 +262,8 @@ class HistoryDialog(QDialog):
         # Ask for confirmation
         confirm = QMessageBox.question(
             self,
-            self.lang.get('history.delete_title', 'Confirm Deletion'),
-            self.lang.get('history.delete_confirm', 'Are you sure you want to delete the selected benchmark result?'),
+            get_text('history.delete_title', 'Confirm Deletion'),
+            get_text('history.delete_confirm', 'Are you sure you want to delete the selected benchmark result?'),
             QMessageBox.Yes | QMessageBox.No,
             QMessageBox.No
         )
@@ -280,15 +280,15 @@ class HistoryDialog(QDialog):
                 
                 QMessageBox.information(
                     self,
-                    self.lang.get('history.deleted', 'Deleted'),
-                    self.lang.get('history.delete_success', 'The benchmark result has been deleted.')
+                    get_text('history.deleted', 'Deleted'),
+                    get_text('history.delete_success', 'The benchmark result has been deleted.')
                 )
             except Exception as e:
                 log.error(f"Error deleting benchmark result: {e}")
                 QMessageBox.critical(
                     self,
-                    self.lang.get('error.title', 'Error'),
-                    self.lang.get('history.delete_error', 'Failed to delete the benchmark result.')
+                    get_text('error.title', 'Error'),
+                    get_text('history.delete_error', 'Failed to delete the benchmark result.')
                 )
     
     def sizeHint(self):

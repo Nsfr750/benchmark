@@ -198,4 +198,4 @@ class SettingsDialog(QDialog):
 def show_settings(parent=None):
     """Show the settings dialog."""
     dialog = SettingsDialog(parent)
-    return dialog.exec_()
+    return dialog.exec()

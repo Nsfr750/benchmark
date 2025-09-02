@@ -90,4 +90,4 @@ def create_about_dialog(parent=None):
 def show_about(parent=None):
     """Show the about dialog."""
     dialog = create_about_dialog(parent)
-    return dialog.exec_()
+    return dialog.exec()

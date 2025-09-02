@@ -206,7 +206,7 @@ def check_for_updates(parent, force=False):
         )
         msg_box.addButton(QMessageBox.Cancel)
         
-        msg_box.exec_()
+        msg_box.exec()
         
         if msg_box.clickedButton() == download_btn:
             import webbrowser

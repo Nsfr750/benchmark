@@ -2,7 +2,7 @@
 Version information for the Benchmark application.
 """
 
-__version__ = "1.2.0"
+__version__ = "1.3.0"
 __author__ = "Nsfr750"
 __email__ = "nsfr750@yandex.com"
 __license__ = "GPLv3"

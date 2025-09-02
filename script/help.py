@@ -233,7 +233,7 @@ def show_help(parent=None):
                 lang.get_text('help.error_loading', 
                              'Could not load help documentation\n\nPlease visit the GitHub repository for documentation')
             )
-            msg.exec_()
+            msg.exec()
         except Exception as e2:
             # If even the message box fails, just print the error
             print(f"Error showing help: {e}\nSecondary error: {e2}")

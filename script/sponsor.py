@@ -23,7 +23,7 @@ def show_sponsor_dialog(parent=None, language_manager=None):
         language_manager: Optional language manager instance
     """
     dialog = SponsorDialog(parent, language_manager)
-    dialog.exec_()
+    dialog.exec()
 
 logger = logging.getLogger(__name__)
 

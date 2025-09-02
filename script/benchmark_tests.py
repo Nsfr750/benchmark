@@ -8,8 +8,15 @@ import random
 import statistics
 import json
 import signal
-from typing import Dict, List, Tuple, Callable, Any
+from typing import Dict, List, Tuple, Callable, Any, Optional
 from dataclasses import dataclass, asdict
+from PySide6.QtWidgets import (
+    QDialog, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, 
+    QProgressBar, QGroupBox, QTreeWidget, QTreeWidgetItem, 
+    QHeaderView, QMessageBox, QTabWidget, QWidget, QTextEdit
+)
+from PySide6.QtCore import Qt, QThread, Signal as QSignal
+from script.lang_mgr import get_language_manager, get_text
 
 class TimeoutError(Exception):
     pass
@@ -567,3 +574,233 @@ class BenchmarkSuite:
         except Exception as e:
             print(f"Error exporting results: {e}")
             return False
+
+
+class BenchmarkWorker(QThread):
+    """Worker thread for running benchmark tests."""
+    progress_updated = QSignal(int, str)  # progress percentage, status message
+    test_completed = QSignal(dict)  # test results
+    finished_all = QSignal()  # emitted when all tests are done
+    
+    def __init__(self, test_categories=None, parent=None):
+        super().__init__(parent)
+        self.test_categories = test_categories
+        self.suite = BenchmarkSuite()
+        self.is_running = True
+    
+    def run(self):
+        """Run the benchmark tests in a separate thread."""
+        try:
+            self.progress_updated.emit(0, get_text("benchmark_tests.starting_tests", "Starting benchmark tests..."))
+            
+            # Get the list of tests to run
+            if not self.test_categories:
+                test_categories = [cat["id"] for cat in self.suite.get_test_categories()]
+            else:
+                test_categories = self.test_categories
+            
+            total_tests = len(test_categories)
+            
+            for i, category in enumerate(test_categories):
+                if not self.is_running:
+                    break
+                    
+                self.progress_updated.emit(
+                    int((i / total_tests) * 100), 
+                    get_text("benchmark_tests.running_test", f"Running {category} tests...")
+                )
+                
+                # Run the test category
+                self.suite.run_all_tests([category])
+                
+                # Emit results for this test category
+                for result in self.suite.results:
+                    if result.name.startswith(category):
+                        self.test_completed.emit({
+                            'name': result.name,
+                            'score': result.score,
+                            'unit': result.unit,
+                            'iterations': result.iterations,
+                            'metadata': result.metadata or {}
+                        })
+            
+            self.progress_updated.emit(100, get_text("benchmark_tests.completed", "Benchmark tests completed"))
+            self.finished_all.emit()
+            
+        except Exception as e:
+            self.progress_updated.emit(0, f"Error: {str(e)}")
+    
+    def stop(self):
+        """Stop the benchmark tests."""
+        self.is_running = False
+
+
+class BenchmarkTestDialog(QDialog):
+    """Dialog for running and viewing benchmark tests."""
+    
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.lang = get_language_manager()
+        self.worker = None
+        self.setup_ui()
+        self.retranslate_ui()
+    
+    def setup_ui(self):
+        """Set up the user interface."""
+        self.setWindowTitle(get_text("benchmark_tests.title", "Benchmark Tests"))
+        self.setMinimumSize(800, 600)
+        
+        # Main layout
+        layout = QVBoxLayout(self)
+        
+        # Test selection
+        self.test_group = QGroupBox()
+        test_layout = QVBoxLayout()
+        
+        # Test categories tree
+        self.categories_tree = QTreeWidget()
+        self.categories_tree.setHeaderLabels([get_text("benchmark_tests.test_category", "Test Category"), 
+                                           get_text("benchmark_tests.status", "Status")])
+        self.categories_tree.setSelectionMode(QTreeWidget.MultiSelection)
+        
+        # Add test categories
+        suite = BenchmarkSuite()
+        categories = suite.get_test_categories()
+        
+        # Map category IDs to display names
+        category_names = {
+            'cpu': get_text('benchmark_tests.cpu', 'CPU Tests'),
+            'memory': get_text('benchmark_tests.memory', 'Memory Tests'),
+            'disk': get_text('benchmark_tests.disk', 'Disk Tests')
+        }
+        
+        for category_id, tests in categories.items():
+            item = QTreeWidgetItem([category_names.get(category_id, category_id), ""])
+            item.setData(0, Qt.UserRole, category_id)
+            item.setCheckState(0, Qt.Checked)
+            self.categories_tree.addTopLevelItem(item)
+            
+            # Add individual tests as child items
+            for test in tests:
+                test_item = QTreeWidgetItem([get_text(f'benchmark_tests.{test}', test), ""])
+                test_item.setData(0, Qt.UserRole, test)
+                test_item.setCheckState(0, Qt.Checked)
+                item.addChild(test_item)
+        
+        self.categories_tree.header().setSectionResizeMode(0, QHeaderView.Stretch)
+        
+        # Results area
+        self.results_area = QTextEdit()
+        self.results_area.setReadOnly(True)
+        
+        # Progress bar
+        self.progress_bar = QProgressBar()
+        self.progress_bar.setRange(0, 100)
+        self.status_label = QLabel()
+        
+        # Buttons
+        button_layout = QHBoxLayout()
+        self.run_button = QPushButton()
+        self.run_button.clicked.connect(self.run_tests)
+        
+        self.stop_button = QPushButton(get_text("common.stop", "Stop"))
+        self.stop_button.clicked.connect(self.stop_tests)
+        self.stop_button.setEnabled(False)
+        
+        self.close_button = QPushButton(get_text("common.close", "Close"))
+        self.close_button.clicked.connect(self.accept)
+        
+        button_layout.addWidget(self.run_button)
+        button_layout.addWidget(self.stop_button)
+        button_layout.addStretch()
+        button_layout.addWidget(self.close_button)
+        
+        # Assemble the UI
+        test_layout.addWidget(self.categories_tree)
+        self.test_group.setLayout(test_layout)
+        
+        layout.addWidget(self.test_group)
+        layout.addWidget(QLabel(get_text("benchmark_tests.results", "Results:")))
+        layout.addWidget(self.results_area)
+        layout.addWidget(self.status_label)
+        layout.addWidget(self.progress_bar)
+        layout.addLayout(button_layout)
+    
+    def retranslate_ui(self):
+        """Update UI text based on current language."""
+        self.setWindowTitle(get_text("benchmark_tests.title", "Benchmark Tests"))
+        self.test_group.setTitle(get_text("benchmark_tests.test_categories", "Test Categories"))
+        self.run_button.setText(get_text("benchmark_tests.run_tests", "Run Selected Tests"))
+    
+    def run_tests(self):
+        """Start running the selected benchmark tests."""
+        # Get selected test categories
+        selected_categories = []
+        for i in range(self.categories_tree.topLevelItemCount()):
+            item = self.categories_tree.topLevelItem(i)
+            if item.checkState(0) == Qt.Checked:
+                selected_categories.append(item.data(0, Qt.UserRole))
+        
+        if not selected_categories:
+            QMessageBox.warning(
+                self,
+                get_text("common.warning", "Warning"),
+                get_text("benchmark_tests.no_tests_selected", "Please select at least one test category to run.")
+            )
+            return
+        
+        # Clear previous results
+        self.results_area.clear()
+        self.progress_bar.setValue(0)
+        self.status_label.setText(get_text("benchmark_tests.starting_tests", "Starting benchmark tests..."))
+        
+        # Disable UI elements during test
+        self.run_button.setEnabled(False)
+        self.stop_button.setEnabled(True)
+        self.categories_tree.setEnabled(False)
+        
+        # Create and start worker thread
+        self.worker = BenchmarkWorker(selected_categories)
+        self.worker.progress_updated.connect(self.update_progress)
+        self.worker.test_completed.connect(self.add_test_result)
+        self.worker.finished_all.connect(self.tests_finished)
+        self.worker.start()
+    
+    def stop_tests(self):
+        """Stop the currently running benchmark tests."""
+        if self.worker and self.worker.isRunning():
+            self.worker.stop()
+            self.worker.wait()
+            self.status_label.setText(get_text("benchmark_tests.stopped", "Tests stopped by user."))
+            self.tests_finished()
+    
+    def update_progress(self, progress, status):
+        """Update the progress bar and status label."""
+        self.progress_bar.setValue(progress)
+        self.status_label.setText(status)
+    
+    def add_test_result(self, result):
+        """Add a test result to the results area."""
+        text = f"{result['name']}: {result['score']:.2f} {result['unit']} " \
+               f"({result['iterations']} {get_text('benchmark_tests.iterations', 'iterations')})\n"
+        self.results_area.moveCursor(self.results_area.textCursor().End)
+        self.results_area.insertPlainText(text)
+        self.results_area.ensureCursorVisible()
+    
+    def tests_finished(self):
+        """Clean up after tests are finished."""
+        self.run_button.setEnabled(True)
+        self.stop_button.setEnabled(False)
+        self.categories_tree.setEnabled(True)
+        
+        if self.worker and self.worker.isRunning():
+            self.worker.wait()
+        
+        self.worker = None
+    
+    def closeEvent(self, event):
+        """Handle window close event."""
+        if self.worker and self.worker.isRunning():
+            self.worker.stop()
+            self.worker.wait()
+        event.accept()

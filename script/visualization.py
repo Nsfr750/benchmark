@@ -439,7 +439,7 @@ class BenchmarkVisualizer(QWidget):
         menu.addAction(export_svg)
         
         # Show the menu at the cursor position
-        menu.exec_(self.chart_view.mapToGlobal(position))
+        menu.exec(self.chart_view.mapToGlobal(position))
     
     def _export_chart(self, format: str):
         """Export the current chart to a file.
