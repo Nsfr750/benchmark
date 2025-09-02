@@ -28,6 +28,8 @@
     "app": {
         "title": "Benchmark",
         "version": "Version",
+        "ready": "Ready",
+        "welcome": "Welcome to {0}",
         "start_benchmark": "Start Benchmark",
         "stop_benchmark": "Stop Benchmark",
         "iterations": "Iterations",
@@ -108,6 +110,7 @@
         "apply": "Apply",
         "yes": "Yes",
         "no": "No",
+        "stop": "Stop",
         "save": "Save",
         "close": "Close"
     },
@@ -120,6 +123,9 @@
         "saved": "Results saved"
     },
     "test": {
+        "label": "Test",
+        "pystone_test": "Pystone Benchmark",
+        "pystone_tooltip": "Run the Pystone benchmark test",
         "export_dialog": "Export Results",
         "import_dialog": "Import Results",
         "test_dialog_title": "Test",
@@ -273,7 +279,8 @@
     },
     "common": {
         "close": "&Close",
-        "refresh": "&Refresh"
+        "refresh": "&Refresh",
+        "stop": "Stop"
     },
     "updates": {
         "available_title": "Update Available",
@@ -349,9 +356,6 @@
         "stop": "Stop",
         "starting_tests": "Starting tests...",
         "running_test": "Running test: {test_name}"
-    },
-    "common": {
-        "stop": "Stop"
     },
     "sponsor": {
         "support": "Support Development",

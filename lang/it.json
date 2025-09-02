@@ -28,6 +28,8 @@
     "app": {
         "title": "Benchmark",
         "version": "Versione",
+        "ready": "Pronto",
+        "welcome": "Benvenuto in {0}",
         "start_benchmark": "Avvia Benchmark",
         "stop_benchmark": "Ferma Benchmark",
         "iterations": "Iterazioni",
@@ -129,6 +131,9 @@
         "saved": "Risultati salvati"
     },
     "test": {
+        "label": "Test",
+        "pystone_test": "Benchmark Pystone",
+        "pystone_tooltip": "Esegui il test di benchmark Pystone",
         "export_dialog": "Esporta Risultati",
         "import_dialog": "Importa Risultati",
         "test_dialog_title": "Test",
@@ -285,32 +290,9 @@
         "results": "Risultati",
         "test_categories": "Categorie di Test",
         "run_tests": "Esegui Test",
-        "stop": "Ferma"
-    },
-    "benchmark_tests": {
-        "title": "Test di Benchmark",
-        "test_category": "Categoria Test",
-        "status": "Stato",
-        "cpu": "CPU",
-        "memory": "Memoria",
-        "disk": "Disco",
-        "test_cpu_math": "Test Matematica CPU",
-        "test_cpu_integer_math": "Test Matematica Interi CPU",
-        "test_cpu_sorting": "Test Ordinamento CPU",
-        "test_cpu_compression": "Test Compressione CPU",
-        "test_memory_allocation": "Test Allocazione Memoria",
-        "test_memory_bandwidth": "Test Banda Memoria",
-        "test_cache_effects": "Test Effetti Cache",
-        "test_disk_io": "Test I/O Disco",
-        "results": "Risultati",
-        "test_categories": "Categorie di Test",
-        "run_tests": "Esegui Test",
         "stop": "Ferma",
         "starting_tests": "Avvio test in corso...",
         "running_test": "Esecuzione test: {test_name}"
-    },
-    "common": {
-        "stop": "Ferma"
     },
     "system_info": {
         "title": "Informazioni di Sistema",
@@ -371,7 +353,8 @@
     },
     "common": {
         "close": "&Chiudi",
-        "refresh": "&Aggiorna"
+        "refresh": "&Aggiorna",
+        "stop": "Ferma"
     },
     "updates": {
         "available_title": "Aggiornamento Disponibile",
