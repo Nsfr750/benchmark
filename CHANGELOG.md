@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2025-09-02
+
+### Added in 1.3.0
+
+- Enhanced Pystone benchmark integration with progress tracking
+- Added comprehensive error handling and user feedback for benchmark operations
+- Implemented translation support for all UI elements
+- Added detailed system information collection for benchmark context
+- Created a unified test menu with categorized benchmark options
+
+### Changed in 1.3.0
+
+- Refactored menu system for better organization and maintainability
+- Updated UI with improved error messages and user guidance
+- Enhanced benchmark result presentation with additional metrics
+- Optimized performance of benchmark execution
+
+### Fixed in 1.3.0
+
+- Fixed translation key errors in benchmark dialogs
+- Resolved issues with benchmark result saving and loading
+- Fixed UI layout issues in high DPI displays
+- Addressed memory management in long-running benchmark sessions
+
 ## [1.2.0] - 2025-08-28
 
 ### Added in 1.2.0

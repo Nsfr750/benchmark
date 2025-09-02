@@ -16,12 +16,19 @@
 - [x] Add GitHub Actions for CI/CD
 - [x] Add hardware monitoring during tests
 - [x] Create a user guide
+- [x] Add comprehensive translation support
+- [x] Implement Pystone benchmark with progress tracking
+- [x] Add system information collection
+- [x] Improve error handling and user feedback
 
 ## Medium Priority
 
 - [ ] Add performance optimization for large datasets
 - [ ] Add support for custom benchmark scripts
 - [ ] Add support for more benchmark types
+- [ ] Add automated tests for benchmark components
+- [ ] Implement result caching for faster repeated tests
+- [ ] Add support for benchmark scheduling
 
 ## Low Priority
 
@@ -41,7 +48,7 @@
 
 ## Future Ideas
 
-- Create a web dashboard for results
+- Add machine learning-based performance prediction
 
 ## Notes
 

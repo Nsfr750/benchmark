@@ -151,7 +151,11 @@
         "view_logs": "Visualizza Log",
         "view_logs_tooltip": "Visualizza i log dell'applicazione",
         "view_history": "Visualizza Cronologia",
-        "view_history_tooltip": "Visualizza la cronologia dei benchmark"
+        "view_history_tooltip": "Visualizza la cronologia dei benchmark",
+        "error": "Errore",
+        "pystone_error": "Impossibile eseguire il test Pystone: {}",
+        "pystone_results": "Risultati Pystone",
+        "pystone_results_text": "Benchmark Pystone completato.\n\nPietre al secondo: {pystones:.2f}\nTempo impiegato: {time_elapsed:.2f} secondi\nCicli: {loops}"
     },
     "test_menu": {
         "title": "&Test",

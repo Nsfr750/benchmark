@@ -10,6 +10,8 @@
    - [Viewing Results](#viewing-results)
    - [Exporting Data](#exporting-data)
    - [Configuration](#configuration)
+   - [Hardware Monitoring](#hardware-monitoring)
+   - [Pystone Benchmark](#pystone-benchmark)
 5. [Advanced Usage](#advanced-usage)
 6. [Troubleshooting](#troubleshooting)
 7. [FAQs](#faqs)
@@ -30,7 +32,7 @@ Welcome to the Benchmark Application! This tool helps you measure and analyze th
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/benchmark.git
+   git clone https://github.com/Nsfr750/benchmark.git
    cd benchmark
    ```
 
@@ -63,28 +65,53 @@ Welcome to the Benchmark Application! This tool helps you measure and analyze th
 
 ### Running Benchmarks
 
-1. Select a benchmark test from the dropdown menu
-2. Configure test parameters as needed
-3. Click "Start Benchmark" to begin
-4. Monitor progress in the status bar
-5. View results in the results panel
+1. Select the type of benchmark from the Test menu
+2. Configure the test parameters (duration, iterations, etc.)
+3. Click "Run Benchmark" to start the test
+4. Monitor real-time progress with the progress bar
+5. View detailed results upon completion
 
 ### Viewing Results
 
-Results are displayed in both tabular and graphical formats:
+Benchmark results are displayed in a comprehensive format with:
 
-- **Performance Metrics**: CPU usage, memory usage, execution time
-- **Comparison View**: Compare results across multiple test runs
-- **History**: Access previous benchmark results
+- Test name, timestamp, and duration
+- Performance metrics (scores, operations per second, etc.)
+- System information (CPU, memory, OS details)
+- Interactive charts and visualizations
+- Historical comparison with previous runs
+
+### Pystone Benchmark
+
+The Pystone benchmark is now available with enhanced features:
+
+- Progress tracking during test execution
+- Configurable number of iterations
+- Detailed performance metrics
+- Comparison with previous runs
+- Exportable results
+
+### Hardware Monitoring
+
+Real-time hardware monitoring is available during benchmark execution:
+
+- CPU usage and temperature
+- Memory usage
+- Disk I/O statistics
+- Network activity
+- System load
 
 ### Exporting Data
 
-You can export benchmark results in multiple formats:
+Export benchmark results for further analysis:
 
-1. Click the "Export" button
-2. Choose the desired format (CSV, JSON)
-3. Select the location to save the file
-4. Click "Save"
+1. Click "Export Results" from the File menu
+2. Choose from available formats:
+   - CSV (for spreadsheet analysis)
+   - JSON (for programmatic processing)
+   - PNG/SVG (for charts and visualizations)
+3. Select a destination folder
+4. Click "Save" to export
 
 ### Configuration
 
@@ -104,12 +131,39 @@ Customize the application settings:
 Run benchmarks directly from the command line:
 
 ```bash
-python -m script.CLI_pystone --iterations 1000 --output results.json
+python main.py --benchmark=pystone --iterations=50000 --output=results.json
 ```
+
+Available options:
+- `--benchmark`: Specify benchmark to run (default: all)
+- `--iterations`: Number of iterations (default: from config)
+- `--output`: Save results to file
+- `--quiet`: Run in non-interactive mode
+- `--version`: Show version information
 
 ### Custom Benchmark Scripts
 
-Create your own benchmark scripts by extending the base test class. Refer to the developer documentation for more details.
+You can create and run custom benchmark scripts by placing them in the `benchmarks` directory. The application will automatically detect and load them at startup.
+
+### Benchmark Configuration
+
+Customize benchmark behavior through the configuration file (`config/config.json`):
+
+```json
+{
+  "benchmark": {
+    "default_iterations": 10000,
+    "enable_hardware_monitoring": true,
+    "save_results_automatically": true,
+    "result_history_size": 50
+  },
+  "ui": {
+    "theme": "dark",
+    "language": "en",
+    "font_size": 10
+  }
+}
+```
 
 ## Troubleshooting
 

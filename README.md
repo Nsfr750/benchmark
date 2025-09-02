@@ -4,7 +4,7 @@
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-A modern Python benchmarking tool built with PySide6, providing a user-friendly interface for running and analyzing Pystone and other benchmark tests.
+A comprehensive benchmarking suite built with PySide6, offering a modern and intuitive interface for running, analyzing, and comparing various benchmark tests including Pystone, CPU performance, memory operations, and system metrics.
 
 ![Benchmark Screenshot](assets/screenshot.png)
 
@@ -48,6 +48,17 @@ A modern Python benchmarking tool built with PySide6, providing a user-friendly 
 
 - **Modern UI**: Clean, responsive interface built with PySide6
 - **Comprehensive Benchmarking**:
+  - Pystone benchmark with progress tracking
+  - CPU performance tests
+  - Memory operation benchmarks
+  - System information collection
+- **Advanced Features**:
+  - Real-time progress monitoring
+  - Detailed performance metrics
+  - Export results to multiple formats (CSV/JSON)
+  - Compare benchmark results
+  - Hardware monitoring during tests
+  - Multi-language support
   - Customizable test duration
   - Real-time progress tracking
   - Detailed results with statistics
