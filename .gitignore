@@ -210,3 +210,5 @@ fix_cache.py
 version.txt
 assets/version-info.txt
 build_nuitka.py
+DATI.txt
+_build_nuitka.py
