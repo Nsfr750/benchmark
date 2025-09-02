@@ -6,10 +6,10 @@ import sys
 import os
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QVBoxLayout, QWidget, QLabel, 
-    QPushButton, QMenuBar, QStatusBar, QMessageBox, QDialog
+    QPushButton, QMenuBar, QStatusBar, QMessageBox, QDialog, 
+    QDialogButtonBox
 )
-from PySide6.QtCore import Qt, QSettings
-from PySide6.QtWidgets import QDialogButtonBox
+from PySide6.QtGui import QPixmap
 from PySide6.QtCore import Qt, QSettings
 
 # Local imports
@@ -62,9 +62,20 @@ class BenchmarkApp(QMainWindow):
         layout = QVBoxLayout(central_widget)
         
         # Add a welcome label
+        # Add logo
+        logo_label = QLabel()
+        logo_pixmap = QPixmap("assets/logo.png")
+        # Scale logo to a reasonable size while maintaining aspect ratio
+        logo_pixmap = logo_pixmap.scaled(200, 200, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        logo_label.setPixmap(logo_pixmap)
+        logo_label.setAlignment(Qt.AlignCenter)
+        logo_label.setStyleSheet("margin: 20px 0;")
+        layout.addWidget(logo_label)
+        
+        # Add welcome label
         welcome_label = QLabel(get_text("app.welcome", f"Welcome to {APP_NAME}"))
         welcome_label.setAlignment(Qt.AlignCenter)
-        welcome_label.setStyleSheet("font-size: 24px; margin: 20px;")
+        welcome_label.setStyleSheet("font-size: 24px; margin: 0 20px 20px 20px;")
         layout.addWidget(welcome_label)
         
         # Add a description label
@@ -151,7 +162,13 @@ class BenchmarkApp(QMainWindow):
         """Handle start benchmark button click"""
         log.info("Start benchmark button clicked")
         self.statusBar().showMessage(get_text("app.starting_benchmark", "Starting benchmark..."))
-        # TODO: Implement benchmark start
+        
+        # Import the BenchmarkTestDialog here to avoid circular imports
+        from script.test_script.benchmark_tests import BenchmarkTestDialog
+        
+        # Create and show the benchmark test dialog
+        dialog = BenchmarkTestDialog(self)
+        dialog.show()
     
     def closeEvent(self, event):
         """Handle window close event"""

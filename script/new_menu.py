@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (
     QTableWidget, QTableWidgetItem, QHeaderView, QTextBrowser
 )
 from PySide6.QtGui import QKeySequence, QIcon, QAction, QActionGroup, QFont, QTextCursor, QPixmap
-from PySide6.QtCore import Qt, Signal, QObject, QSize, QThread, QTimer
+from PySide6.QtCore import Qt, Signal, QObject, QSize, QThread, QTimer, QSettings
 
 from script.version import APP_NAME, APP_DESCRIPTION, __version__
 from script.lang_mgr import get_language_manager, get_text
@@ -141,7 +141,7 @@ class TestMenu(QMenu):
         self.hardware_monitor_action = QAction(self)
         self.hardware_monitor_action.triggered.connect(self.show_hardware_monitor)
         self.addAction(self.hardware_monitor_action)
-
+        
         # Pystone Test action
         self.pystone_test_action = QAction(self)
         self.pystone_test_action.triggered.connect(self.run_pystone_test)
@@ -210,7 +210,7 @@ class TestMenu(QMenu):
         self.pystone_test_action.setText(get_text('test.pystone_test', '&Pystone Benchmark'))
         self.pystone_test_action.setStatusTip(get_text('test.pystone_tooltip', 'Run the Pystone benchmark test'))
         
-        self.test_action.setText(get_text('test.test_action', 'Test &Action'))
+        self.test_action.setText(get_text('test.test_action', 'Test Action'))
         self.test_action.setStatusTip(get_text('test.test_tooltip', 'Test action for development'))
     
     def show_system_info(self):
@@ -339,10 +339,33 @@ class TestMenu(QMenu):
         QMessageBox.information(
             self.parent(),
             get_text('test.test_action', 'Test Action'),
-            get_text('test.test_message', 'This is a test action.')
+            get_text('test.test_message', 'This is development test action.')
         )
 
 def create_menu_bar(parent):
+    """Create and return the application menu bar."""
+    def change_language(lang_code, menubar):
+        """Change the application language."""
+        lang_manager = get_language_manager()
+        if lang_manager.set_language(lang_code):
+            # Save the language preference
+            settings = QSettings("Nsfr750", "Benchmark")
+            settings.setValue("language", lang_code)
+            
+            # Get the main window
+            main_window = menubar.parent()
+            
+            # Rebuild the UI
+            main_window.setup_ui()
+            
+            # Update window title
+            main_window.setWindowTitle(f"{APP_NAME} v{__version__}")
+        else:
+            QMessageBox.warning(
+                menubar.parent(),
+                get_text('error.title', 'Error'),
+                get_text('error.language_change', 'Failed to change language')
+            )
     """Create and return the application menu bar."""
     menubar = QMenuBar(parent)
     
@@ -491,12 +514,33 @@ def create_menu_bar(parent):
     update_action.triggered.connect(lambda: get_updates_module().check_for_updates(parent))
     tools_menu.addAction(update_action)
     
-    # Add a separator before Test menu
-    menubar.addSeparator()
+    # Language menu
+    language_menu = QMenu(get_text('menu.language', '&Language'), menubar)
     
-    # Test menu
-    test_menu = TestMenu(parent)
-    menubar.addMenu(test_menu)
+    # Create a QActionGroup to make language selection exclusive
+    language_group = QActionGroup(menubar)
+    language_group.setExclusive(True)
+    
+    # Get available languages
+    lang_manager = get_language_manager()
+    current_lang = lang_manager.get_current_language()
+    
+    # Add language actions
+    for lang_code in lang_manager.get_available_languages():
+        lang_name = {
+            'en': 'English',
+            'it': 'Italiano'
+        }.get(lang_code, lang_code.upper())
+        
+        action = QAction(lang_name, menubar, checkable=True)
+        action.setData(lang_code)
+        action.setChecked(lang_code == current_lang)
+        action.triggered.connect(lambda checked, code=lang_code: 
+                               change_language(code, menubar))
+        language_menu.addAction(action)
+        language_group.addAction(action)
+    
+    menubar.addMenu(language_menu)
     
     # Add a separator before Help menu
     menubar.addSeparator()

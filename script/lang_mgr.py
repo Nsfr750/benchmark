@@ -166,6 +166,24 @@ class LanguageManager:
             Current language code (e.g., 'en')
         """
         return self.current_lang
+        
+    def set_language(self, lang_code: str) -> bool:
+        """Set the current language.
+        
+        Args:
+            lang_code: Language code to set (e.g., 'en', 'it')
+            
+        Returns:
+            bool: True if language was changed successfully, False otherwise
+        """
+        if lang_code == self.current_lang:
+            return True  # Already using this language
+            
+        # Try to load the new language
+        if self.load_language(lang_code):
+            self.current_lang = lang_code
+            return True
+        return False
 
 
 # Singleton instance

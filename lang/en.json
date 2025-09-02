@@ -123,7 +123,7 @@
         "export_dialog": "Export Results",
         "import_dialog": "Import Results",
         "test_dialog_title": "Test",
-        "test_message": "This is a test message.",
+        "test_message": "This is a development test message.",
         "export_results": "&Export Results...",
         "export_results_tooltip": "Export test results to a file",
         "import_results": "&Import Results...",
@@ -327,6 +327,31 @@
         "tab_memory": "Memory",
         "tab_disk": "Disk",
         "tab_raw": "Raw Info"
+    },
+    "benchmark_tests": {
+        "title": "Benchmark Tests",
+        "test_category": "Test Category",
+        "status": "Status",
+        "cpu": "CPU",
+        "memory": "Memory",
+        "disk": "Disk",
+        "test_cpu_math": "CPU Math Test",
+        "test_cpu_integer_math": "CPU Integer Math Test",
+        "test_cpu_sorting": "CPU Sorting Test",
+        "test_cpu_compression": "CPU Compression Test",
+        "test_memory_allocation": "Memory Allocation Test",
+        "test_memory_bandwidth": "Memory Bandwidth Test",
+        "test_cache_effects": "Cache Effects Test",
+        "test_disk_io": "Disk I/O Test",
+        "results": "Results",
+        "test_categories": "Test Categories",
+        "run_tests": "Run Tests",
+        "stop": "Stop",
+        "starting_tests": "Starting tests...",
+        "running_test": "Running test: {test_name}"
+    },
+    "common": {
+        "stop": "Stop"
     },
     "sponsor": {
         "support": "Support Development",

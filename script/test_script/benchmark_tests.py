@@ -191,7 +191,7 @@ class BenchmarkSuite:
             iterations=iterations,
             metadata={
                 "test_type": "cpu", 
-                "data_size": len(data) * 10,
+                "data_size": test_size,
                 "algorithms": ["Timsort", "Bubble Sort", "Quicksort"]
             }
         )
