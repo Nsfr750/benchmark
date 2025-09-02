@@ -142,7 +142,11 @@
         "view_logs": "View Logs",
         "view_logs_tooltip": "View application logs",
         "view_history": "View History",
-        "view_history_tooltip": "View benchmark history"
+        "view_history_tooltip": "View benchmark history",
+        "error": "Error",
+        "pystone_error": "Failed to run Pystone test: {}",
+        "pystone_results": "Pystone Results",
+        "pystone_results_text": "Pystone benchmark completed.\n\nPystones per second: {pystones:.2f}\nTime elapsed: {time_elapsed:.2f} seconds\nLoops: {loops}"
     },
     "test_menu": {
         "title": "&Test",
@@ -337,7 +341,7 @@
     },
     "about": {
         "title": "About",
-        "description": "A Python implementation of the Pystone benchmark andother resrs with a modern GUI.",
+        "description": "A Python implementation of the Pystone benchmark and other tests with a modern GUI.",
         "credits": "Credits",
         "connect": "Connect",
         "github": "GitHub",

@@ -12,7 +12,7 @@ from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QComboBox, QLa
 from PySide6.QtCharts import (QChart, QChartView, QLineSeries, QScatterSeries, QValueAxis, 
                              QBarSet, QBarSeries, QBarCategoryAxis, QPieSeries, QPieSlice)
 
-from script.benchmark_history import get_benchmark_history, TestResult
+from script.test_script.benchmark_history import get_benchmark_history, TestResult
 from script.lang_mgr import get_language_manager
 import math
 import statistics
@@ -34,7 +34,7 @@ from PySide6.QtGui import QPainter, QColor, QFont, QPen, QBrush, QLinearGradient
 import numpy as np
 
 from script.lang_mgr import get_language_manager
-from script.benchmark_history import get_benchmark_history, BenchmarkResult, TestResult
+from script.test_script.benchmark_history import get_benchmark_history, BenchmarkResult, TestResult
 from script.logger import logger
 
 class BenchmarkChartView(QChartView):

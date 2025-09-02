@@ -1,6 +1,6 @@
 """Test script for HardwareMonitor."""
 import time
-from script.hardware_monitor import HardwareMonitor
+from script.test_script.hardware_monitor import HardwareMonitor
 
 def test_monitor():
     print("Starting hardware monitor test...")

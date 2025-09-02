@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 import logging
 from typing import List, Optional, Tuple
 
-from script.benchmark_history import BenchmarkResult, get_benchmark_history
+from .benchmark_history import BenchmarkResult, get_benchmark_history
 from script.lang_mgr import get_language_manager, get_text
 
 log = logging.getLogger(__name__)

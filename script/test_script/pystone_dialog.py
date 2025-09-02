@@ -7,7 +7,7 @@ from PySide6.QtWidgets import (
     QHBoxLayout, QTextEdit, QMessageBox, QApplication
 )
 from PySide6.QtCore import Qt, QThread, Signal, QObject
-from script.CLI_pystone import pystones
+from .CLI_pystone import pystones
 import time
 
 
@@ -91,6 +91,14 @@ class PystoneDialog(QDialog):
         
         layout.addLayout(button_layout)
     
+    def get_loops(self) -> int:
+        """Get the number of loops for the benchmark.
+        
+        Returns:
+            int: Number of loops to run the benchmark for
+        """
+        return 50000  # Default value, can be modified to get from UI if needed
+        
     def run_benchmark(self):
         """Run the Pystone benchmark."""
         self.run_button.setEnabled(False)

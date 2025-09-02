@@ -6,7 +6,7 @@ import time
 # Add the parent directory to the path so we can import script
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from script.hardware_monitor import HardwareMonitor
+from script.test_script.hardware_monitor import HardwareMonitor
 
 def test_monitor():
     print("Starting hardware monitor test...")

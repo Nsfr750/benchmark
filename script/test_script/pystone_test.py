@@ -4,8 +4,8 @@ Pystone benchmark test implementation.
 
 import time
 from typing import Dict, Any, Optional
-from script.CLI_pystone import pystones
-from script.system_info import get_system_info
+from .CLI_pystone import pystones
+from .system_info import get_system_info
 
 
 def run_pystones_test(loops: int = 50000) -> Dict[str, Any]:

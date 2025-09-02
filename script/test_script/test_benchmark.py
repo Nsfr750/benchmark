@@ -12,9 +12,9 @@ from datetime import datetime
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # Now import local modules
-from script.benchmark_tests import BenchmarkSuite
-from script.system_info import get_system_info, save_system_info
-from script.export_results import ResultExporter
+from .benchmark_tests import BenchmarkSuite
+from .system_info import get_system_info, save_system_info
+from script.test_script.export_results import ResultExporter
 
 def run_benchmark():
     """Run benchmark tests and display results."""

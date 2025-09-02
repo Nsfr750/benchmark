@@ -5,7 +5,7 @@ import time
 import psutil
 import pytest
 
-from script.hardware_monitor import HardwareMonitor, HardwareMetrics
+from script.test_script.hardware_monitor import HardwareMonitor, HardwareMetrics
 
 
 def test_hardware_metrics_initialization():
@@ -110,7 +110,7 @@ def test_get_summary():
 def test_cpu_temperature():
     """Test getting CPU temperature (if available)."""
 
-    from script.hardware_monitor import get_cpu_temperature
+    from script.test_script.hardware_monitor import get_cpu_temperature
     temp = get_cpu_temperature()
     
     # Temperature should be None or a reasonable value

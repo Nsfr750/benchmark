@@ -9,7 +9,7 @@ from PySide6.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QLabel,
                              QFormLayout, QDialogButtonBox)
 from PySide6.QtCore import Qt
 
-from script.export_results import ResultExporter, get_export_formats
+from script.test_script.export_results import ResultExporter, get_export_formats
 
 class ExportDialog(QDialog):
     """Dialog for exporting benchmark results."""

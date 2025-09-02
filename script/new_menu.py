@@ -25,9 +25,9 @@ from PySide6.QtCore import Qt, Signal, QObject, QSize, QThread, QTimer
 from script.version import APP_NAME, APP_DESCRIPTION, __version__
 from script.lang_mgr import get_language_manager, get_text
 from script.theme_manager import get_theme_manager
-from script.system_info import get_system_info, save_system_info
-from script.benchmark_tests import BenchmarkSuite
-from script.export_dialog import ExportDialog
+from script.test_script.system_info import get_system_info, save_system_info
+from script.test_script.benchmark_tests import BenchmarkSuite
+from script.test_script.export_dialog import ExportDialog
 from script.logger import logger as log
 
 # Lazy import updates to avoid circular imports
@@ -141,6 +141,11 @@ class TestMenu(QMenu):
         self.hardware_monitor_action = QAction(self)
         self.hardware_monitor_action.triggered.connect(self.show_hardware_monitor)
         self.addAction(self.hardware_monitor_action)
+
+        # Pystone Test action
+        self.pystone_test_action = QAction(self)
+        self.pystone_test_action.triggered.connect(self.run_pystone_test)
+        self.addAction(self.pystone_test_action)
         
         # Add separator
         self.addSeparator()
@@ -202,24 +207,27 @@ class TestMenu(QMenu):
         self.import_results_action.setText(get_text('test.import_results', '&Import Results...'))
         self.import_results_action.setStatusTip(get_text('test.import_results_tooltip', 'Import test results from a file'))
         
+        self.pystone_test_action.setText(get_text('test.pystone_test', '&Pystone Benchmark'))
+        self.pystone_test_action.setStatusTip(get_text('test.pystone_tooltip', 'Run the Pystone benchmark test'))
+        
         self.test_action.setText(get_text('test.test_action', 'Test &Action'))
         self.test_action.setStatusTip(get_text('test.test_tooltip', 'Test action for development'))
     
     def show_system_info(self):
         """Show system information dialog."""
-        from script.system_info import SystemInfoDialog
+        from script.test_script.system_info import SystemInfoDialog
         dialog = SystemInfoDialog(self.parent())
         dialog.exec()
     
     def run_benchmark_tests(self):
         """Run benchmark tests."""
-        from script.benchmark_tests import BenchmarkTestDialog
+        from script.test_script.benchmark_tests import BenchmarkTestDialog
         dialog = BenchmarkTestDialog(self.parent())
         dialog.exec()
     
     def show_hardware_monitor(self):
         """Show hardware monitor dialog."""
-        from script.hardware_monitor import HardwareMonitorDialog
+        from script.test_script.hardware_monitor import HardwareMonitorDialog
         dialog = HardwareMonitorDialog(self.parent())
         dialog.show()
     
@@ -231,7 +239,7 @@ class TestMenu(QMenu):
     
     def view_history(self):
         """View test history."""
-        from script.history_dialog import HistoryDialog
+        from script.test_script.history_dialog import HistoryDialog
         dialog = HistoryDialog(self.parent())
         dialog.exec()
     
@@ -293,12 +301,45 @@ class TestMenu(QMenu):
                     get_text('test.import_error_msg', 'Failed to import results: {}').format(str(e))
                 )
     
+    def run_pystone_test(self):
+        """Run the Pystone benchmark test."""
+        try:
+            from script.test_script.pystone_test import run_pystones_test
+            from script.test_script.pystone_dialog import PystoneDialog
+            
+            # Create and show the Pystone test dialog
+            dialog = PystoneDialog(self.parent())
+            if dialog.exec_() == QDialog.Accepted:
+                # Get the number of loops from the dialog
+                loops = dialog.get_loops()
+                
+                # Run the test
+                results = run_pystones_test(loops)
+                
+                # Show results
+                QMessageBox.information(
+                    self.parent(),
+                    get_text('test.pystone_results', 'Pystone Results'),
+                    get_text('test.pystone_results_text', 
+                           'Pystone benchmark completed.\n\n' +
+                           f"Pystones per second: {results['pystones']:.2f}\n" +
+                           f"Time elapsed: {results['time_elapsed']:.2f} seconds\n" +
+                           f"Loops: {results['loops']}")
+                )
+                
+        except Exception as e:
+            QMessageBox.critical(
+                self.parent(),
+                get_text('test.error', 'Error'),
+                get_text('test.pystone_error', 'Failed to run Pystone test: {}').format(str(e))
+            )
+    
     def test_action_triggered(self):
         """Handle test action triggered."""
         QMessageBox.information(
             self.parent(),
-            get_text('test.test_dialog_title', 'Test'),
-            get_text('test.test_message', 'Test action triggered!')
+            get_text('test.test_action', 'Test Action'),
+            get_text('test.test_message', 'This is a test action.')
         )
 
 def create_menu_bar(parent):
