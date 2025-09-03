@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- Comprehensive API documentation in `docs/API.md`
+- Project roadmap in `docs/ROADMAP.md`
+- Code of Conduct in `docs/CODE_OF_CONDUCT.md`
+- Detailed prerequisites and setup guide in `docs/PREREQUISITES.md`
+- CODEOWNERS file for better project management
+- Support for additional benchmark metrics and visualizations
+- Enhanced error handling and user feedback
+- Automated test suite for core functionality
+
+### Changed
+- Updated dependencies to their latest stable versions
+- Improved documentation structure and content
+- Enhanced build and deployment process
+- Optimized performance for large benchmark datasets
+- Refactored core modules for better maintainability
+
+### Fixed
+- Resolved issues with benchmark result saving/loading
+- Fixed memory leaks in long-running benchmark sessions
+- Addressed UI responsiveness issues
+- Fixed compatibility issues with specific hardware configurations
+- Corrected documentation inaccuracies
+
 ## [1.3.0] - 2025-09-02
 
 ### Added in 1.3.0

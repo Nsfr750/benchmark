@@ -1,0 +1,35 @@
+# This file defines code owners for different parts of the project.
+# Each line is a file pattern followed by one or more owners.
+
+# These owners will be the default owners for everything in the repo.
+# Unless a later match takes precedence, these owners will be requested for
+# review when someone opens a pull request.
+*       @Nsfr750
+
+# Core application code
+/benchmark/           @Nsfr750
+/script/             @Nsfr750
+/main.py             @Nsfr750
+
+# Documentation
+/docs/               @Nsfr750
+/README.md           @Nsfr750
+/CHANGELOG.md        @Nsfr750
+/TO_DO.md            @Nsfr750
+
+# Configuration files
+/config/             @Nsfr750
+/requirements*.txt   @Nsfr750
+/setup.py            @Nsfr750
+
+# Tests
+/tests/              @Nsfr750
+
+# Installer
+/installer.nsi       @Nsfr750
+
+# GitHub specific files
+/.github/            @Nsfr750
+
+# For more information about CODEOWNERS files, see:
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners

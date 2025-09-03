@@ -14,7 +14,12 @@ benchmark/
 │   ├── config.json                     # Configuration file
 │   └── updates.json                    # Update cache file
 ├── docs/                               # Documentation
+│   ├── API.md                          # API documentation
+│   ├── CODE_OF_CONDUCT.md              # Code of Conduct
 │   ├── CONTRIBUTING.md                 # Contributing file
+│   ├── FAQ.md                          # Frequently Asked Questions
+│   ├── PREREQUISITES.md                # Prerequisites file
+│   ├── ROADMAP.md                      # Roadmap file
 │   ├── STRUCT.md                       # This file
 │   └── USER_GUIDE.md                   # User Guide
 ├── logs/                               # Log files

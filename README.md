@@ -1,8 +1,10 @@
-# ![Logo](assets/logo.png) Benchmark
+# ![Logo](assets/logo.png) PyBench
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![GitHub release](https://img.shields.io/github/v/release/Nsfr750/benchmark)](https://github.com/Nsfr750/benchmark/releases)
+[![Discord](https://img.shields.io/discord/1234567890123456789?label=Discord&logo=discord)](https://discord.gg/ryqNeuRYjD)
 
 A comprehensive benchmarking suite built with PySide6, offering a modern and intuitive interface for running, analyzing, and comparing various benchmark tests including Pystone, CPU performance, memory operations, and system metrics.
 
@@ -12,42 +14,65 @@ A comprehensive benchmarking suite built with PySide6, offering a modern and int
 
 ### Prerequisites
 
-- Python 3.9 or higher
-- Windows or Linux
+- **OS**: Windows 10/11 (64-bit)
+- **Python**: 3.9 or higher
+- **RAM**: 4GB minimum (8GB recommended)
+- **Disk Space**: 500MB free space
 
 ### Quick Start
 
-1. Clone the repository:
+1. **Download the latest release** from [GitHub Releases](https://github.com/Nsfr750/benchmark/releases)
+
+2. **Run the installer** and follow the on-screen instructions
+
+   or
+
+   **Manual Installation**:
 
    ```bash
+   # Clone the repository
    git clone https://github.com/Nsfr750/benchmark.git
    cd benchmark
-   ```
-
-2. Create and activate a virtual environment:
-
-   ```bash
+   
+   # Create and activate virtual environment
    python -m venv venv
    .\venv\Scripts\activate  # Windows
    source venv/bin/activate  # Linux/Mac
-   ```
-
-3. Install dependencies:
-
-   ```bash
+   
+   # Install dependencies
    pip install -r requirements.txt
-   ```
-
-4. Run the application:
-
-   ```bash
+   
+   # Run the application
    python main.py
    ```
 
 ## ✨ Features
 
-- **Modern UI**: Clean, responsive interface built with PySide6
 - **Comprehensive Benchmarking**:
+  - CPU Performance Tests
+  - Memory Bandwidth & Latency
+  - Disk I/O Operations
+  - System Monitoring
+  - Pystone Benchmark
+  - Custom Test Suites
+
+- **Modern UI**:
+  - Dark/Light theme support
+  - Real-time performance monitoring
+  - Interactive charts and visualizations
+  - Responsive design
+
+- **Advanced Features**:
+  - Save/Load benchmark configurations
+  - Export results to multiple formats (CSV, JSON, HTML)
+  - Compare results across different runs
+  - Custom benchmark creation
+
+- **System Integration**:
+  - Detailed hardware information
+  - System resource monitoring
+  - Automatic updates
+  - Multi-language support
   - Pystone benchmark with progress tracking
   - CPU performance tests
   - Memory operation benchmarks
@@ -92,11 +117,11 @@ A comprehensive benchmarking suite built with PySide6, offering a modern and int
 
 ## 📂 Project Structure
 
-Please read our [Project Structure](STRUCT.md) for more information.
+Please read our [Project Structure](docs/STRUCT.md) for more information.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please read our [Contributing Guidelines](CONTRIBUTING.md) for details.
+Contributions are welcome! Please read our [Contributing Guidelines](docs/CONTRIBUTING.md) for details.
 
 ## 📄 License
 
