@@ -17,9 +17,6 @@ benchmark/
 │   ├── CONTRIBUTING.md                 # Contributing file
 │   ├── STRUCT.md                       # This file
 │   └── USER_GUIDE.md                   # User Guide
-├── lang/                               # Language files
-│   ├── en.json                         # English language file
-│   └── it.json                         # Italian language file
 ├── logs/                               # Log files
 ├── script/                             # Source code
 │   ├── test_script/                    # Test scripts
@@ -47,6 +44,7 @@ benchmark/
 │   ├── settings.py                     # Settings dialog
 │   ├── sponsor.py                      # Sponsor dialog
 │   ├── theme_manager.py                # Theme Manager
+│   ├── translations.py                 # Translations
 │   ├── updates.py                      # Update system
 │   ├── version.py                      # Version system
 │   ├── view_log.py                     # Log viewer

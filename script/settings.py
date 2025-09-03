@@ -34,12 +34,16 @@ class SettingsDialog(QDialog):
         
         # Language selection
         self.language_combo = QComboBox()
-        self.language_combo.addItems([
-            f"{name} ({code})" for code, name in [
-                ('en', 'English'),
-                ('it', 'Italiano')
-            ]
-        ])
+        
+        # Add available languages
+        self.languages = [
+            ('en', 'English'),
+            ('it', 'Italiano')
+        ]
+        
+        for code, name in self.languages:
+            self.language_combo.addItem(f"{name} ({code})", code)
+            
         general_layout.addRow(self.tr('Language:'), self.language_combo)
         
         # Theme selection
@@ -68,17 +72,23 @@ class SettingsDialog(QDialog):
         layout.addWidget(self.tabs)
         
         # Add dialog buttons
-        buttons = QDialogButtonBox(
-            QDialogButtonBox.Ok | QDialogButtonBox.Cancel | QDialogButtonBox.Apply,
-            parent=self
-        )
+        from PySide6.QtWidgets import QDialogButtonBox, QPushButton
+        from PySide6.QtCore import Qt
         
-        buttons.accepted.connect(self.accept)
-        buttons.rejected.connect(self.reject)
-        apply_btn = buttons.button(QDialogButtonBox.Apply)
-        apply_btn.clicked.connect(self.apply_settings)
+        self.button_box = QDialogButtonBox()
+        self.button_box.setOrientation(Qt.Horizontal)
         
-        layout.addWidget(buttons)
+        # Add standard buttons
+        self.ok_button = self.button_box.addButton(QDialogButtonBox.Ok)
+        self.cancel_button = self.button_box.addButton(QDialogButtonBox.Cancel)
+        self.apply_button = self.button_box.addButton(QDialogButtonBox.Apply)
+        
+        # Connect signals
+        self.ok_button.clicked.connect(self.accept)
+        self.cancel_button.clicked.connect(self.reject)
+        self.apply_button.clicked.connect(self.apply_settings)
+        
+        layout.addWidget(self.button_box)
         
         # Load current settings
         self.load_current_settings()
@@ -124,10 +134,9 @@ class SettingsDialog(QDialog):
         """Load current settings into the UI"""
         # Load language
         current_lang = self.settings.get('language', 'en')
-        for i in range(self.language_combo.count()):
-            if f'({current_lang})' in self.language_combo.itemText(i):
-                self.language_combo.setCurrentIndex(i)
-                break
+        index = self.language_combo.findData(current_lang)
+        if index >= 0:
+            self.language_combo.setCurrentIndex(index)
         
         # Load theme
         theme_map = {
@@ -145,11 +154,8 @@ class SettingsDialog(QDialog):
     def gather_settings(self):
         """Gather settings from UI controls."""
         # Get selected language code
-        selected_lang = 'en'  # Default
-        selected_text = self.language_combo.currentText()
-        if '(' in selected_text and ')' in selected_text:
-            selected_lang = selected_text.split('(')[1].rstrip(')')
-            
+        selected_lang = self.language_combo.currentData() or 'en'
+        
         # Map theme text back to internal value
         theme_text = self.theme_combo.currentText()
         if theme_text == self.tr('Light'):

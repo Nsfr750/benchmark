@@ -73,7 +73,7 @@ class BenchmarkApp(QMainWindow):
         layout.addWidget(logo_label)
         
         # Add welcome label
-        welcome_label = QLabel(get_text("app.welcome", f"Welcome to {APP_NAME}"))
+        welcome_label = QLabel(get_text("app.welcome", f"Welcome to {APP_NAME}", app_name=APP_NAME))
         welcome_label.setAlignment(Qt.AlignCenter)
         welcome_label.setStyleSheet("font-size: 24px; margin: 0 20px 20px 20px;")
         layout.addWidget(welcome_label)
