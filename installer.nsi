@@ -1,4 +1,42 @@
-; Minimal NSIS Installer Script for MSR605 Card Reader/Writer
+; NSIS Installer Script for Benchmark Application
+!include MUI2.nsh
+!include FileFunc.nsh
+!insertmacro GetParameters
+!insertmacro GetOptions
+
+; Basic configuration
+!define APPNAME "PyBench"
+!define DISPLAY_NAME "Benchmark Application"
+!define PUBLISHER "Nsfr750"
+!define WEBSITE "https://github.com/Nsfr750/benchmark"
+!define INSTALLER_NAME "PyBench_Setup.exe"
+!define HELP_URL "${WEBSITE}/wiki"
+!define UPDATE_URL "${WEBSITE}/releases/latest"
+!define SUPPORT_EMAIL "nsfr750@yandex.com"
+!define DISCORD_URL "https://discord.gg/BvvkUEP9"
+
+; Installer attributes
+Name "${DISPLAY_NAME}"
+OutFile "${INSTALLER_NAME}"
+InstallDir "$PROGRAMFILES\${APPNAME}"
+InstallDirRegKey HKLM "Software\${APPNAME}" ""
+RequestExecutionLevel admin
+
+; Modern UI2 settings
+!define MUI_ABORTWARNING
+!define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\modern-install.ico"
+!define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
+
+; Pages
+!insertmacro MUI_PAGE_DIRECTORY
+!insertmacro MUI_PAGE_INSTFILES
+!insertmacro MUI_UNPAGE_CONFIRM
+!insertmacro MUI_UNPAGE_INSTFILES
+!insertmacro MUI_LANGUAGE "English"
+
+; --------------------------------
+; Application Information (already defined above)
+; --------------------------------
 
 ; --------------------------------
 ; Version Information
@@ -8,19 +46,8 @@
 !define PATCH_VERSION "0"
 !define BUILD_NUMBER "0"
 !define VERSION "${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}.${BUILD_NUMBER}"
-!define APPNAME "PyBench"
-!define DISPLAY_NAME "Benchmark Apllication"
-!define PUBLISHER "Nsfr750"
-!define COMPANY "Nsfr750"
-!define WEBSITE "https://github.com/Nsfr750/benchmark"
-!define UPDATE_URL "${WEBSITE}/releases/latest"
-!define HELP_URL "${WEBSITE}/wiki"
-!define SUPPORT_EMAIL "nsfr750@yandex.com"
-!define DISCORD_URL "https://discord.gg/BvvkUEP9"
 
-; --------------------------------
-; Version Info for the installer
-; --------------------------------
+; Version Info for the installer executable
 VIProductVersion "${VERSION}"
 VIAddVersionKey "ProductName" "${DISPLAY_NAME}"
 VIAddVersionKey "CompanyName" "${COMPANY}"
@@ -42,7 +69,7 @@ Var ReinstallUninstallString
 
 ; General settings
 Name "${APPNAME}"
-OutFile ".\dist\MSR605-v2.4.1.0-Setup.exe"
+OutFile ".\dist\PyBench-v1.3.0.0-Setup.exe"
 InstallDir "$PROGRAMFILES64\${APPNAME}"
 InstallDirRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "InstallLocation"
 RequestExecutionLevel admin
@@ -219,12 +246,12 @@ Section "MainSection" SecMain
   skip_readme:
   
   ; Install LICENSE
-  IfFileExists "X:\GitHub\MSR605\LICENSE" license_exists
-    MessageBox MB_OK|MB_ICONEXCLAMATION "Skipping LICENSE: Source file not found at X:\GitHub\MSR605\LICENSE"
+  IfFileExists "X:\GitHub\benchmark\LICENSE" license_exists
+    MessageBox MB_OK|MB_ICONEXCLAMATION "Skipping LICENSE: Source file not found at X:\GitHub\benchmark\LICENSE"
     Goto skip_license
   
   license_exists:
-  File "X:\GitHub\MSR605\LICENSE"
+  File "X:\GitHub\benchmark\LICENSE"
   IfFileExists "$INSTDIR\LICENSE" license_installed
     MessageBox MB_OK|MB_ICONSTOP "Failed to install LICENSE to $INSTDIR"
     Goto skip_license
@@ -235,12 +262,12 @@ Section "MainSection" SecMain
   skip_license:
   
   ; Install CHANGELOG.md
-  IfFileExists "X:\GitHub\MSR605\CHANGELOG.md" changelog_exists
-    MessageBox MB_OK|MB_ICONEXCLAMATION "Skipping CHANGELOG.md: Source file not found at X:\GitHub\MSR605\CHANGELOG.md"
+  IfFileExists "X:\GitHub\benchmark\CHANGELOG.md" changelog_exists
+    MessageBox MB_OK|MB_ICONEXCLAMATION "Skipping CHANGELOG.md: Source file not found at X:\GitHub\benchmark\CHANGELOG.md"
     Goto skip_changelog
   
   changelog_exists:
-  File "X:\GitHub\MSR605\CHANGELOG.md"
+  File "X:\GitHub\benchmark\CHANGELOG.md"
   IfFileExists "$INSTDIR\CHANGELOG.md" changelog_installed
     MessageBox MB_OK|MB_ICONSTOP "Failed to install CHANGELOG.md to $INSTDIR"
     Goto skip_changelog
@@ -274,10 +301,8 @@ Section "MainSection" SecMain
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "NoRepair" 1
   
-  ; Calculate installation size
-  ${GetSize} "$INSTDIR" "/S=0K" $0 $1 $2
-  IntFmt $0 "0x%08X" $0
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "EstimatedSize" "$0"
+  ; Set estimated size (in KB)
+  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "EstimatedSize" 10240
   
   ; Create uninstaller for the current user
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" \
