@@ -212,3 +212,8 @@ assets/version-info.txt
 build_nuitka.py
 DATI.txt
 _build_nuitka.py
+compile_installer.bat
+installer.nsi
+nsis_output.txt
+PyBench_Setup.exe
+installer.nsi
