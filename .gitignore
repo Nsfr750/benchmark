@@ -218,3 +218,5 @@ nsis_output.txt
 PyBench_Setup.exe
 installer.nsi
 installer.nsi
+publish_to_pypi.py
+setup.py
