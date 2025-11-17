@@ -1,0 +1,16 @@
+2025-09-03 10:52:56 - BenchmarkApp - ERROR - Application error: Replacement index 0 out of range for positional args tuple
+Traceback (most recent call last):
+  File "X:\GitHub\benchmark\main.py", line 213, in main
+    window = BenchmarkApp()
+  File "X:\GitHub\benchmark\main.py", line 36, in __init__
+    self.setup_ui()
+  File "X:\GitHub\benchmark\main.py", line 76, in setup_ui
+    welcome_label = QLabel(get_text("app.welcome", f"Welcome to {APP_NAME}"))
+  File "X:\GitHub\benchmark\script\lang_mgr.py", line 139, in get_text
+    return get_language_manager().get_text(key, default, **kwargs)
+  File "X:\GitHub\benchmark\script\lang_mgr.py", line 67, in get_text
+    return translations.get_translation(self.current_lang, key, default or key).format(**kwargs)
+IndexError: Replacement index 0 out of range for positional args tuple
+2025-09-03 10:55:15 - BenchmarkApp - INFO - Benchmark v1.3.0 started
+2025-09-03 10:55:15 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-03 10:55:15 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark

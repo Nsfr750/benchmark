@@ -1,0 +1,29 @@
+# Core Dependencies
+PySide6>=6.5.0,<7.0.0  # GUI Framework
+wand>=0.6.10,<0.7.0    # Image processing (replaces PIL)
+pywin32>=306,<308; platform_system == "Windows"
+psutil>=5.9.5,<6.0.0   # System monitoring
+py-cpuinfo>=9.0.0,<10.0.0  # CPU information
+wmi>=1.5.1,<2.0.0; platform_system == "Windows"
+
+# Data Processing & Analysis
+numpy>=2.0.2,<3.0.0
+pandas>=2.0.0,<3.0.0
+matplotlib>=3.7.0,<4.0.0  # Data visualization
+
+# Testing & Development
+pytest>=7.0.0,<8.0.0
+pytest-cov>=4.0.0,<5.0.0
+black>=23.0.0,<24.0.0  # Code formatting
+flake8>=6.0.0,<7.0.0   # Linting
+mypy>=1.0.0,<2.0.0     # Type checking
+
+# Development
+black>=23.3.0,<24.0.0
+flake8>=6.0.0,<7.0.0
+mypy>=1.0.0,<2.0.0
+isort>=5.12.0,<6.0.0
+
+# Additional Utilities
+requests>=2.31.0,<3.0.0
+python-dateutil>=2.8.2,<3.0.0

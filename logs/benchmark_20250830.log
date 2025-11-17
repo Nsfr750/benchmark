@@ -1,0 +1,38 @@
+2025-08-30 17:30:45 - BenchmarkApp - INFO - Starting Benchmark v1.2.0
+2025-08-30 17:30:45 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-08-30 17:30:45 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-08-30 17:33:19 - BenchmarkApp - INFO - Starting Benchmark v1.2.0
+2025-08-30 17:33:19 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-08-30 17:33:19 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-08-30 17:58:41 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-08-30 17:58:41 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-08-30 17:58:41 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-08-30 17:58:43 - BenchmarkApp - INFO - Start benchmark button clicked
+2025-08-30 17:58:45 - BenchmarkApp - INFO - Start benchmark button clicked
+2025-08-30 17:58:45 - BenchmarkApp - INFO - Start benchmark button clicked
+2025-08-30 17:58:46 - BenchmarkApp - INFO - Start benchmark button clicked
+2025-08-30 17:58:47 - BenchmarkApp - INFO - Start benchmark button clicked
+2025-08-30 17:58:48 - BenchmarkApp - INFO - Start benchmark button clicked
+2025-08-30 17:58:48 - BenchmarkApp - INFO - Start benchmark button clicked
+2025-08-30 17:58:48 - BenchmarkApp - INFO - Start benchmark button clicked
+2025-08-30 17:58:49 - BenchmarkApp - INFO - Start benchmark button clicked
+2025-08-30 18:01:20 - BenchmarkApp - ERROR - Application error: 'BenchmarkApp' object has no attribute 'show_about'
+Traceback (most recent call last):
+  File "x:\GitHub\benchmark\start.py", line 132, in main
+    window = BenchmarkApp()
+  File "x:\GitHub\benchmark\start.py", line 35, in __init__
+    self.setup_ui()
+  File "x:\GitHub\benchmark\start.py", line 53, in setup_ui
+    self.create_menu_bar()
+  File "x:\GitHub\benchmark\start.py", line 88, in create_menu_bar
+    menu_bar = create_menu_bar(self)
+  File "x:\GitHub\benchmark\script\menu.py", line 252, in create_menu_bar
+    about_action.triggered.connect(parent.show_about)
+AttributeError: 'BenchmarkApp' object has no attribute 'show_about'
+2025-08-30 18:01:46 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-08-30 18:01:46 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-08-30 18:01:46 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-08-30 18:01:49 - BenchmarkApp - INFO - Start benchmark button clicked
+2025-08-30 18:02:26 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-08-30 18:02:26 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-08-30 18:02:26 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark

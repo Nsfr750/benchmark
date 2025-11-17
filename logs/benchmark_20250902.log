@@ -1,0 +1,229 @@
+2025-09-02 18:06:45 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 18:06:45 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 18:06:45 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 18:18:49 - BenchmarkApp - ERROR - Application error: 'TestMenu' object has no attribute 'view_logs_action'
+Traceback (most recent call last):
+  File "x:\GitHub\benchmark\start.py", line 154, in main
+    window = BenchmarkApp()
+  File "x:\GitHub\benchmark\start.py", line 35, in __init__
+    self.setup_ui()
+  File "x:\GitHub\benchmark\start.py", line 53, in setup_ui
+    self.create_menu_bar()
+  File "x:\GitHub\benchmark\start.py", line 91, in create_menu_bar
+    test_menu = TestMenu(self)
+  File "x:\GitHub\benchmark\script\test_menu.py", line 25, in __init__
+    self.retranslate_ui()
+  File "x:\GitHub\benchmark\script\test_menu.py", line 78, in retranslate_ui
+    self.view_logs_action.setText(get_text("test_menu.view_logs", "&View Logs"))
+AttributeError: 'TestMenu' object has no attribute 'view_logs_action'
+2025-09-02 18:20:00 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 18:20:00 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 18:20:00 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 18:28:29 - BenchmarkApp - ERROR - Error exporting results: 'LanguageManager' object has no attribute 'get'
+Traceback (most recent call last):
+  File "x:\GitHub\benchmark\script\test_menu.py", line 149, in export_results
+    self.lang.get("export.no_data_title", "No Data"),
+AttributeError: 'LanguageManager' object has no attribute 'get'
+2025-09-02 18:28:46 - BenchmarkApp - ERROR - Error importing results: 'LanguageManager' object has no attribute 'get'
+Traceback (most recent call last):
+  File "x:\GitHub\benchmark\script\test_menu.py", line 201, in import_results
+    self.lang.get("import.open_dialog", "Import Benchmark Results"),
+AttributeError: 'LanguageManager' object has no attribute 'get'
+2025-09-02 18:32:17 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 18:32:17 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 18:32:17 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 18:39:34 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 18:39:34 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 18:39:34 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 18:40:16 - BenchmarkApp - INFO - Start benchmark button clicked
+2025-09-02 18:45:48 - BenchmarkApp - ERROR - Application error: 'TestMenu' object has no attribute 'run_test'
+Traceback (most recent call last):
+  File "x:\GitHub\benchmark\start.py", line 154, in main
+    window = BenchmarkApp()
+  File "x:\GitHub\benchmark\start.py", line 35, in __init__
+    self.setup_ui()
+  File "x:\GitHub\benchmark\start.py", line 53, in setup_ui
+    self.create_menu_bar()
+  File "x:\GitHub\benchmark\start.py", line 91, in create_menu_bar
+    test_menu = TestMenu(self)
+  File "x:\GitHub\benchmark\script\test_menu.py", line 24, in __init__
+    self.setup_ui()
+  File "x:\GitHub\benchmark\script\test_menu.py", line 128, in setup_ui
+    self.test_action.triggered.connect(self.run_test)
+AttributeError: 'TestMenu' object has no attribute 'run_test'
+2025-09-02 18:47:28 - BenchmarkApp - ERROR - Application error: 'TestMenu' object has no attribute 'system_info_action'
+Traceback (most recent call last):
+  File "x:\GitHub\benchmark\start.py", line 154, in main
+    window = BenchmarkApp()
+  File "x:\GitHub\benchmark\start.py", line 35, in __init__
+    self.setup_ui()
+  File "x:\GitHub\benchmark\start.py", line 53, in setup_ui
+    self.create_menu_bar()
+  File "x:\GitHub\benchmark\start.py", line 91, in create_menu_bar
+    test_menu = TestMenu(self)
+  File "x:\GitHub\benchmark\script\test_menu.py", line 25, in __init__
+    self.retranslate_ui()
+  File "x:\GitHub\benchmark\script\test_menu.py", line 85, in retranslate_ui
+    self.system_info_action.setText(get_text("test_menu.system_info", "System &Information"))
+AttributeError: 'TestMenu' object has no attribute 'system_info_action'
+2025-09-02 18:54:03 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 18:54:03 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 18:54:03 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 18:54:06 - BenchmarkApp - INFO - Start benchmark button clicked
+2025-09-02 19:00:09 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 19:00:09 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 19:00:09 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 19:05:06 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 19:05:06 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 19:05:06 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 19:06:35 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 19:06:35 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 19:06:35 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 19:08:05 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 19:08:05 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 19:08:05 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 19:16:33 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 19:16:33 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 19:16:33 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 19:31:05 - BenchmarkApp - ERROR - Application error: 'BenchmarkApp' object has no attribute 'toggle_fullscreen'
+Traceback (most recent call last):
+  File "x:\GitHub\benchmark\start.py", line 153, in main
+    window = BenchmarkApp()
+  File "x:\GitHub\benchmark\start.py", line 34, in __init__
+    self.setup_ui()
+  File "x:\GitHub\benchmark\start.py", line 52, in setup_ui
+    self.create_menu_bar()
+  File "x:\GitHub\benchmark\start.py", line 87, in create_menu_bar
+    menu_bar = create_menu_bar(self)
+  File "x:\GitHub\benchmark\script\new_menu.py", line 418, in create_menu_bar
+    full_screen_action.triggered.connect(parent.toggle_fullscreen)
+AttributeError: 'BenchmarkApp' object has no attribute 'toggle_fullscreen'
+2025-09-02 19:34:47 - BenchmarkApp - ERROR - Application error: 'BenchmarkApp' object has no attribute 'show_options'
+Traceback (most recent call last):
+  File "x:\GitHub\benchmark\start.py", line 168, in main
+    window = BenchmarkApp()
+  File "x:\GitHub\benchmark\start.py", line 34, in __init__
+    self.setup_ui()
+  File "x:\GitHub\benchmark\start.py", line 52, in setup_ui
+    self.create_menu_bar()
+  File "x:\GitHub\benchmark\start.py", line 87, in create_menu_bar
+    menu_bar = create_menu_bar(self)
+  File "x:\GitHub\benchmark\script\new_menu.py", line 430, in create_menu_bar
+    options_action.triggered.connect(parent.show_options)
+AttributeError: 'BenchmarkApp' object has no attribute 'show_options'
+2025-09-02 19:39:28 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 19:39:28 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 19:39:28 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 19:41:19 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 19:41:19 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 19:41:19 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 19:43:32 - BenchmarkApp - ERROR - Error showing options dialog: name 'QDialog' is not defined
+2025-09-02 19:43:49 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 19:43:49 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 19:43:49 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 19:44:17 - BenchmarkApp - ERROR - Error showing options dialog: name 'QDialog' is not defined
+2025-09-02 19:50:41 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 19:50:41 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 19:50:41 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 19:55:50 - BenchmarkApp - ERROR - Application error: 'BenchmarkApp' object has no attribute 'view_logs'
+Traceback (most recent call last):
+  File "x:\GitHub\benchmark\start.py", line 188, in main
+    window = BenchmarkApp()
+  File "x:\GitHub\benchmark\start.py", line 36, in __init__
+    self.setup_ui()
+  File "x:\GitHub\benchmark\start.py", line 54, in setup_ui
+    self.create_menu_bar()
+  File "x:\GitHub\benchmark\start.py", line 89, in create_menu_bar
+    menu_bar = create_menu_bar(self)
+  File "x:\GitHub\benchmark\script\new_menu.py", line 439, in create_menu_bar
+    system_log_action.triggered.connect(parent.view_logs)
+AttributeError: 'BenchmarkApp' object has no attribute 'view_logs'
+2025-09-02 19:58:19 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 19:58:19 - BenchmarkApp - INFO - Python 3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]
+2025-09-02 19:58:19 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 20:00:25 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 20:00:25 - BenchmarkApp - INFO - Python 3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]
+2025-09-02 20:00:25 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 20:03:37 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 20:03:37 - BenchmarkApp - INFO - Python 3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]
+2025-09-02 20:03:37 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 20:04:32 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 20:04:32 - BenchmarkApp - INFO - Python 3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]
+2025-09-02 20:04:32 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 20:05:24 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 20:05:24 - BenchmarkApp - INFO - Python 3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]
+2025-09-02 20:05:24 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 20:07:25 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 20:07:25 - BenchmarkApp - INFO - Python 3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]
+2025-09-02 20:07:25 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 20:11:32 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 20:11:32 - BenchmarkApp - INFO - Python 3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]
+2025-09-02 20:11:32 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 20:14:09 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 20:14:09 - BenchmarkApp - INFO - Python 3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]
+2025-09-02 20:14:09 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 20:16:36 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 20:16:36 - BenchmarkApp - INFO - Python 3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]
+2025-09-02 20:16:36 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 20:18:26 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 20:18:26 - BenchmarkApp - INFO - Python 3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]
+2025-09-02 20:18:26 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 20:20:12 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 20:20:12 - BenchmarkApp - INFO - Python 3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]
+2025-09-02 20:20:12 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 20:22:00 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 20:22:00 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 20:22:00 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 20:23:00 - BenchmarkApp - INFO - Benchmark v1.2.0 started
+2025-09-02 20:23:00 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 20:23:00 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 20:35:36 - BenchmarkApp - INFO - Benchmark v1.3.0 started
+2025-09-02 20:35:36 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 20:35:36 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 20:38:56 - BenchmarkApp - INFO - Benchmark v1.3.0 started
+2025-09-02 20:38:56 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 20:38:56 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 21:15:45 - BenchmarkApp - INFO - Start benchmark button clicked
+2025-09-02 21:21:25 - BenchmarkApp - INFO - Benchmark v1.3.0 started
+2025-09-02 21:21:25 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 21:21:25 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 21:21:37 - BenchmarkApp - INFO - Start benchmark button clicked
+2025-09-02 21:22:49 - BenchmarkApp - INFO - Benchmark v1.3.0 started
+2025-09-02 21:22:49 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 21:22:49 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 21:28:06 - BenchmarkApp - INFO - Benchmark v1.3.0 started
+2025-09-02 21:28:06 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 21:28:06 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 21:28:08 - BenchmarkApp - INFO - Start benchmark button clicked
+2025-09-02 21:30:14 - BenchmarkApp - INFO - Benchmark v1.3.0 started
+2025-09-02 21:30:14 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 21:30:14 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 21:34:27 - BenchmarkApp - INFO - Benchmark v1.3.0 started
+2025-09-02 21:34:27 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 21:34:27 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 21:36:52 - BenchmarkApp - INFO - Start benchmark button clicked
+2025-09-02 21:38:31 - BenchmarkApp - INFO - Benchmark v1.3.0 started
+2025-09-02 21:38:31 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 21:38:31 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 21:40:44 - BenchmarkApp - INFO - Benchmark v1.3.0 started
+2025-09-02 21:40:44 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 21:40:44 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 21:41:10 - BenchmarkApp - INFO - Benchmark v1.3.0 started
+2025-09-02 21:41:10 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 21:41:10 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 21:41:15 - BenchmarkApp - INFO - Start benchmark button clicked
+2025-09-02 21:41:52 - BenchmarkApp - INFO - Benchmark v1.3.0 started
+2025-09-02 21:41:52 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 21:41:52 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 21:49:02 - BenchmarkApp - INFO - Benchmark v1.3.0 started
+2025-09-02 21:49:02 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 21:49:02 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 21:52:55 - BenchmarkApp - INFO - Benchmark v1.3.0 started
+2025-09-02 21:52:55 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 21:52:55 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 21:56:41 - BenchmarkApp - INFO - Benchmark v1.3.0 started
+2025-09-02 21:56:41 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 21:56:41 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
+2025-09-02 21:57:27 - BenchmarkApp - INFO - Benchmark v1.3.0 started
+2025-09-02 21:57:27 - BenchmarkApp - INFO - Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+2025-09-02 21:57:27 - BenchmarkApp - INFO - Working directory: X:\GitHub\benchmark
