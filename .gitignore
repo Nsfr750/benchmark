@@ -212,3 +212,4 @@ assets/version-info.txt
 
 # Mix
 setup/
+.windsurf/rules
